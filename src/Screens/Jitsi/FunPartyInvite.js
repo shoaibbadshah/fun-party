@@ -122,8 +122,7 @@ const FunPartyInvite = ({route, navigation}) => {
       <StatusBar barStyle={theme.StatusBar} />
 
       {guidCheck ? (
-        <>
-          <View style={{paddingHorizontal: 15}}>
+          <View style={{paddingHorizontal: 15,flex:1}}>
             <View
               style={[
                 styles.flexStyle,
@@ -191,7 +190,7 @@ const FunPartyInvite = ({route, navigation}) => {
 
             <FlatList
               data={filterSearch}
-              contentContainerStyle={{paddingBottom: 145}}
+              contentContainerStyle={{paddingBottom: 90}}
               ListEmptyComponent={() => (
                 <View
                   style={{
@@ -263,7 +262,6 @@ const FunPartyInvite = ({route, navigation}) => {
               )}
             />
           </View>
-        </>
       ) : (
         <WatchPartyGuide />
       )}
