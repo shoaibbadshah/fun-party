@@ -48,23 +48,30 @@ const FunPartyInvite = ({route, navigation}) => {
   };
   const theme = useSelector(e => e.theme);
 
-  const userFollowing = useSelector(e => e.userFollowerFollowing?.friendList);
+  const userFollowing = useSelector(
+    e => e.userFollowerFollowing?.userFollowing,
+  );
 
   const userFollower = useSelector(e => e.userFollowerFollowing?.userFollower);
-
+  const [search, setSearch] = useState('');
   const allUser = [...userFollowing, ...userFollower];
+  const filterSearch = search
+    ? allUser?.filter(x =>
+        x.first_name.toLowerCase().includes(search.toLowerCase()),
+      )
+    : allUser;
 
   const LOADING = useSelector(e => e.userFollowerFollowing?.isLoading);
 
   useEffect(() => {
-    dispatch(fetchUserFollowersAndFollowing(setisloading)).then(e => {
-      setFriend(userFollowing);
-    });
+    dispatch(fetchUserFollowersAndFollowing(setisloading));
+    setFriend(allUser);
   }, []);
 
   const onChangeText = e => {
     const searchName = searchByName(e, friend);
     setFriend(searchName);
+    setSearch(e);
   };
 
   const handleInvitePress = async () => {
@@ -183,7 +190,7 @@ const FunPartyInvite = ({route, navigation}) => {
             </View>
 
             <FlatList
-              data={friend}
+              data={filterSearch}
               contentContainerStyle={{paddingBottom: 145}}
               ListEmptyComponent={() => (
                 <View

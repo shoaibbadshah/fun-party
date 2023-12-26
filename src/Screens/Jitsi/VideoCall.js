@@ -1,17 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import { JitsiMeeting } from "@jitsi/react-native-sdk/index";
+import React, {useEffect, useRef} from 'react';
+import {JitsiMeeting} from '@jitsi/react-native-sdk/index';
 
-import { NAVIGATION_ROUTES } from "../../Utils/Navigation/NavigationRoutes";
-import { useDispatch } from "react-redux";
-import { meetExpire_room } from "../../Store/Actions/minis";
+import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
+import {useDispatch} from 'react-redux';
+import {meetExpire_room} from '../../Store/Actions/minis';
 import {
   decodeMeetID,
   generateRandomMeetId,
   interStitialAdsWithInAppSHOW,
-} from "../../Utils/helpers";
-import { Text, View } from "react-native";
+} from '../../Utils/helpers';
+import {Text, View} from 'react-native';
 
-const VideoCall = ({ route, navigation }) => {
+const VideoCall = ({route, navigation}) => {
   const roomId = route?.params?.RoomID;
 
   // const rndm = decodeMeetID(roomId);
@@ -37,40 +37,39 @@ const VideoCall = ({ route, navigation }) => {
   return rndm ? (
     <JitsiMeeting
       flags={{
-        "call-integration.enabled": true,
-        "fullscreen.enabled": true,
-        "add-people.enabled": false,
-        "chat.enabled": false,
-        "invite.enabled": false,
-        "security-options.enabled": false,
-        "car-mode.enabled": false,
-        "settings.enabled": false,
-        "live-streaming.enabled": false,
-        "tile-view.enabled": false,
+        'call-integration.enabled': true,
+        'fullscreen.enabled': true,
+        'add-people.enabled': false,
+        'chat.enabled': false,
+        'invite.enabled': false,
+        'security-options.enabled': false,
+        'car-mode.enabled': false,
+        'settings.enabled': false,
+        'live-streaming.enabled': false,
+        'tile-view.enabled': false,
       }}
       eventListeners={{
-        onConferenceJoined: (e) => {
+        onConferenceJoined: e => {
           interStitialAdsWithInAppSHOW();
         },
-        onReadyToClose: async (e) => {
+        onReadyToClose: async e => {
           onCallEnd();
         },
-        onParticipantJoined: (e) => console.log(e, "onParticipantJoined"),
-        onConferenceFocused: (e) => console.log(e, "onConferenceFocused"),
-        onConferenceLeft: (e) => {
+        onParticipantJoined: e => console.log(e, 'onParticipantJoined'),
+        onConferenceFocused: e => console.log(e, 'onConferenceFocused'),
+        onConferenceLeft: e => {
           onCallEnd();
         },
-        onEnterPictureInPicture: (e) =>
-          console.log(e, "onEnterPictureInPicture"),
+        onEnterPictureInPicture: e => console.log(e, 'onEnterPictureInPicture'),
       }}
       ref={jitsiMeeting}
-      style={{ flex: 1 }}
-      token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ'
-      room={rndm}
-      serverURL={"https://meet.shareslate.fun/"}
+      style={{flex: 1}}
+      token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ"
+      room={'searchnew'}
+      serverURL={'https://meet.shareslate.fun/'}
     />
   ) : (
-    <View style={{ backgroundColor: "red" }}>
+    <View style={{backgroundColor: 'red'}}>
       <Text>It does not exist. Room Id check kr lo</Text>
       <Text>It does not exist. Room Id check kr lo</Text>
       <Text>It does not exist. Room Id check kr lo</Text>
