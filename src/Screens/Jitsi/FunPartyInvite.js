@@ -48,9 +48,7 @@ const FunPartyInvite = ({route, navigation}) => {
   };
   const theme = useSelector(e => e.theme);
 
-  const userFollowing = useSelector(
-    e => e.userFollowerFollowing?.userFollowing,
-  );
+  const userFollowing = useSelector(e => e.userFollowerFollowing?.friendList);
 
   const userFollower = useSelector(e => e.userFollowerFollowing?.userFollower);
 
@@ -59,8 +57,9 @@ const FunPartyInvite = ({route, navigation}) => {
   const LOADING = useSelector(e => e.userFollowerFollowing?.isLoading);
 
   useEffect(() => {
-    dispatch(fetchUserFollowersAndFollowing(setisloading));
-    setFriend(allUser);
+    dispatch(fetchUserFollowersAndFollowing(setisloading)).then(e => {
+      setFriend(userFollowing);
+    });
   }, []);
 
   const onChangeText = e => {
@@ -184,7 +183,7 @@ const FunPartyInvite = ({route, navigation}) => {
             </View>
 
             <FlatList
-              data={allUser}
+              data={friend}
               contentContainerStyle={{paddingBottom: 145}}
               ListEmptyComponent={() => (
                 <View

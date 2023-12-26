@@ -1,9 +1,9 @@
-import { Platform } from "react-native";
-import { Types } from "../Store/Types/type";
-import { API } from "../Api";
-import { store } from "../Store/store";
-import Share from "react-native-share";
-import ImagePicker from "react-native-image-crop-picker";
+import {Platform} from 'react-native';
+import {Types} from '../Store/Types/type';
+import {API} from '../Api';
+import {store} from '../Store/store';
+import Share from 'react-native-share';
+import ImagePicker from 'react-native-image-crop-picker';
 // import {
 //   IronSource,
 //   IronSourceSegment,
@@ -12,42 +12,42 @@ import ImagePicker from "react-native-image-crop-picker";
 //   IronSourceOfferwall,
 //   IronSourceBanner,
 // } from '@wowmaking/react-native-iron-source';
-import { useDispatch } from "react-redux";
+import {useDispatch} from 'react-redux';
 // import {
 //   AdEventType,
 //   InterstitialAd,
 //   TestIds,
 // } from "react-native-google-mobile-ads";
-import socketServcies from "./socketServcie";
-import CustomAlert from "../Components/CustomAlert";
-import { NAVIGATION_ROUTES } from "./Navigation/NavigationRoutes";
-const isIos = Platform.OS === "ios";
+import socketServcies from './socketServcie';
+import CustomAlert from '../Components/CustomAlert';
+import {NAVIGATION_ROUTES} from './Navigation/NavigationRoutes';
+const isIos = Platform.OS === 'ios';
 
-const timeSince = (date) => {
+const timeSince = date => {
   let seconds = Math.floor((new Date() - date) / 1000);
 
   let interval = seconds / 31536000;
 
   if (interval > 1) {
-    return Math.floor(interval) + " y";
+    return Math.floor(interval) + ' y';
   }
   interval = seconds / 2592000;
   if (interval > 1) {
-    return Math.floor(interval) + " m";
+    return Math.floor(interval) + ' m';
   }
   interval = seconds / 86400;
   if (interval > 1) {
-    return Math.floor(interval) + " d";
+    return Math.floor(interval) + ' d';
   }
   interval = seconds / 3600;
   if (interval > 1) {
-    return Math.floor(interval) + " h";
+    return Math.floor(interval) + ' h';
   }
   interval = seconds / 60;
   if (interval > 1) {
-    return Math.floor(interval) + " m";
+    return Math.floor(interval) + ' m';
   }
-  return Math.floor(seconds) + " s";
+  return Math.floor(seconds) + ' s';
 };
 const handleAddVideo = (route, navigation, createType, miniId) => {
   ImagePicker.openPicker({
@@ -55,10 +55,10 @@ const handleAddVideo = (route, navigation, createType, miniId) => {
     height: 250,
     cropping: false,
     multiple: false,
-    mediaType: route?.params?.item ? "any" : "video",
-  }).then((image) => {
-    console.log(image, "image for picker");
-    if (image == null || undefined || "") return;
+    mediaType: route?.params?.item ? 'any' : 'video',
+  }).then(image => {
+    console.log(image, 'image for picker');
+    if (image == null || undefined || '') return;
     if (route?.params?.item) {
       route.params.sendMessageHandler(image);
 
@@ -71,8 +71,8 @@ const handleAddVideo = (route, navigation, createType, miniId) => {
     } else {
       navigation.navigate(NAVIGATION_ROUTES.CREATE_MINI, {
         image: image,
-        from: "upload",
-        type: "picker",
+        from: 'upload',
+        type: 'picker',
         miniId,
         ...createType,
       });
@@ -80,7 +80,7 @@ const handleAddVideo = (route, navigation, createType, miniId) => {
   });
 };
 const handleChangeNotificationElement = (arr, id) => {
-  return arr.map((el) =>
+  return arr.map(el =>
     el._id === id
       ? {
           ...el,
@@ -93,21 +93,19 @@ const handleChangeNotificationElement = (arr, id) => {
 const handleFilteredReadUnread = (arr, isRead, key) => {
   return [
     ...new Map(
-      arr
-        .filter((el) => el.is_read === isRead)
-        .map((item) => [item[key], item]),
+      arr.filter(el => el.is_read === isRead).map(item => [item[key], item]),
     ).values(),
   ];
 };
-const countFormatter = (num) => {
+const countFormatter = num => {
   const lookup = [
-    { value: 1, symbol: "" },
-    { value: 1e3, symbol: "K" },
-    { value: 1e6, symbol: "M" },
-    { value: 1e9, symbol: "G" },
-    { value: 1e12, symbol: "T" },
-    { value: 1e15, symbol: "P" },
-    { value: 1e18, symbol: "E" },
+    {value: 1, symbol: ''},
+    {value: 1e3, symbol: 'K'},
+    {value: 1e6, symbol: 'M'},
+    {value: 1e9, symbol: 'G'},
+    {value: 1e12, symbol: 'T'},
+    {value: 1e15, symbol: 'P'},
+    {value: 1e18, symbol: 'E'},
   ];
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
   const item = lookup
@@ -117,28 +115,28 @@ const countFormatter = (num) => {
       return num >= item.value;
     });
   return item
-    ? (num / item.value).toFixed(1).replace(rx, "$1") + item.symbol
-    : "0";
+    ? (num / item.value).toFixed(1).replace(rx, '$1') + item.symbol
+    : '0';
 };
-const transactionStyle = (coin) => {
+const transactionStyle = coin => {
   if (coin == 10) {
-    return "Flower";
+    return 'Flower';
   } else if (coin == 20) {
-    return "Thumbs Up";
+    return 'Thumbs Up';
   } else if (coin == 50) {
-    return "Stars";
+    return 'Stars';
   } else if (coin == 100) {
-    return "Love";
+    return 'Love';
   } else if (coin == 250) {
-    return "Kiss";
+    return 'Kiss';
   } else if (coin == 500) {
-    return "Crown";
+    return 'Crown';
   }
 };
 
-const convertMentionsToPlainText = (text) => {
+const convertMentionsToPlainText = text => {
   const entityRegex = /(@|#)\[([^\]]+)\]\(\w+\)/g;
-  const plainText = text.replace(entityRegex, "$1$2");
+  const plainText = text.replace(entityRegex, '$1$2');
   return plainText;
 };
 // const generateLink = async () => {
@@ -165,7 +163,7 @@ const convertMentionsToPlainText = (text) => {
 //   }
 // };
 
-const calculateAge = (birthDateString) => {
+const calculateAge = birthDateString => {
   var birthDate = new Date(birthDateString);
   var currentDate = new Date();
 
@@ -177,8 +175,8 @@ const calculateAge = (birthDateString) => {
 };
 const generateRandomMeetId = () => {
   const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-  let strongId = "";
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+';
+  let strongId = '';
 
   for (let i = 0; i < 6; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
@@ -214,9 +212,9 @@ const generateRandomMeetId = () => {
 
 //   IronSourceInterstitials.loadInterstitial();
 // };
-const getImageExtension = (url) => {
-  const extension = url.split(".").pop().toLowerCase(); // Get the extension after the last dot and convert to lowercase
-  const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"]; // List of common image extensions
+const getImageExtension = url => {
+  const extension = url.split('.').pop().toLowerCase(); // Get the extension after the last dot and convert to lowercase
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp']; // List of common image extensions
 
   if (imageExtensions.includes(extension)) {
     return true; // Return the extension if it's in the list of image extensions
@@ -224,15 +222,15 @@ const getImageExtension = (url) => {
     return false; // Return null if the extension is not in the list
   }
 };
-const getMIniSocket = (ID) => {
+const getMIniSocket = ID => {
   const dispatch = useDispatch();
   const user = store.getState().user;
-  socketServcies.emit("mini", {
+  socketServcies.emit('mini', {
     user_id: user.data?.checkUser?._id,
     mini_id: ID,
   });
-  socketServcies.on("mini", (e) => {
-    console.log("🚀 ~ file: socketServcies.js:140 ~ socketServcies.on ~ e:", e);
+  socketServcies.on('mini', e => {
+    console.log('🚀 ~ file: socketServcies.js:140 ~ socketServcies.on ~ e:', e);
     // return e;
     // dispatch({
     //   type: Types.LIKE_COUNT,
@@ -268,8 +266,8 @@ const getMIniSocket = (ID) => {
 // );
 
 const adUnitWithInApp = isIos
-  ? "ca-app-pub-3686012001393355/2730649049"
-  : "ca-app-pub-3686012001393355/9737204239";
+  ? 'ca-app-pub-3686012001393355/2730649049'
+  : 'ca-app-pub-3686012001393355/9737204239';
 
 // const interStitialAdsWithInApp = InterstitialAd.createForAdRequest(
 //   adUnitWithInApp,
@@ -332,6 +330,8 @@ const searchByName = (searchString, peopleArray) => {
 
     if (fullName.includes(searchString.toLowerCase())) {
       foundPeople.push(person);
+    } else {
+      foundPeople.pop();
     }
   }
 
@@ -340,10 +340,10 @@ const searchByName = (searchString, peopleArray) => {
 const checkImageUrl = (url, alfaBaticUrl) => {
   // console.log("🚀 ~ file: helpers.js:331 ~ checkImageUrl ~ url:", url);
   // List of common image file extensions
-  const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
   // Get the file extension from the URL
   if (url) {
-    const urlParts = url.split(".");
+    const urlParts = url.split('.');
     const fileExtension = urlParts[urlParts.length - 1].toLowerCase();
 
     // Check if the file extension is in the list of image extensions
@@ -357,30 +357,30 @@ const checkImageUrl = (url, alfaBaticUrl) => {
     }
   } else {
     const dummyImageUrl =
-      "https://img.freepik.com/premium-vector/happy-smiling-young-man-avatar-3d-portrait-man-cartoon-character-people-vector-illustration_653240-187.jpg";
+      'https://img.freepik.com/premium-vector/happy-smiling-young-man-avatar-3d-portrait-man-cartoon-character-people-vector-illustration_653240-187.jpg';
     return alfaBaticUrl;
   }
 };
 
-const generateAuthToken = (payload) => {
+const generateAuthToken = payload => {
   // var jwt = require("jsonwebtoken");
   // const token = jwt.sign(payload, "518B837725AC1959C4878BDF15362AFD8B");
   return false;
 };
-const formatTime = (timeInSeconds) => {
+const formatTime = timeInSeconds => {
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = Math.round(timeInSeconds % 60);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 };
 
 let alertInstance;
 
-export function showAlert({ message, centerbtnText }) {
+export function showAlert({message, centerbtnText}) {
   if (!alertInstance) {
     // const div = document.createElement('div');
     // document.body.appendChild(div);
     const onClose = () => {
-      console.log("closed alert");
+      console.log('closed alert');
     };
 
     alertInstance = (
@@ -396,7 +396,7 @@ export function showAlert({ message, centerbtnText }) {
     return alertInstance;
   }
 }
-const decodeMeetID = (RoomID) => {
+const decodeMeetID = RoomID => {
   const regex = /https:\/\/meet\.shareslate\.fun\/(\w+)\?jwt=/;
   const match = RoomID.match(regex);
 
@@ -405,7 +405,7 @@ const decodeMeetID = (RoomID) => {
     console.log(randomMeetId);
     return randomMeetId;
   } else {
-    console.log("Random meet ID not found.");
+    console.log('Random meet ID not found.');
     return null;
   }
 };
