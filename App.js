@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import Toast, {ErrorToast} from 'react-native-toast-message';
-
+import PushNotification from "react-native-push-notification";
 import RootNavigator from './src/Utils/Navigation/Routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -15,6 +15,7 @@ import {DarkMode, LightMode} from './src/Store/Actions/theme';
 import {isIos} from './src/Utils/helpers';
 import socketServcies from './src/Utils/socketServcie';
 import {Types} from './src/Store/Types/type';
+import messaging from "@react-native-firebase/messaging";
 import {navigate, navigationRef} from './src/Utils/Navigation/navigationRef';
 import {NAVIGATION_ROUTES} from './src/Utils/Navigation/NavigationRoutes';
 import {store} from './src/Store/store';
@@ -333,6 +334,72 @@ const App = () => {
   //     linkingListener();
   //   };
   // }, []);
+  useEffect(() => {
+    _createChannel();
+    requestPermission();
+    getNotifications();
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      console.log(
+        "🚀 ~ file: App.js:291 ~ unsubscribe ~ remoteMessage:",
+        remoteMessage,
+      );
+      dispatch(notificationCount());
+      isIos &&
+        PushNotificationIOS.addNotificationRequest({
+          id: new Date().toString(),
+          title: remoteMessage.notification?.title,
+          body: remoteMessage.notification?.body,
+          category: "userAction",
+          data: remoteMessage.data,
+        });
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const requestPermission = async () => {
+    const authorizationStatus = await messaging().requestPermission();
+
+    if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+    } else if (
+      authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL
+    ) {
+    }
+  };
+
+  const _createChannel = () => {
+    PushNotification.createChannel(
+      {
+        channelId: "share_slate_fun",
+        channelName: "Share Slate Fun",
+        channelDescription: "A channel to categorise your notifications",
+        soundName: "default",
+        importance: 4,
+        vibrate: true,
+      },
+      () => {},
+    );
+  };
+
+  const getNotifications = async () => {
+    messaging().onNotificationOpenedApp(({ notification }) => {
+      console.log(
+        "🚀 ~ file: App.js:335 ~ getNotifications ~ notification:",
+        notification,
+      );
+      dispatch(notificationCount());
+    });
+
+    await messaging()
+      .getInitialNotification()
+      .then((remoteMessage) => {
+        console.log(
+          "🚀 ~ file: App.js:344 ~ getNotifications ~ remoteMessage:",
+          remoteMessage,
+        );
+        dispatch(notificationCount());
+      });
+  };
 
   const handleDynamicLink = async link => {
     console.log('🚀 ~ file: App.js:226 ~ handleDynamicLink ~ link:', link);
