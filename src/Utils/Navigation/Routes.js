@@ -22,7 +22,7 @@ import {NAVIGATION_ROUTES} from './NavigationRoutes';
 // import CreateMini from "../../Screens/CreateMini";
 import TermsnConditions from '../../Components/TermsnConditions';
 // import QRCodeScreen from "../../Screens/QRCode";
-import Help from "../../Screens/Help";
+import Help from '../../Screens/Help';
 import ForgetPassword from '../../Screens/ForgetPassword';
 
 // import SearchMini from "../../Screens/SearchMinis";
@@ -35,7 +35,7 @@ import {Dimensions, StatusBar, Text, View} from 'react-native';
 // import CreateSupportCase from "../../Screens/CreateSupportCase";
 // import SupportChat from "../../Screens/SupportChat";
 import {navigationRef} from './navigationRef';
-import RecoverAccount from "../../Screens/RecoverAccount";
+import RecoverAccount from '../../Screens/RecoverAccount';
 // import WalletHome from "../../Screens/WalletScreens/WalletHome";
 // import Statement from "../../Screens/WalletScreens/Statement";
 // import WalletStatement from "../../Screens/WalletScreens/WalletStatement";
@@ -153,7 +153,7 @@ const RootNavigator = ({initial}) => {
               options={{
                 ...customAuthOptions,
                 headerBackTitleVisible: false,
-                headerTitle: "Need Help",
+                headerTitle: 'Need Help',
               }}
             />
             <Stack.Screen
@@ -162,7 +162,7 @@ const RootNavigator = ({initial}) => {
               options={{
                 ...customAuthOptions,
                 headerBackTitleVisible: false,
-                headerTitle: "Need Help",
+                headerTitle: 'Need Help',
               }}
             />
             <Stack.Screen
@@ -187,7 +187,7 @@ const RootNavigator = ({initial}) => {
           </>
         ) : (
           <>
-          {/* <Stack.Screen
+            {/* <Stack.Screen
               name={NAVIGATION_ROUTES.TABS}
               component={TabRoutes}
               options={{
