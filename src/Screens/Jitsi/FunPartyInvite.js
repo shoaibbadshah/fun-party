@@ -88,15 +88,15 @@ const FunPartyInvite = ({route, navigation}) => {
       });
 
       const randomMeetId = generateRandomMeetId();
-      const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
+      // const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
       const body = {
         // users: selectedUsersIds,
-        room: RoomID,
+        room: randomMeetId,
       };
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
-      navigation.navigate(NAVIGATION_ROUTES.JITSI, {RoomID: RoomID});
+      navigation.navigate(NAVIGATION_ROUTES.JITSI, {RoomID: randomMeetId});
       // navigation.reset({
       //   index: 0,
       //   routes: [{ name: NAVIGATION_ROUTES.JITSI, RoomID: RoomID }],
@@ -122,17 +122,16 @@ const FunPartyInvite = ({route, navigation}) => {
       <StatusBar barStyle={theme.StatusBar} />
 
       {guidCheck ? (
-        <>
-          <View style={{paddingHorizontal: 15}}>
-            <View
-              style={[
-                styles.flexStyle,
-                {
-                  // width: width - width / 2 + 40,
-                  marginBottom: height - height + 20,
-                },
-              ]}>
-              {/* <Icon
+        <View style={{paddingHorizontal: 15, flex: 1}}>
+          <View
+            style={[
+              styles.flexStyle,
+              {
+                // width: width - width / 2 + 40,
+                marginBottom: height - height + 20,
+              },
+            ]}>
+            {/* <Icon
                 name='chevron-back'
                 size={23}
                 color={theme.text}
@@ -140,130 +139,128 @@ const FunPartyInvite = ({route, navigation}) => {
                   navigation.goBack();
                 }}
               /> */}
-              <LeftArrow
+            {/* <LeftArrow
                 onPress={() => navigationRef.current?.goBack()}
                 color={'white'}
                 width={24}
                 height={24}
-              />
-              <Text
-                style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
-                FunParty Invite
-              </Text>
-              <Icon
-                name="settings-outline"
-                size={22}
-                color={theme.text}
-                style={{paddingRight: 12}}
-                onPress={handleMenu}
-              />
-            </View>
-            <View style={{position: 'relative'}}>
-              <View
-                style={{
-                  backgroundColor: theme.button,
-                  height: 45,
-                  width: '100%',
-                  marginVertical: 15,
-                  borderRadius: 10,
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                  paddingHorizontal: 15,
-                }}>
-                <MinisSearch color={'grey'} width={18} height={18} />
-                <TextInput
-                  onChangeText={onChangeText}
-                  style={{
-                    width: '92%',
-                    color: 'grey',
-                    textAlign: 'left',
-                  }}
-                  placeholderTextColor={'grey'}
-                  returnKeyType={'search'}
-                  selectTextOnFocus={false}
-                  contextMenuHidden={true}
-                  placeholder={'Search'}
-                />
-              </View>
-            </View>
-
-            <FlatList
-              data={filterSearch}
-              contentContainerStyle={{paddingBottom: 245}}
-              ListEmptyComponent={() => (
-                <View
-                  style={{
-                    height: height - 200,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  {isloading ? (
-                    <ActivityIndicator color={theme.text} size={'large'} />
-                  ) : (
-                    <Text style={{color: theme.text}}>
-                      you don't have any friends yet
-                    </Text>
-                  )}
-                </View>
-              )}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item, index}) => (
-                <View style={styles.inviteUser}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <View
-                      style={{
-                        width: 35,
-                        height: 35,
-                        backgroundColor: '#00000010',
-                        borderRadius: width,
-                        marginRight: 20,
-                        overflow: 'hidden',
-                      }}>
-                      <FastImage
-                        // defaultSource={require("../../Assets/avatar.jpg")}
-                        // source={{ uri: checkImageUrl(item?.profile_image) }}
-                        source={{
-                          uri: checkImageUrl(
-                            item?.profile_image,
-                            `https://ui-avatars.com/api/?background=random&name=${item?.first_name}+${item?.last_name}`,
-                          ),
-                        }}
-                        resizeMode={'cover'}
-                        style={{width: '100%', height: '100%'}}
-                      />
-                    </View>
-                    <Text style={{color: theme.text, fontWeight: 'bold'}}>
-                      {item?.first_name} {item?.last_name}
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor:
-                        theme.name === 'dark'
-                          ? checked.includes(index)
-                            ? theme.secondary
-                            : 'black'
-                          : checked.includes(index)
-                          ? theme.secondary
-                          : 'grey',
-                      paddingHorizontal: 10,
-                      height: 25,
-                      borderRadius: 15,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    onPress={() => toggleCheck(index)}>
-                    <Text style={{color: 'white'}}>
-                      {checked.includes(index) ? 'Invite' : 'Invite'}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+              /> */}
+            <Text style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
+              FunParty Invite
+            </Text>
+            <Icon
+              name="settings-outline"
+              size={22}
+              color={theme.text}
+              style={{paddingRight: 12}}
+              onPress={handleMenu}
             />
           </View>
-        </>
+          <View style={{position: 'relative'}}>
+            <View
+              style={{
+                backgroundColor: theme.button,
+                height: 45,
+                width: '100%',
+                marginVertical: 15,
+                borderRadius: 10,
+                alignItems: 'center',
+                alignSelf: 'center',
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                paddingHorizontal: 15,
+              }}>
+              <MinisSearch color={'grey'} width={18} height={18} />
+              <TextInput
+                onChangeText={onChangeText}
+                style={{
+                  width: '92%',
+                  color: 'grey',
+                  textAlign: 'left',
+                }}
+                placeholderTextColor={'grey'}
+                returnKeyType={'search'}
+                selectTextOnFocus={false}
+                contextMenuHidden={true}
+                placeholder={'Search'}
+              />
+            </View>
+          </View>
+
+          <FlatList
+            data={filterSearch}
+            contentContainerStyle={{paddingBottom: 245}}
+            ListEmptyComponent={() => (
+              <View
+                style={{
+                  height: height - 200,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {isloading ? (
+                  <ActivityIndicator color={theme.text} size={'large'} />
+                ) : (
+                  <Text style={{color: theme.text}}>
+                    you don't have any friends yet
+                  </Text>
+                )}
+              </View>
+            )}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item, index}) => (
+              <View style={styles.inviteUser}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: '#00000010',
+                      borderRadius: width,
+                      marginRight: 20,
+                      overflow: 'hidden',
+                    }}>
+                    <FastImage
+                      // defaultSource={require("../../Assets/avatar.jpg")}
+                      // source={{ uri: checkImageUrl(item?.profile_image) }}
+                      source={{
+                        uri: checkImageUrl(
+                          item?.profile_image,
+                          `https://ui-avatars.com/api/?background=random&name=${item?.first_name}+${item?.last_name}`,
+                        ),
+                      }}
+                      resizeMode={'cover'}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                  <Text style={{color: theme.text, fontWeight: 'bold'}}>
+                    {item?.first_name} {item?.last_name}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor:
+                      theme.name === 'dark'
+                        ? checked.includes(index)
+                          ? theme.secondary
+                          : 'black'
+                        : checked.includes(index)
+                        ? theme.secondary
+                        : 'grey',
+                    paddingHorizontal: 10,
+                    height: 25,
+                    borderRadius: 15,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  onPress={() => toggleCheck(index)}>
+                  <Text style={{color: 'white'}}>
+                    {checked.includes(index) ? 'Invite' : 'Invite'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        </View>
       ) : (
         <WatchPartyGuide />
       )}
