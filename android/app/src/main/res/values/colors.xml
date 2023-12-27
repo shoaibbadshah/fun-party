@@ -1,0 +1,6 @@
+<resources>
+    <color name="bootsplash_background">#1A2236</color>
+    <color name="colorPrimary">#D5281C</color>
+    <color name="colorAccent">#03A9F4</color>
+    <color name="colorPrimaryDark">#9C27B0</color>
+</resources>

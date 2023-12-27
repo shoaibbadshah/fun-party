@@ -88,15 +88,15 @@ const FunPartyInvite = ({route, navigation}) => {
       });
 
       const randomMeetId = generateRandomMeetId();
-      const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
+      // const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
       const body = {
         // users: selectedUsersIds,
-        room: RoomID,
+        room: randomMeetId,
       };
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
-      navigation.navigate(NAVIGATION_ROUTES.JITSI, {RoomID: RoomID});
+      navigation.navigate(NAVIGATION_ROUTES.JITSI, {RoomID: randomMeetId});
       // navigation.reset({
       //   index: 0,
       //   routes: [{ name: NAVIGATION_ROUTES.JITSI, RoomID: RoomID }],
@@ -139,12 +139,12 @@ const FunPartyInvite = ({route, navigation}) => {
                   navigation.goBack();
                 }}
               /> */}
-              <LeftArrow
+              {/* <LeftArrow
                 onPress={() => navigationRef.current?.goBack()}
                 color={'white'}
                 width={24}
                 height={24}
-              />
+              /> */}
               <Text
                 style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
                 FunParty Invite
