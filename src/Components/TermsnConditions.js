@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Text,
   View,
@@ -8,25 +8,25 @@ import {
   TouchableOpacity,
   Alert,
   Linking,
-} from "react-native";
-import { TermsandConditions } from "../Utils/PolicyStrings";
-import { convertMentionsToPlainText } from "../Utils/helpers";
+} from 'react-native';
+import {TermsandConditions} from '../Utils/PolicyStrings';
+import {convertMentionsToPlainText} from '../Utils/helpers';
 
-const TermsnConditions = ({ route }) => {
+const TermsnConditions = ({route}) => {
   const textData = route?.params?.textData.data;
   const Title = route?.params?.textData.title;
   // const textData = TermsandConditions;
   // const singleWord = textData.split(" ");
-  const words = textData.split(" ");
+  const words = textData?.split(' ');
   const emailRegex = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,})/g;
   // const emailRegex = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,})/g;
 
   const Regex = /[\n\r\s]/g;
 
   // Split the text into parts using the emailRegex
-  const parts = textData.split(emailRegex);
+  const parts = textData?.split(emailRegex);
   // const words = singleWord;
-  const highlightedText = parts.map((part, index) =>
+  const highlightedText = parts?.map((part, index) =>
     // emailRegex.test(part) ? (
     //   <Text
     //     onPress={() => {
@@ -59,29 +59,26 @@ const TermsnConditions = ({ route }) => {
           // }
         }}
         key={index}
-        style={{ color: "blue", fontWeight: "bold" }}
-      >
+        style={{color: 'blue', fontWeight: 'bold'}}>
         {part}
       </Text>
     ),
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "black" }}>
+    <View style={{flex: 1, backgroundColor: 'black'}}>
       <ScrollView
         style={styles.componentView}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         <>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Text
               style={{
                 fontSize: 25,
-                fontWeight: "bold",
-                color: "white",
+                fontWeight: 'bold',
+                color: 'white',
                 marginBottom: 15,
-              }}
-            >
+              }}>
               {Title}
             </Text>
           </View>
@@ -90,16 +87,14 @@ const TermsnConditions = ({ route }) => {
             style={{
               // textAlign: 'justify',
               // color: 'white',
-              flexDirection: "column",
-              marginBottom: Platform.OS === "android" ? "-75%" : 35,
-            }}
-          >
+              flexDirection: 'column',
+              marginBottom: Platform.OS === 'android' ? '-75%' : 35,
+            }}>
             <Text
               style={{
-                textAlign: "justify",
-                color: "white",
-              }}
-            >
+                textAlign: 'justify',
+                color: 'white',
+              }}>
               {highlightedText}
               {/* {words.map((word, index) => {
                 if (word.includes("@shareslate.fun")) {
@@ -133,7 +128,7 @@ const TermsnConditions = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  footerView: { position: "absolute", zIndex: 10, bottom: 20, left: 10 },
+  footerView: {position: 'absolute', zIndex: 10, bottom: 20, left: 10},
   itemContainer: {},
   itemImage: {
     width: 125,

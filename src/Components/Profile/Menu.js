@@ -1,27 +1,27 @@
-import React, { useRef, useImperativeHandle, forwardRef } from 'react';
-import { Alert, View } from 'react-native';
+import React, {useRef, useImperativeHandle, forwardRef} from 'react';
+import {Alert, View} from 'react-native';
 import Share from 'react-native-share';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import Text from '../../Components/Text';
-import { isIos } from '../../Utils/helpers';
-import { userSignOut } from '../../Store/Actions/user';
-import { fetchAllAnalytics } from '../../Store/Actions/minis';
+import {isIos} from '../../Utils/helpers';
+import {userSignOut} from '../../Store/Actions/user';
+import {fetchAllAnalytics} from '../../Store/Actions/minis';
 import TouchableOpacity from '../../Components/TouchableOpacity';
-import { NAVIGATION_ROUTES } from '../../Utils/Navigation/NavigationRoutes';
+import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
 
 const Menu = forwardRef((props, ref) => {
   const refRBSheet = useRef();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const theme = useSelector((e) => e.theme);
-  const user = useSelector((e) => e.profile?.profile);
+  const theme = useSelector(e => e.theme);
+  const user = useSelector(e => e.profile?.profile);
 
   const handleLogout = async () => {
     let fcm = {};
@@ -69,12 +69,12 @@ const Menu = forwardRef((props, ref) => {
   };
 
   return (
-    <View style={{ flexDirection: 'row', marginTop: -12 }}>
+    <View style={{flexDirection: 'row', marginTop: -12}}>
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={120}
+        height={140}
         closeOnPressBack={true}
         openDuration={50}
         customStyles={{
@@ -85,8 +85,7 @@ const Menu = forwardRef((props, ref) => {
             borderRadius: 15,
             backgroundColor: theme.primary,
           },
-        }}
-      >
+        }}>
         {/* <TouchableOpacity
           style={{
             justifyContent: 'flex-start',
@@ -96,14 +95,13 @@ const Menu = forwardRef((props, ref) => {
           noBg
           onPress={() => {
             handleQR();
-          }}
-        >
+          }}>
           <Ionicons
             name={'qr-code-outline'}
             size={22}
             color={theme.textColor}
           />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>
             Share Slate Code
           </Text>
         </TouchableOpacity> */}
@@ -115,10 +113,9 @@ const Menu = forwardRef((props, ref) => {
             shadowOpacity: 0,
           }}
           noBg
-          onPress={handleLink}
-        >
+          onPress={handleLink}>
           <Ionicons name={'share-outline'} size={22} color={theme.textColor} />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>
             Share Profile
           </Text>
         </TouchableOpacity> */}
@@ -135,22 +132,21 @@ const Menu = forwardRef((props, ref) => {
             refRBSheet.current.close();
             dispatch(fetchAllAnalytics(user?._id));
             navigation.navigate(NAVIGATION_ROUTES.PROFILE_ALL_ANALYTICS);
-          }}
-        >
+          }}>
           <Ionicons
             name={'analytics'}
             size={22}
             style={{
-              transform: [{ rotate: '180deg' }],
+              transform: [{rotate: '180deg'}],
               color: theme.textColor,
             }}
           />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>
             Analytics
           </Text>
         </TouchableOpacity> */}
 
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={{
             shadowOpacity: 0,
             justifyContent: 'flex-start',
@@ -160,17 +156,16 @@ const Menu = forwardRef((props, ref) => {
           onPress={() => {
             refRBSheet.current.close();
             navigation.navigate(NAVIGATION_ROUTES.SETTINGS);
-          }}
-        >
+          }}>
           <Ionicons
             name={'settings-outline'}
             size={22}
             color={theme.textColor}
           />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>
             Settings and privacy
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         {/* <TouchableOpacity
           style={{
@@ -183,19 +178,16 @@ const Menu = forwardRef((props, ref) => {
           onPress={() => {
             refRBSheet.current.close();
             navigation.navigate(NAVIGATION_ROUTES.WALLET_HOME);
-          }}
-        >
+          }}>
           <Octicons
             name={'credit-card'}
             size={22}
             style={{
-              transform: [{ rotate: '180deg' }],
+              transform: [{rotate: '180deg'}],
               color: theme.textColor,
             }}
           />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
-            Wallet
-          </Text>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>Wallet</Text>
         </TouchableOpacity> */}
 
         {/* <TouchableOpacity
@@ -208,16 +200,13 @@ const Menu = forwardRef((props, ref) => {
           onPress={() => {
             refRBSheet.current.close();
             navigation.navigate(NAVIGATION_ROUTES.SUPPORT);
-          }}
-        >
+          }}>
           <MaterialIcons
             name={'support-agent'}
             size={22}
             color={theme.textColor}
           />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
-            Support
-          </Text>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>Support</Text>
         </TouchableOpacity> */}
 
         <TouchableOpacity
@@ -227,19 +216,16 @@ const Menu = forwardRef((props, ref) => {
             shadowOpacity: 0,
           }}
           noBg
-          onPress={handleLogout}
-        >
+          onPress={handleLogout}>
           <Octicons
             name={'sign-out'}
             size={22}
             style={{
-              transform: [{ rotate: '180deg' }],
+              transform: [{rotate: '180deg'}],
               color: theme.textColor,
             }}
           />
-          <Text style={{ paddingLeft: 15, color: theme.textColor }}>
-            Logout
-          </Text>
+          <Text style={{paddingLeft: 15, color: theme.textColor}}>Logout</Text>
         </TouchableOpacity>
       </RBSheet>
     </View>

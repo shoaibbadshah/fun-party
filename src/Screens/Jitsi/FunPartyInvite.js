@@ -191,12 +191,11 @@ const FunPartyInvite = ({route, navigation}) => {
 
             <FlatList
               data={filterSearch}
-              style={{height: Dimensions.get('screen').height * 0.7}}
-              contentContainerStyle={{paddingBottom: 145}}
+              contentContainerStyle={{paddingBottom: 245}}
               ListEmptyComponent={() => (
                 <View
                   style={{
-                    height: height - 160,
+                    height: height - 200,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -272,7 +271,7 @@ const FunPartyInvite = ({route, navigation}) => {
         onPress={handleInvitePress}
         disabled={checked.length == 0 ? true : false}
         style={{
-          //position: '',
+          position: 'absolute',
           bottom: 30,
           right: 30,
           left: 30,

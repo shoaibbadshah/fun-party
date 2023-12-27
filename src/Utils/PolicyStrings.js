@@ -1,5 +1,5 @@
 const PrivacyPolicy = {
-  title: "Privacy Policy",
+  title: 'Privacy Policy',
   data: `This Privacy Policy explains how Share Slate Inc. and its subsidiaries and affiliated companies (“Share Slate,” “we,” or “us”) collects, uses, and discloses information about you. This Privacy Policy applies when you use our websites, mobile applications, and other online products and services that link to this Privacy Policy (collectively, our “Services”), contact our customer service team, engage with us on social media, or otherwise interact with us.
 
 We may change this Privacy Policy from time to time. If we make changes, we will notify you by revising the date at the top of this policy and, in some cases, we may provide you with additional notice (such as adding a statement to our website or sending you a notification). We encourage you to review this Privacy Policy regularly to stay informed about our information practices and the choices available to you.
@@ -139,7 +139,7 @@ CONTACT US
 If you have any questions about this Privacy Policy, please contact us at contact@shareslate.fun.`,
 };
 const CommunityGuidLines = {
-  title: "Community GuidLines",
+  title: 'Community GuidLines',
   data: `Our Community Guidelines along with relevant portions of the Terms & Conditions (collectively, the "Guidelines") govern your relationship with and use of Share Slate and are enforced by us, the admins.
 
 Share Slate intends to use ‘equal opportunity’ algorithms to show ordinary, real, and diverse communities of people through the sharing of short and long videos and watch party also known as Fun Party. We are a platform of neutrality where users can converse and discover the world around them through content. We have created a platform to express yourself, share your life and show your talent. Our mission is to use technology to empower everyone's life so that everyone has the opportunity to show, the channel to speak, and the possibility to be seen. To accomplish this, we generally allow Share Slate users to moderate and curate their own content but also have set basic Guidelines to protect the safety and privacy of our users and others. To that end, our Guidelines are based on Equality, Unbiasedness, Respect, and Law.
@@ -283,7 +283,7 @@ Team Share Slate`,
 };
 
 const TermsandConditions = {
-  title: "Terms & Conditions",
+  title: 'Terms & Conditions',
   data: `These Terms & Conditions ( “Terms”) apply to your access to, and use of the websites, mobile applications, and other online products and services (collectively, the “Services”) provided by Share Slate Inc. (“Share Slate” or “we”). By downloading, installing, accessing, posting to, interacting with, or using our Services, you agree to these Terms, including the mandatory arbitration provision and class action waiver in Section 16, the Privacy Policy, and the Community Guidelines. If you do not agree to these Terms, the Privacy Policy, or the Community Guidelines, do not download, install, access, post to, interact with, or use our Services.
 
 We may make changes to these Terms from time to time. If we make changes, we will provide you with notice of such changes by updating the date at the top of these Terms. Unless we say otherwise in our notice, the amended Terms will be effective immediately, and your continued use of our Services will confirm your acceptance of the changes. If you do not agree to the amended Terms, you must stop using our Services.
@@ -418,7 +418,7 @@ If any provision or part of a provision of these Terms is unlawful, void or unen
 The failure of Share Slate to exercise or enforce any right or provision of these Terms will not operate as a waiver of such right or provision. The section titles in these Terms are for convenience only and have no legal or contractual effect. Except as otherwise provided herein, these Terms are intended solely for the benefit of the parties and are not intended to confer third-party beneficiary rights upon any other person or entity. You agree that communications and transactions between us may be conducted electronically.`,
 };
 const CopyrightPolicy = {
-  title: "Copyright Policy",
+  title: 'Copyright Policy',
   data: `Share Slate respects the intellectual property rights of others, and we expect you to do the same. Share Slate’s Terms & Conditions and Community Guidelines  do not allow posting, sharing, or sending any content that violates or infringes someone else’s copyrights, trademarks or other intellectual property rights.
 
 Copyright
@@ -491,7 +491,7 @@ As a Share Slate user, you are responsible for the content you post. If you have
 If you submit a report or infringement notification to us, we may contact you if we have additional questions about your report or notification. Please note that Share Slate is not in a position to adjudicate disputes between third parties, and may not be able to remove the content or suspend the account you reported for infringement or violation. As an alternative, you may want to contact the person who posted the content or owns the account to try to resolve your issue directly.`,
 };
 const CookiePolicy = {
-  title: "Cookie Policy",
+  title: 'Cookie Policy',
   data: `This cookie policy describes how Share Slate uses “Cookies” and other similar technologies, in connection with our Site and Services. Cookies allow us to recognize your device and store information about your preferences, to help provide a functioning website/application, to give us insight on marketing and to optimize content for use.
 
 By using the www.shareslate.com or www.shareslate.fun site you agree to us using Cookies for the purpose of data analytics.

@@ -65,6 +65,7 @@ import FunPartyQuickStart from '../../Screens/Jitsi/FunPartyQuickStart';
 import OTPScreen from '../../Screens/OTPScreen';
 import LeftArrow from '../Assets/Icons/LeftArrow';
 import TabRoutes from './TabRoutes';
+import Settings from '../../Screens/Settings';
 // import CameraScreenNew from "../../Screens/DeepAR/screens/CameraScreenNew";
 
 const Stack = createStackNavigator();
@@ -205,6 +206,7 @@ const RootNavigator = ({initial}) => {
                 headerTitle: 'Create FunParty',
               }}
             /> */}
+
             <Stack.Screen
               name={NAVIGATION_ROUTES.FUN_PARTY_INVITE}
               component={FunPartyInvite}
@@ -219,6 +221,25 @@ const RootNavigator = ({initial}) => {
               options={{
                 headerShown: false,
                 headerBackTitle: '',
+              }}
+            />
+
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.SETTINGS}
+              component={Settings}
+              options={{
+                ...customOptions,
+                headerTitle: 'Settings & Privacy',
+              }}
+            />
+
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.TERMS_CONDITION}
+              component={TermsnConditions}
+              options={{
+                ...customAuthOptions,
+                headerBackTitleVisible: false,
+                title: '',
               }}
             />
           </>
