@@ -20,6 +20,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {fetchUserFollowersAndFollowing} from '../../Store/Actions/profile';
 import {inviteToFunParty} from '../../Store/Actions/minis';
 import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 import {
   searchByName,
@@ -73,6 +74,37 @@ const FunPartyInvite = ({route, navigation}) => {
     setFriend(searchName);
     setSearch(e);
   };
+
+  const handleDynamicLink = link => {
+    console.log(
+      '🚀 ~ file: FunPartyInvite.js:81 ~ handleDynamicLink ~ link:',
+      link,
+    );
+    // Handle dynamic link inside your own application
+    if (link.url === 'https://invertase.io/offer') {
+      // ...navigate to your offers screen
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+    // When the component is unmounted, remove the listener
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    dynamicLinks()
+      .getInitialLink()
+      .then(link => {
+        console.log(
+          '🚀 ~ file: FunPartyInvite.js:104 ~ useEffect ~ link:',
+          link,
+        );
+        if (link.url === 'https://invertase.io/offer') {
+          // ...set initial route as offers screen
+        }
+      });
+  }, []);
 
   const handleInvitePress = async () => {
     if (guidCheck) {
