@@ -12,8 +12,8 @@ import {
 import {Text, View} from 'react-native';
 
 const VideoCall = ({route, navigation}) => {
-  const roomId = route?.params?.RoomID;
-  // console.log(roomId, 'sdf');
+  const roomId = route?.params.roomId;
+  console.log(route?.params, 'sdf',roomId[0]);
   // const rndm = decodeMeetID(roomId);
 
   const rndm = generateRandomMeetId();

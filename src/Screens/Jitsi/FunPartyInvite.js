@@ -87,25 +87,25 @@ const FunPartyInvite = ({route, navigation}) => {
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
-    // When the component is unmounted, remove the listener
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+  //   // When the component is unmounted, remove the listener
+  //   return () => unsubscribe();
+  // }, []);
 
-  useEffect(() => {
-    dynamicLinks()
-      .getInitialLink()
-      .then(link => {
-        console.log(
-          '🚀 ~ file: FunPartyInvite.js:104 ~ useEffect ~ link:',
-          link,
-        );
-        if (link.url === 'https://invertase.io/offer') {
-          // ...set initial route as offers screen
-        }
-      });
-  }, []);
+  // useEffect(() => {
+  //   dynamicLinks()
+  //     .getInitialLink()
+  //     .then(link => {
+  //       console.log(
+  //         '🚀 ~ file: FunPartyInvite.js:104 ~ useEffect ~ link:',
+  //         link,
+  //       );
+  //       if (link.url === 'https://invertase.io/offer') {
+  //         // ...set initial route as offers screen
+  //       }
+  //     });
+  // }, []);
 
   const handleInvitePress = async () => {
     const randomMeetId = generateRandomMeetId();
@@ -133,7 +133,7 @@ const FunPartyInvite = ({route, navigation}) => {
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
-      navigation.navigate(NAVIGATION_ROUTES.JITSI, {RoomID: randomMeetId});
+      navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
       // navigation.reset({
       //   index: 0,
       //   routes: [{ name: NAVIGATION_ROUTES.JITSI, RoomID: RoomID }],
