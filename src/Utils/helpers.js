@@ -3,6 +3,7 @@ import {Types} from '../Store/Types/type';
 import {API} from '../Api';
 import {store} from '../Store/store';
 import Share from 'react-native-share';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import ImagePicker from 'react-native-image-crop-picker';
 // import {
 //   IronSource,
@@ -139,29 +140,29 @@ const convertMentionsToPlainText = text => {
   const plainText = text.replace(entityRegex, '$1$2');
   return plainText;
 };
-// const generateLink = async () => {
-//   try {
-//     var link = await dynamicLinks().buildShortLink(
-//       {
-//         link: `https://appshareslatefun.page.link/V9Hh`,
-//         domainUriPrefix: "https://appshareslatefun.page.link",
-//         android: {
-//           packageName: "com.ShareSlateFun",
-//           minimumVersion: "18",
-//         },
-//         ios: {
-//           appStoreId: "1670628391",
-//           bundleId: "com.ShareSlateFun",
-//           minimumVersion: "18",
-//         },
-//       },
-//       dynamicLinks.ShortLinkType.DEFAULT,
-//     );
-//     return link;
-//   } catch (error) {
-//     console.log("error raised", error);
-//   }
-// };
+const generateLink = async (mini_id) => {
+  try {
+    var link = await dynamicLinks().buildShortLink(
+      {
+        link: `https://shareslatefunparty.page.link/u9DC/?${mini_id}`,
+        domainUriPrefix: 'https://shareslatefunparty.page.link',
+        android: {
+          packageName: 'com.shareslatefunparty',
+          minimumVersion: '18',
+        },
+        ios: {
+          appStoreId: '1670628391',
+          bundleId: 'com.ShareSlateFun',
+          minimumVersion: '18',
+        },
+      },
+      dynamicLinks.ShortLinkType.DEFAULT,
+    );
+    return link;
+  } catch (error) {
+    console.log('error raised', error);
+  }
+};
 
 const calculateAge = birthDateString => {
   var birthDate = new Date(birthDateString);
@@ -417,7 +418,7 @@ export {
   handleFilteredReadUnread,
   countFormatter,
   convertMentionsToPlainText,
-  // generateLink,
+  generateLink,
   calculateAge,
   transactionStyle,
   // showInterstitial,

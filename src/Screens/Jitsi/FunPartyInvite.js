@@ -26,6 +26,7 @@ import {
   searchByName,
   checkImageUrl,
   generateRandomMeetId,
+  generateLink,
 } from '../../Utils/helpers';
 import MinisSearch from '../../Assets/MinisSearch';
 import WatchPartyGuide from '../../Components/WatchPartyGuide';
@@ -107,6 +108,11 @@ const FunPartyInvite = ({route, navigation}) => {
   }, []);
 
   const handleInvitePress = async () => {
+    const randomMeetId = generateRandomMeetId();
+
+    
+    const generate = await generateLink(randomMeetId);
+    console.log(generate, 'new generate',randomMeetId);
     if (guidCheck) {
       setGuidCheck(!guidCheck);
     } else {
@@ -119,11 +125,10 @@ const FunPartyInvite = ({route, navigation}) => {
         }
       });
 
-      const randomMeetId = generateRandomMeetId();
       // const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
       const body = {
-        // users: selectedUsersIds,
-        room: randomMeetId,
+        users: selectedUsersIds,
+        room: generate,
       };
 
       dispatch(inviteToFunParty(body));

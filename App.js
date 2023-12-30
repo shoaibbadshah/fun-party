@@ -3,6 +3,8 @@ import Toast, {ErrorToast} from 'react-native-toast-message';
 import PushNotification from "react-native-push-notification";
 import RootNavigator from './src/Utils/Navigation/Routes';
 import {useDispatch, useSelector} from 'react-redux';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+
 import {
   Appearance,
   Linking,
@@ -323,17 +325,18 @@ const App = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   dynamicLinks()
-  //     .getInitialLink()
-  //     .then(link => {
-  //       handleDynamicLink(link);
-  //     });
-  //   const linkingListener = dynamicLinks().onLink(handleDynamicLink);
-  //   return () => {
-  //     linkingListener();
-  //   };
-  // }, []);
+  useEffect(() => {
+    dynamicLinks()
+      .getInitialLink()
+      .then(link => {
+        console.log(link,'new one');
+        handleDynamicLink(link);
+      });
+    const linkingListener = dynamicLinks().onLink(handleDynamicLink);
+    return () => {
+      linkingListener();
+    };
+  }, []);
   useEffect(() => {
     _createChannel();
     requestPermission();
@@ -412,7 +415,7 @@ const App = () => {
       const from = getRoute.split('=')[0];
 
       if (user.data?.checkUser?._id && from == 'mini') {
-        navigate(NAVIGATION_ROUTES.MINI_PLAY, {
+        navigate(NAVIGATION_ROUTES.JITSI, {
           mini_id: miniID,
           from: 'app.js',
         });
@@ -462,7 +465,6 @@ const App = () => {
 
 
   const theme = useSelector(e => e.theme);
-
   return (
     // <StripeProvider publishableKey="pk_live_51JgDigIDLkUgIvmNGwVY2btHxXaO2DYfS0M5BikH9NjjYX9yuVX2vOzKmDhWUo2dlCmHSJJzOdSFOas3H6yOFu0800Z3fEO7h3">
       <>
