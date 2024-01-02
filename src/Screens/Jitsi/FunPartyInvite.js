@@ -58,10 +58,10 @@ const FunPartyInvite = ({route, navigation}) => {
   const [search, setSearch] = useState('');
   const allUser = [...userFollowing, ...userFollower];
   const filterSearch = search
-    ? allUser?.filter(x =>
+    ? userFollowing?.filter(x =>
         x.first_name.toLowerCase().includes(search.toLowerCase()),
       )
-    : allUser;
+    : userFollowing;
 
   const LOADING = useSelector(e => e.userFollowerFollowing?.isLoading);
 
@@ -110,9 +110,8 @@ const FunPartyInvite = ({route, navigation}) => {
   const handleInvitePress = async () => {
     const randomMeetId = generateRandomMeetId();
 
-    
     const generate = await generateLink(randomMeetId);
-    console.log(generate, 'new generate',randomMeetId);
+    console.log(generate, 'new generate', randomMeetId);
     if (guidCheck) {
       setGuidCheck(!guidCheck);
     } else {
@@ -196,9 +195,10 @@ const FunPartyInvite = ({route, navigation}) => {
           <View style={{position: 'relative'}}>
             <View
               style={{
-                backgroundColor: theme.button,
+                backgroundColor: '#1B2438',
                 height: 45,
-                width: '100%',
+                //width: '100%',
+                marginHorizontal: 15,
                 marginVertical: 15,
                 borderRadius: 10,
                 alignItems: 'center',
@@ -207,20 +207,35 @@ const FunPartyInvite = ({route, navigation}) => {
                 flexDirection: 'row',
                 paddingHorizontal: 15,
               }}>
-              <MinisSearch color={'grey'} width={18} height={18} />
+              <MinisSearch color={'#B3B3B3'} width={18} height={18} />
               <TextInput
                 onChangeText={onChangeText}
                 style={{
-                  width: '92%',
-                  color: 'grey',
+                  width: '82%',
+                  color: 'white',
                   textAlign: 'left',
+                  marginLeft: 4,
                 }}
-                placeholderTextColor={'grey'}
+                placeholderTextColor={'#B3B3B3'}
                 returnKeyType={'search'}
                 selectTextOnFocus={false}
                 contextMenuHidden={true}
-                placeholder={'Search'}
+                placeholder={'Search contacts'}
               />
+              <View
+                style={{
+                  backgroundColor: '#303D5B',
+                  borderWidth: 1,
+                  borderColor: 'black',
+                  //backgroundColor: 'black',
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 5,
+                  paddingHorizontal: 12,
+                }}>
+                <Text style={{color: 'white'}}>Search</Text>
+              </View>
             </View>
           </View>
 

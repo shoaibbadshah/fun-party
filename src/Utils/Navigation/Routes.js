@@ -66,6 +66,7 @@ import OTPScreen from '../../Screens/OTPScreen';
 import LeftArrow from '../Assets/Icons/LeftArrow';
 import TabRoutes from './TabRoutes';
 import Settings from '../../Screens/Settings';
+import AuthDecide from '../../Screens/AuthDecide';
 // import CameraScreenNew from "../../Screens/DeepAR/screens/CameraScreenNew";
 
 const Stack = createStackNavigator();
@@ -126,6 +127,11 @@ const RootNavigator = ({initial}) => {
                 options={{headerShown: false}}
               />
             )}
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.AUTH_DECIDE}
+              component={AuthDecide}
+              options={{headerShown: false}}
+            />
             <Stack.Screen
               name={NAVIGATION_ROUTES.LOGIN}
               component={Login}
