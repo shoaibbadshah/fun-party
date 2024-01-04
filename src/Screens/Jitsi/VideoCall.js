@@ -13,17 +13,17 @@ import {Text, View} from 'react-native';
 
 const VideoCall = ({route, navigation}) => {
   const roomId = route?.params.roomId;
-  console.log(route?.params, 'sdf',roomId[0]);
+  console.log(route?.params, 'sdf', roomId[0]);
   // const rndm = decodeMeetID(roomId);
 
   const rndm = generateRandomMeetId();
-  useEffect(() => {
-    const interval = setInterval(interStitialAdsWithInAppSHOW, 10 * 60 * 1000); // 10 minutes in milliseconds
+  // useEffect(() => {
+  //   const interval = setInterval(interStitialAdsWithInAppSHOW, 10 * 60 * 1000); // 10 minutes in milliseconds
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
   const jitsiMeeting = useRef();
   const dispatch = useDispatch();
 
@@ -47,10 +47,11 @@ const VideoCall = ({route, navigation}) => {
         'settings.enabled': false,
         'live-streaming.enabled': false,
         'tile-view.enabled': false,
+        'video-share.enabled': true,
       }}
       eventListeners={{
         onConferenceJoined: e => {
-          interStitialAdsWithInAppSHOW();
+          //interStitialAdsWithInAppSHOW();
         },
         onReadyToClose: async e => {
           onCallEnd();

@@ -53,16 +53,9 @@ const Login = () => {
         backgroundColor: 'black',
         paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 0,
       }}
-      contentContainerStyle={{flex: 1}}
       showsVerticalScrollIndicator={false}>
       <StatusBar barStyle={'light-content'} backgroundColor={'black'} />
-      <View
-        style={
-          {
-            // justifyContent: "center",
-            // alignItems: "center",
-          }
-        }>
+      <View>
         <View style={{flex: 1, alignItems: 'flex-start'}}>
           <TouchableOpacity
             onPress={() => {

@@ -39,6 +39,10 @@ const {width, height} = Dimensions.get('screen');
 const FunPartyInvite = ({route, navigation}) => {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState([]);
+  console.log(
+    '🚀 ~ file: FunPartyInvite.js:42 ~ FunPartyInvite ~ checked:',
+    checked,
+  );
 
   const [guidCheck, setGuidCheck] = useState(true);
   const [isloading, setisloading] = useState(true);
@@ -115,20 +119,34 @@ const FunPartyInvite = ({route, navigation}) => {
     if (guidCheck) {
       setGuidCheck(!guidCheck);
     } else {
-      const selectedUsersIds = checked.map(index => {
-        const fff = friend[index]?._id;
-        if (!fff) {
-          return null;
-        } else {
-          return friend[index]?._id;
-        }
-      });
+      // const selectedUsersIds = checked.map(index => {
+      //   if (index && friend[index] && friend[index]._id) {
+      //     const fff = friend[index]._id;
+      //     console.log(
+      //       '🚀 ~ file: FunPartyInvite.js:124 ~ selectedUsersIds ~ fff:',
+      //       fff,
+      //     );
+      //     if (!friend[index]._id) {
+      //       return null;
+      //     } else {
+      //       return friend[index]._id;
+      //     }
+      //   }
+      // });
+      // console.log(
+      //   '🚀 ~ file: FunPartyInvite.js:134 ~ selectedUsersIds ~ selectedUsersIds:',
+      //   selectedUsersIds,
+      // );
 
       // const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
       const body = {
-        users: selectedUsersIds,
+        users: checked,
         room: generate,
       };
+      console.log(
+        '🚀 ~ file: FunPartyInvite.js:146 ~ handleInvitePress ~ body:',
+        body,
+      );
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
@@ -140,17 +158,27 @@ const FunPartyInvite = ({route, navigation}) => {
     }
   };
 
-  const toggleCheck = index => {
-    const isSelected = checked.includes(index);
-    if (isSelected) {
-      setChecked(checked.filter(itemIndex => itemIndex !== index));
-    } else {
-      if (checked.length < 5) {
-        setChecked([...checked, index]);
-      } else {
-        Alert.alert('Invite contact', 'Up to 5 contacts can be invited.');
-      }
-    }
+  const toggleCheck = (item, index) => {
+    console.log(
+      '🚀 ~ file: FunPartyInvite.js:158 ~ toggleCheck ~ item:',
+      item._id,
+    );
+    setChecked([...checked, item._id]);
+    console.log(
+      '🚀 ~ file: FunPartyInvite.js:163 ~ toggleCheck ~ checked:',
+      checked,
+    );
+    // const isSelected = checked.includes(index);
+    // if (isSelected) {
+    // setChecked(checked.filter(itemIndex => itemIndex !== index));
+
+    // } else {
+    //   if (checked.length < 5) {
+    //     setChecked([...checked, index]);
+    //   } else {
+    //     Alert.alert('Invite contact', 'Up to 5 contacts can be invited.');
+    // }
+    // }
   };
 
   return (
@@ -292,10 +320,10 @@ const FunPartyInvite = ({route, navigation}) => {
                   style={{
                     backgroundColor:
                       theme.name === 'dark'
-                        ? checked.includes(index)
+                        ? checked.includes(item?._id)
                           ? theme.secondary
                           : 'black'
-                        : checked.includes(index)
+                        : checked.includes(item?._id)
                         ? theme.secondary
                         : 'grey',
                     paddingHorizontal: 10,
@@ -304,7 +332,7 @@ const FunPartyInvite = ({route, navigation}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  onPress={() => toggleCheck(index)}>
+                  onPress={() => toggleCheck(item, index)}>
                   <Text style={{color: 'white'}}>
                     {checked.includes(index) ? 'Invite' : 'Invite'}
                   </Text>

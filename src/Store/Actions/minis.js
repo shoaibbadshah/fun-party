@@ -1,17 +1,17 @@
-import { Alert } from "react-native";
-import { API } from "../../Api";
-import { store } from "../store";
-import { Types } from "../Types/type";
-import socketServcies from "../../Utils/socketServcie";
-import { navigate } from "../../Utils/Navigation/navigationRef";
-import { fetchOtherUserFollowersAndFollowing } from "./profile";
-import { NAVIGATION_ROUTES } from "../../Utils/Navigation/NavigationRoutes";
-import { chatCount } from "./chat";
+import {Alert} from 'react-native';
+import {API} from '../../Api';
+import {store} from '../store';
+import {Types} from '../Types/type';
+import socketServcies from '../../Utils/socketServcie';
+import {navigate} from '../../Utils/Navigation/navigationRef';
+import {fetchOtherUserFollowersAndFollowing} from './profile';
+import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
+import {chatCount} from './chat';
 
-export const fetchMinis = (page, setRefreshing) => async (dispatch) => {
+export const fetchMinis = (page, setRefreshing) => async dispatch => {
   try {
     setRefreshing && setRefreshing(true);
-    const { data } = await API.v1.Minis.fetchMinis(page);
+    const {data} = await API.v1.Minis.fetchMinis(page);
     dispatch({
       type: Types.FETCH_MINIS,
       payload: {
@@ -25,9 +25,9 @@ export const fetchMinis = (page, setRefreshing) => async (dispatch) => {
   }
 };
 
-export const fetchPublicMinis = (page) => async (dispatch) => {
+export const fetchPublicMinis = page => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.fetchPublicMinis(page);
+    const {data} = await API.v1.Minis.fetchPublicMinis(page);
 
     dispatch({
       type: Types.FETCH_MINIS,
@@ -37,13 +37,13 @@ export const fetchPublicMinis = (page) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:34 ~ fetchPublicMinis ~ error:", error);
+    console.log('🚀 ~ file: minis.js:34 ~ fetchPublicMinis ~ error:', error);
   }
 };
-export const fetchLongVideos = (page, setLoader) => async (dispatch) => {
+export const fetchLongVideos = (page, setLoader) => async dispatch => {
   try {
     setLoader && setLoader(true);
-    const { data } = await API.v1.Minis.fetchLongVideos(page);
+    const {data} = await API.v1.Minis.fetchLongVideos(page);
 
     dispatch({
       type: Types.FETCH_LONG_VIDEOS,
@@ -55,19 +55,19 @@ export const fetchLongVideos = (page, setLoader) => async (dispatch) => {
     setLoader && setLoader(false);
   } catch (error) {
     setLoader && setLoader(false);
-    console.log("🚀 ~ file: minis.js:50 ~ fetchLongVideos ~ error:", error);
+    console.log('🚀 ~ file: minis.js:50 ~ fetchLongVideos ~ error:', error);
   }
 };
 
-export const fetchSearchLongVideos = (caption) => async (dispatch) => {
+export const fetchSearchLongVideos = caption => async dispatch => {
   console.log(
-    "🚀 ~ file: minis.js:56 ~ fetchSearchLongVideos ~ caption:",
+    '🚀 ~ file: minis.js:56 ~ fetchSearchLongVideos ~ caption:',
     caption,
   );
 
   try {
-    const { data } = await API.v1.Minis.searchLongVideos(caption);
-    console.log("🚀 ~ file: minis.js:58 ~ fetchSearchLongVideos ~ data:", data);
+    const {data} = await API.v1.Minis.searchLongVideos(caption);
+    console.log('🚀 ~ file: minis.js:58 ~ fetchSearchLongVideos ~ data:', data);
 
     dispatch({
       type: Types.FETCH_SEARCH_LONG_VIDOES,
@@ -77,14 +77,14 @@ export const fetchSearchLongVideos = (caption) => async (dispatch) => {
     });
   } catch (error) {
     console.log(
-      "🚀 ~ file: minis.js:80 ~ fetchSearchLongVideos ~ error:",
+      '🚀 ~ file: minis.js:80 ~ fetchSearchLongVideos ~ error:',
       error,
     );
   }
 };
-export const fetchPaginatedLongVideos = (page, minis) => async (dispatch) => {
+export const fetchPaginatedLongVideos = (page, minis) => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.fetchLongVideos(page);
+    const {data} = await API.v1.Minis.fetchLongVideos(page);
 
     dispatch({
       type: Types.FETCH_LONG_VIDEOS,
@@ -96,10 +96,10 @@ export const fetchPaginatedLongVideos = (page, minis) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const createMini = (body) => async (dispatch) => {
+export const createMini = body => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.createMini(body);
-    console.log("🚀 ~ file: minis.js:57 ~ createMini ~ data:", data);
+    const {data} = await API.v1.Minis.createMini(body);
+    console.log('🚀 ~ file: minis.js:57 ~ createMini ~ data:', data);
 
     // dispatch({
     //   type: Types.FETCH_MINIS,
@@ -109,14 +109,14 @@ export const createMini = (body) => async (dispatch) => {
     //   },
     // });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:68 ~ createMini ~ error:", error);
+    console.log('🚀 ~ file: minis.js:68 ~ createMini ~ error:', error);
   }
 };
 
-export const subscribeMini = (page) => async (dispatch) => {
+export const subscribeMini = page => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.subscribeMini(page);
-    console.log("🚀 ~ file: minis.js:110 ~ subscribeMini ~ data:", data);
+    const {data} = await API.v1.Minis.subscribeMini(page);
+    console.log('🚀 ~ file: minis.js:110 ~ subscribeMini ~ data:', data);
     dispatch({
       type: Types.SUBSCRIBE_MINI,
       payload: {
@@ -125,7 +125,7 @@ export const subscribeMini = (page) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:119 ~ subscribeMini ~ error:", error);
+    console.log('🚀 ~ file: minis.js:119 ~ subscribeMini ~ error:', error);
   }
 };
 // export const nearMini = (page) => async (dispatch) => {
@@ -144,17 +144,17 @@ export const subscribeMini = (page) => async (dispatch) => {
 //   }
 // };
 
-export const SearchMinis = (caption) => async (dispatch) => {
+export const SearchMinis = caption => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.searchMini(caption);
+    const {data} = await API.v1.Minis.searchMini(caption);
   } catch (error) {}
 };
 
 export const fetchPaginatedMinis =
-  (page, minis, setTimeOut) => async (dispatch) => {
+  (page, minis, setTimeOut) => async dispatch => {
     try {
       setTimeOut(true);
-      const { data } = await API.v1.Minis.fetchMinis(page);
+      const {data} = await API.v1.Minis.fetchMinis(page);
 
       dispatch({
         type: Types.FETCH_MINIS,
@@ -170,10 +170,10 @@ export const fetchPaginatedMinis =
   };
 
 export const fetchPublicPaginatedMinis =
-  (page, minis, setTimeOut) => async (dispatch) => {
+  (page, minis, setTimeOut) => async dispatch => {
     try {
       setTimeOut(true);
-      const { data } = await API.v1.Minis.fetchPublicMinis(page);
+      const {data} = await API.v1.Minis.fetchPublicMinis(page);
       dispatch({
         type: Types.FETCH_MINIS,
         payload: {
@@ -188,10 +188,10 @@ export const fetchPublicPaginatedMinis =
   };
 
 export const fetchPaginatedSubscribedMinis =
-  (page, minis, setTimeOut) => async (dispatch) => {
+  (page, minis, setTimeOut) => async dispatch => {
     try {
       setTimeOut(true);
-      const { data } = await API.v1.Minis.subscribeMini(page);
+      const {data} = await API.v1.Minis.subscribeMini(page);
 
       dispatch({
         type: Types.SUBSCRIBE_MINI,
@@ -205,15 +205,15 @@ export const fetchPaginatedSubscribedMinis =
       setTimeOut(false);
     }
   };
-export const GetCountry = () => async (dispatch) => {
+export const GetCountry = () => async dispatch => {
   try {
-    let userCountry = "";
+    let userCountry = '';
 
-    await fetch("http://ip-api.com/json/", {
-      method: "GET",
+    await fetch('http://ip-api.com/json/', {
+      method: 'GET',
     })
-      .then((response) => response.json())
-      .then((responseJson) => {
+      .then(response => response.json())
+      .then(responseJson => {
         dispatch({
           type: Types.OWNER_COUNTRY,
           responseJson,
@@ -221,16 +221,16 @@ export const GetCountry = () => async (dispatch) => {
 
         return responseJson;
       })
-      .catch((error) => {
-        console.log("🚀 ~ file: minis.js:214 ~ GetCountry ~ error:", error);
+      .catch(error => {
+        console.log('🚀 ~ file: minis.js:214 ~ GetCountry ~ error:', error);
       });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:222 ~ GetCountry ~ error:", error);
+    console.log('🚀 ~ file: minis.js:222 ~ GetCountry ~ error:', error);
   }
 };
-export const fetchPaginatedNearMeMinis = (page, minis) => async (dispatch) => {
+export const fetchPaginatedNearMeMinis = (page, minis) => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.nearMeMinis(page);
+    const {data} = await API.v1.Minis.nearMeMinis(page);
 
     dispatch({
       type: Types.NEAR_ME_MINI,
@@ -242,15 +242,15 @@ export const fetchPaginatedNearMeMinis = (page, minis) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const postMini = () => async (dispatch) => {
+export const postMini = () => async dispatch => {
   try {
     await API.v1.Minis.postMini();
   } catch (error) {}
 };
 
-export const deleteMini = (id) => async (dispatch) => {
+export const deleteMini = id => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.deleteMini(id);
+    const {data} = await API.v1.Minis.deleteMini(id);
 
     dispatch({
       type: Types.DELETE_MINI,
@@ -259,26 +259,26 @@ export const deleteMini = (id) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const editMini = (id, body, user) => async (dispatch) => {
+export const editMini = (id, body, user) => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.editMini(id, body);
+    const {data} = await API.v1.Minis.editMini(id, body);
 
     dispatch({
       type: Types.EDIT_MINI,
       // payload: { id, caption: data.data.caption },
       payload: {
         _miniId: data?.data?._id,
-        caption: "",
+        caption: '',
         new_mini: data?.data,
         user: user,
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:123 ~ vloadingeditMini ~ error:", error);
+    console.log('🚀 ~ file: minis.js:123 ~ vloadingeditMini ~ error:', error);
   }
 };
 
-export const fetchComments = (id) => async (dispatch) => {
+export const fetchComments = id => async dispatch => {
   try {
     dispatch({
       type: Types.LOADING_COMMENTS,
@@ -286,7 +286,7 @@ export const fetchComments = (id) => async (dispatch) => {
         loading: true,
       },
     });
-    const { data } = await API.v1.Minis.fetchComments(id);
+    const {data} = await API.v1.Minis.fetchComments(id);
 
     dispatch({
       type: Types.FETCH_COMMENTS,
@@ -302,13 +302,13 @@ export const fetchComments = (id) => async (dispatch) => {
         loading: false,
       },
     });
-    console.log("🚀 ~ file: minis.js:137 ~ fetchComments ~ error:", error);
+    console.log('🚀 ~ file: minis.js:137 ~ fetchComments ~ error:', error);
   }
 };
 
-export const deleteComment = (id, itemId) => async (dispatch) => {
+export const deleteComment = (id, itemId) => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.deleteComment(id);
+    const {data} = await API.v1.Minis.deleteComment(id);
 
     // dispatch({
     //   type: Types.DELETE_COMMENT,
@@ -329,9 +329,9 @@ export const deleteComment = (id, itemId) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const deleteCommentReplyAction = (id) => async (dispatch) => {
+export const deleteCommentReplyAction = id => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.deleteCommentReply(id);
+    const {data} = await API.v1.Minis.deleteCommentReply(id);
 
     if (data.status == 200) {
       dispatch({
@@ -341,13 +341,13 @@ export const deleteCommentReplyAction = (id) => async (dispatch) => {
     }
   } catch (error) {
     console.log(
-      "🚀 ~ file: minis.js:168 ~ deleteCommentReplyAction ~ error:",
+      '🚀 ~ file: minis.js:168 ~ deleteCommentReplyAction ~ error:',
       error,
     );
   }
 };
 
-export const postComment = (body, id, setComment_count) => async (dispatch) => {
+export const postComment = (body, id, setComment_count) => async dispatch => {
   try {
     const data = await API.v1.Minis.postComment(body);
     dispatch(fetchComments(id));
@@ -360,34 +360,34 @@ export const postComment = (body, id, setComment_count) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:197 ~ postComment ~ error:", error);
+    console.log('🚀 ~ file: minis.js:197 ~ postComment ~ error:', error);
   }
 };
-export const editCommentAction = (body, id, comment_id) => async (dispatch) => {
+export const editCommentAction = (body, id, comment_id) => async dispatch => {
   try {
     const data = await API.v1.Minis.editComment(body, comment_id);
 
     dispatch(fetchComments(id));
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:215 ~ editCommentAction ~ error:", error);
+    console.log('🚀 ~ file: minis.js:215 ~ editCommentAction ~ error:', error);
   }
 };
-export const editCommentReplyAction = (body, id) => async (dispatch) => {
+export const editCommentReplyAction = (body, id) => async dispatch => {
   try {
     const data = await API.v1.Minis.editCommentReply(body);
 
     dispatch(fetchComments(id));
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:215 ~ editCommentAction ~ error:", error);
+    console.log('🚀 ~ file: minis.js:215 ~ editCommentAction ~ error:', error);
   }
 };
 export const replyCommentAction =
-  (body, id, setComment_count) => async (dispatch) => {
+  (body, id, setComment_count) => async dispatch => {
     try {
       const data = await API.v1.Minis.replyComment(body);
       setComment_count && setComment_count(data?.data?.data?.comment_count);
       dispatch(fetchComments(id));
-      socketServcies.emit("mini", id);
+      socketServcies.emit('mini', id);
       // socketServcies.on('mini', (e) => {
       //   dispatch({
       //     type: Types.UPDATE_MINI,
@@ -401,14 +401,14 @@ export const replyCommentAction =
   };
 
 export const userFollow =
-  (body, setProfileData, setis_followed) => async (dispatch) => {
+  (body, setProfileData, setis_followed) => async dispatch => {
     try {
       const data = await API.v1.Minis.userFollow(body);
-      console.log("🚀 ~ file: minis.js:350 ~ data:", data);
+      console.log('🚀 ~ file: minis.js:350 ~ data:', data);
       setis_followed(true);
       if (data?.status == 200) {
         if (setProfileData) {
-          setProfileData("following");
+          setProfileData('following');
         }
         setis_followed(true);
       }
@@ -421,14 +421,14 @@ export const userFollow =
         },
       });
     } catch (error) {
-      console.log("🚀 ~ file: minis.js:280 ~ error:", error);
-      Alert.alert("Error", error.response.data.message);
+      console.log('🚀 ~ file: minis.js:280 ~ error:', error);
+      Alert.alert('Error', error.response.data.message);
     }
   };
-export const miniView = (body, setViews_count) => async (dispatch) => {
+export const miniView = (body, setViews_count) => async dispatch => {
   const user = store.getState().user;
   try {
-    const { data } = await API.v1.Minis.miniViewCount(body);
+    const {data} = await API.v1.Minis.miniViewCount(body);
 
     setViews_count && setViews_count(data?.data?.views_count);
     // dispatch({
@@ -439,18 +439,18 @@ export const miniView = (body, setViews_count) => async (dispatch) => {
     //   },
     // });
 
-    socketServcies.emit("mini", {
+    socketServcies.emit('mini', {
       user_id: user.data?.checkUser?._id,
       mini_id: body,
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:204 ~ error:", error);
+    console.log('🚀 ~ file: minis.js:204 ~ error:', error);
     // Alert.alert('Error2', error.response.data.message);
   }
 };
 
 export const userFollowing =
-  (body, setProfileData, setLoadingFollow) => async (dispatch) => {
+  (body, setProfileData, setLoadingFollow) => async dispatch => {
     try {
       setLoadingFollow(true);
 
@@ -458,7 +458,7 @@ export const userFollowing =
 
       if (data?.status == 200) {
         if (setProfileData) {
-          setProfileData("Follow");
+          setProfileData('Follow');
         }
       }
       dispatch(fetchOtherUserFollowersAndFollowing(body?.following_id));
@@ -476,14 +476,14 @@ export const userFollowing =
     }
   };
 
-export const likeMini = (body, count) => async (dispatch) => {
+export const likeMini = (body, count) => async dispatch => {
   const user = store.getState().user;
 
-  socketServcies.emit("mini_likes_dislikes", {
+  socketServcies.emit('mini_likes_dislikes', {
     mini_id: body.mini,
     user_id: user.data?.checkUser?._id,
   });
-  socketServcies.on("mini_likes_dislikes", (e) => {
+  socketServcies.on('mini_likes_dislikes', e => {
     // dispatch({
     //   type: Types.LIKE_COUNT,
     //   payload: {
@@ -507,25 +507,25 @@ export const likeMini = (body, count) => async (dispatch) => {
   //   user_id: user.data?.checkUser?._id,
   // });
 };
-export const reportMini = (body) => async (dispatch) => {
+export const reportMini = body => async dispatch => {
   try {
     const data = await API.v1.Minis.miniReport(body);
 
     Alert.alert(
-      "Report Content",
-      "Thank you for reporting and playing your role in keeping Share Slate a safe place for our users. We will reach out to you in case any additional information is needed.",
-      [{ text: "OK", onPress: () => {} }],
+      'Report Content',
+      'Thank you for reporting and playing your role in keeping Share Slate a safe place for our users. We will reach out to you in case any additional information is needed.',
+      [{text: 'OK', onPress: () => {}}],
     );
   } catch (error) {}
 };
-export const notificationCount = (body) => async (dispatch) => {
+export const notificationCount = body => async dispatch => {
   dispatch(chatCount());
   try {
     const data = await API.v1.Minis.notifyCount();
 
     dispatch({
       type: Types.FETCH_NOTIFICATIONS_COUNT,
-      payload: { count: data?.data?.count },
+      payload: {count: data?.data?.count},
     });
     dispatch(chatCount());
   } catch (error) {
@@ -533,13 +533,13 @@ export const notificationCount = (body) => async (dispatch) => {
   }
 };
 
-export const fetchPreviewMinis = (page) => async (dispatch) => {
+export const fetchPreviewMinis = page => async dispatch => {
   try {
     dispatch({
       type: Types.IS_LOADING,
       payload: page === 1 ? true : false,
     });
-    const { data } = await API.v1.Minis.searchPreview(page);
+    const {data} = await API.v1.Minis.searchPreview(page);
     dispatch({
       type: Types.IS_LOADING,
       payload: false,
@@ -566,16 +566,16 @@ export const fetchPreviewMinis = (page) => async (dispatch) => {
   }
 };
 
-export const previewMiniTap = (mini) => (dispatch) => {
+export const previewMiniTap = mini => dispatch => {
   dispatch({
     type: Types.ON_MINI_TAP,
     payload: mini,
   });
 };
 
-export const fetchSearchMinisAndUsers = (caption) => async (dispatch) => {
+export const fetchSearchMinisAndUsers = caption => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.searchMini(caption);
+    const {data} = await API.v1.Minis.searchMini(caption);
     let minis = [];
     let users = [];
 
@@ -583,9 +583,7 @@ export const fetchSearchMinisAndUsers = (caption) => async (dispatch) => {
 
     if (data && data.data) {
       minis = data.data.minis;
-      users = data.data.users.filter(
-        (u) => u._id !== user?.data?.checkUser?._id,
-      );
+      users = data.data.users.filter(u => u._id !== user?.data?.checkUser?._id);
     }
 
     dispatch({
@@ -598,9 +596,9 @@ export const fetchSearchMinisAndUsers = (caption) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const fetchSearchtags = (caption) => async (dispatch) => {
+export const fetchSearchtags = caption => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.searchTags({ tag: caption });
+    const {data} = await API.v1.Minis.searchTags({tag: caption});
 
     let minis = [];
 
@@ -617,12 +615,12 @@ export const fetchSearchtags = (caption) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:315 ~ fetchSearchtags ~ error:", error);
+    console.log('🚀 ~ file: minis.js:315 ~ fetchSearchtags ~ error:', error);
   }
 };
-export const fetchSearchLocation = (caption) => async (dispatch) => {
+export const fetchSearchLocation = caption => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.searchLocations({ keyword: caption });
+    const {data} = await API.v1.Minis.searchLocations({keyword: caption});
 
     let minis = [];
 
@@ -639,45 +637,40 @@ export const fetchSearchLocation = (caption) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:315 ~ fetchSearchtags ~ error:", error);
+    console.log('🚀 ~ file: minis.js:315 ~ fetchSearchtags ~ error:', error);
   }
 };
 
-export const getTrendingMiniReplies =
-  (body, pagination) => async (dispatch) => {
-    try {
-      dispatch({ type: Types.TRENDING_MINI_REPLIES_LOADING, payload: true });
+export const getTrendingMiniReplies = (body, pagination) => async dispatch => {
+  try {
+    dispatch({type: Types.TRENDING_MINI_REPLIES_LOADING, payload: true});
 
-      const { data } = await API.v1.Minis.getTrendingMiniReplies(
-        body,
-        pagination,
-      );
+    const {data} = await API.v1.Minis.getTrendingMiniReplies(body, pagination);
 
-      dispatch({
-        type: Types.FETCH_TRENDING_MINI_REPLIES,
-        payload: data.data.get_minis,
-      });
-      dispatch({ type: Types.TRENDING_MINI_REPLIES_LOADING, payload: false });
-    } catch (error) {
-      dispatch({ type: Types.TRENDING_MINI_REPLIES_LOADING, payload: false });
-    }
-  };
+    dispatch({
+      type: Types.FETCH_TRENDING_MINI_REPLIES,
+      payload: data.data.get_minis,
+    });
+    dispatch({type: Types.TRENDING_MINI_REPLIES_LOADING, payload: false});
+  } catch (error) {
+    dispatch({type: Types.TRENDING_MINI_REPLIES_LOADING, payload: false});
+  }
+};
 
-export const sendMiniChallengeInvite =
-  (body, navigation) => async (dispatch) => {
-    try {
-      dispatch({ type: Types.USER_INVITABLES_LOADING, payload: true });
-      await API.v1.Minis.sendMiniChallengeInvite(body);
-      dispatch({ type: Types.USER_INVITABLES_LOADING, payload: false });
-      Alert.alert("Challenge", "Challange has been sent", [
-        { text: "OK", onPress: () => navigation.goBack() },
-      ]);
-    } catch (error) {
-      dispatch({ type: Types.USER_INVITABLES_LOADING, payload: false });
-    }
-  };
+export const sendMiniChallengeInvite = (body, navigation) => async dispatch => {
+  try {
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: true});
+    await API.v1.Minis.sendMiniChallengeInvite(body);
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: false});
+    Alert.alert('Challenge', 'Challange has been sent', [
+      {text: 'OK', onPress: () => navigation.goBack()},
+    ]);
+  } catch (error) {
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: false});
+  }
+};
 
-export const removeData = (navigation, screen) => async (dispatch) => {
+export const removeData = (navigation, screen) => async dispatch => {
   try {
     // await dispatch({
     //   type: Types.FETCH_MINIS,
@@ -699,7 +692,7 @@ export const removeData = (navigation, screen) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const onTop = () => async (dispatch) => {
+export const onTop = () => async dispatch => {
   try {
     await dispatch({
       type: Types.FETCH_MINIS,
@@ -711,21 +704,21 @@ export const onTop = () => async (dispatch) => {
   } catch (error) {}
 };
 
-export const fetchHashtTags = (page) => async (dispatch) => {
+export const fetchHashtTags = page => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.fetchHashtTags(page);
+    const {data} = await API.v1.Minis.fetchHashtTags(page);
   } catch (error) {}
 };
 
 export const savedMini =
-  ({ body, setSaved }) =>
-  async (dispatch) => {
+  ({body, setSaved}) =>
+  async dispatch => {
     const user = store.getState().user;
     try {
       // console.log("🚀 ~ file: minis.js:635 ~ body:", body);
       const data = await API.v1.Minis.savedMini(body);
-      console.log("🚀 ~ file: minis.js:723 ~ data:", data);
-      if (data.data?.message === "Saved minis") {
+      console.log('🚀 ~ file: minis.js:723 ~ data:', data);
+      if (data.data?.message === 'Saved minis') {
         setSaved(true);
         // Alert.alert("Mini saved successfully!");
       } else {
@@ -733,16 +726,16 @@ export const savedMini =
         setSaved(false);
       }
 
-      socketServcies.emit("mini", {
+      socketServcies.emit('mini', {
         user_id: user.data?.checkUser?._id,
         mini_id: body.mini_id,
       });
     } catch (error) {
-      console.log(error, "error saved mimi post");
+      console.log(error, 'error saved mimi post');
     }
   };
 
-export const fetchInsights = (id) => async (dispatch) => {
+export const fetchInsights = id => async dispatch => {
   try {
     const data = await API.v1.Minis.fetchInsights(id);
 
@@ -751,11 +744,11 @@ export const fetchInsights = (id) => async (dispatch) => {
       payload: data?.data?.data,
     });
   } catch (error) {
-    console.log(error, "error saved mimi post");
+    console.log(error, 'error saved mimi post');
   }
 };
 
-export const fetchAllAnalytics = (id) => async (dispatch) => {
+export const fetchAllAnalytics = id => async dispatch => {
   try {
     const data = await API.v1.Minis.fetchAllAnalytics(id);
 
@@ -842,9 +835,9 @@ export const fetchAllAnalytics = (id) => async (dispatch) => {
         acc.total_views += obj.total_views;
         acc.unique_users += obj.unique_users;
 
-        obj.cities.forEach((city) => {
-          if (acc.cities.some((c) => c.name === city.name)) {
-            const index = acc.cities.findIndex((c) => c.name === city.name);
+        obj.cities.forEach(city => {
+          if (acc.cities.some(c => c.name === city.name)) {
+            const index = acc.cities.findIndex(c => c.name === city.name);
             acc.cities[index].value += city.value;
           } else {
             acc.cities.push({
@@ -855,11 +848,9 @@ export const fetchAllAnalytics = (id) => async (dispatch) => {
           }
         });
 
-        obj.countries.forEach((country) => {
-          if (acc.countries.some((c) => c.name === country.name)) {
-            const index = acc.countries.findIndex(
-              (c) => c.name === country.name,
-            );
+        obj.countries.forEach(country => {
+          if (acc.countries.some(c => c.name === country.name)) {
+            const index = acc.countries.findIndex(c => c.name === country.name);
             acc.countries[index].value += country.value;
           } else {
             acc.countries.push({
@@ -897,11 +888,11 @@ export const fetchAllAnalytics = (id) => async (dispatch) => {
       payload: counts,
     });
   } catch (error) {
-    console.log(error, "error saved mimi post");
+    console.log(error, 'error saved mimi post');
   }
 };
 
-export const SendCoinAction = (body, refRBSheetCoin) => async (dispatch) => {
+export const SendCoinAction = (body, refRBSheetCoin) => async dispatch => {
   try {
     const data = await API.v1.Profile.sendCointoUser(body);
 
@@ -914,47 +905,47 @@ export const SendCoinAction = (body, refRBSheetCoin) => async (dispatch) => {
     //   payload: data?.data?.data,
     // });
   } catch (error) {
-    console.log(error, "error sending Coin ");
+    console.log(error, 'error sending Coin ');
     const navigateHandle = () => {
       // navigate(NAVIGATION_ROUTES.WALLET_HOME);
       refRBSheetCoin?.current?.close();
     };
     if (
       error?.response?.data?.message ==
-      "User is not allowed to receive the coin"
+      'User is not allowed to receive the coin'
     ) {
       Alert.alert(error?.response?.data?.message);
     } else if (
       error?.response?.data?.message ==
-      "You have insufficient balance in your account. Please recharge."
+      'You have insufficient balance in your account. Please recharge.'
     ) {
       Alert.alert(
-        "Choose an option",
-        "You do not have sufficient funds. Load coins to wallet?",
+        'Choose an option',
+        'You do not have sufficient funds. Load coins to wallet?',
         [
           {
-            text: "May be later",
-            onPress: () => console.log("May be later option selected"),
+            text: 'May be later',
+            onPress: () => console.log('May be later option selected'),
           },
           {
-            text: "No",
-            onPress: () => console.log("Cancel option selected"),
-            style: "cancel",
+            text: 'No',
+            onPress: () => console.log('Cancel option selected'),
+            style: 'cancel',
           },
           {
-            text: "Yes",
+            text: 'Yes',
             onPress: navigateHandle,
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
     }
   }
 };
 
-export const loadMoreLongVideos = (caption) => async (dispatch) => {
+export const loadMoreLongVideos = caption => async dispatch => {
   try {
-    const { data } = await API.v1.Minis.loadMoreLongVideos(caption);
+    const {data} = await API.v1.Minis.loadMoreLongVideos(caption);
 
     dispatch({
       type: Types.FETCH_MORE_LONG_VIDEOS,
@@ -966,24 +957,28 @@ export const loadMoreLongVideos = (caption) => async (dispatch) => {
     });
   } catch (error) {
     console.log(
-      "🚀 ~ file: lvActions.js:83 ~ loadMoreLongVideos ~ error:",
+      '🚀 ~ file: lvActions.js:83 ~ loadMoreLongVideos ~ error:',
       error,
     );
   }
 };
-export const inviteToFunParty = (body) => async (dispatch) => {
+export const inviteToFunParty = body => async dispatch => {
+  console.log(
+    '🚀 ~ file: minis.js:975 ~ inviteToFunParty ~ body:',
+    JSON.stringify(body.users),
+  );
   try {
     const data = await API.v1.Minis.inviteToFunParty(body);
-    console.log("🚀 ~ file: minis.js:896 ~ inviteToFunParty ~ data:", data);
+    // console.log('🚀 ~ file: minis.js:896 ~ inviteToFunParty ~ data:', data);
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:900 ~ inviteToFunParty ~ error:", error);
+    console.log('🚀 ~ file: minis.js:900 ~ inviteToFunParty ~ error:', error);
   }
 };
-export const meetExpire_room = (body) => async (dispatch) => {
+export const meetExpire_room = body => async dispatch => {
   try {
     const data = await API.v1.Minis.expire_room(body);
-    console.log("🚀 ~ file: minis.js:896 ~ meetExpire_room ~ data:", data);
+    console.log('🚀 ~ file: minis.js:896 ~ meetExpire_room ~ data:', data);
   } catch (error) {
-    console.log("🚀 ~ file: minis.js:900 ~ meetExpire_room ~ error:", error);
+    console.log('🚀 ~ file: minis.js:900 ~ meetExpire_room ~ error:', error);
   }
 };
