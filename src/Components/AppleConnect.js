@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   Alert,
   Image,
@@ -11,21 +11,21 @@ import {
   Pressable,
   StyleSheet,
   Text,
-} from "react-native";
-import { appleLogin } from "../Store/Actions/auth";
+} from 'react-native';
+import {appleLogin} from '../Store/Actions/auth';
 import appleAuth, {
   AppleButton,
-} from "@invertase/react-native-apple-authentication";
-import { API } from "../Api";
-import TouchableOpacity from "./TouchableOpacity";
-import TextInput from "./TextInput";
-import { setUser } from "../Store/Actions/user";
-import { NAVIGATION_ROUTES } from "../Utils/Navigation/NavigationRoutes";
+} from '@invertase/react-native-apple-authentication';
+import {API} from '../Api';
+import TouchableOpacity from './TouchableOpacity';
+import TextInput from './TextInput';
+import {setUser} from '../Store/Actions/user';
+import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 
-import ImageCropPicker from "react-native-image-crop-picker";
+import ImageCropPicker from 'react-native-image-crop-picker';
 
 export default function AppleConnect() {
-  const theme = useSelector((s) => s.theme);
+  const theme = useSelector(s => s.theme);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [user, setUserApple] = useState(null);
@@ -42,7 +42,7 @@ export default function AppleConnect() {
   };
   const updateAppleSignup = () => {
     if (!firstName || !lastName || !modalEmail) {
-      Alert.alert("Missing information", "Complete your profile to continue.");
+      Alert.alert('Missing information', 'Complete your profile to continue.');
     } else {
       dispatch(
         appleLogin(
@@ -59,7 +59,7 @@ export default function AppleConnect() {
       handleChangePassword();
     }
   };
- const onAppleButtonPress = async () => {
+  const onAppleButtonPress = async () => {
     try {
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
@@ -70,7 +70,7 @@ export default function AppleConnect() {
         appleAuthRequestResponse.user,
       );
       try {
-        const { data } = await API.v1.Auth.appleLoginVerify({
+        const {data} = await API.v1.Auth.appleLoginVerify({
           apple_id: appleAuthRequestResponse.user,
           // apple_id:
           //   '34567890vy78uioiuh9rtyuoi.34567890vy78uioiuh9rtyuoi.iouy5678',
@@ -127,7 +127,7 @@ export default function AppleConnect() {
       if (error.code === appleAuth.Error.CANCELED) {
         // console.log('Apple authentication request was canceled by the user');
       } else {
-        console.error("Apple login error:", error);
+        console.error('Apple login error:', error);
       }
     }
   };
@@ -138,8 +138,8 @@ export default function AppleConnect() {
       cropping: true,
 
       cropperCircleOverlay: true,
-    }).then((image) => {
-      setDp("file://" + image?.path);
+    }).then(image => {
+      setDp('file://' + image?.path);
       // if (isIos) {
       //   handleChangeValue("file://" + image?.path, "profile_image");
       // } else {
@@ -149,7 +149,7 @@ export default function AppleConnect() {
   };
   return (
     <>
-      {Platform.OS === "ios" && (
+      {Platform.OS === 'ios' && (
         <>
           {/* <AppleButton
             buttonStyle={AppleButton.Style.WHITE_OUTLINE}
@@ -170,49 +170,44 @@ export default function AppleConnect() {
 
               height: 48,
               width: 56,
-              backgroundColor: "#303D5B",
-              alignItems: "center",
-              justifyContent: "center",
+              backgroundColor: '#303D5B',
+              alignItems: 'center',
+              justifyContent: 'center',
               borderRadius: 5,
               marginLeft: 15,
-            }}
-          >
-            <Ionicons name='logo-apple' size={25} color={"#6563ff"} />
+            }}>
+            <Ionicons name="logo-apple" size={25} color={'white'} />
           </TouchableOpacity>
 
           <Modal
-            animationType='fade'
+            animationType="fade"
             transparent={true}
             visible={isChangePassVisible}
             onRequestClose={handleChangePassword}
-            style={{ margin: 0, flex: 1 }}
-          >
+            style={{margin: 0, flex: 1}}>
             <TouchableOpacity
               onPress={handleChangePassword}
               style={{
                 flex: 1,
-                backgroundColor: "rgba(0,0,0,0.4)",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <Pressable
                 style={{
                   backgroundColor: theme.primary,
-                  width: "90%",
+                  width: '90%',
                   borderRadius: 10,
                   padding: 20,
-                }}
-              >
+                }}>
                 <Text
                   style={{
                     fontSize: 20,
                     marginBottom: 20,
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    color: "white",
-                  }}
-                >
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
                   Complete your profile
                 </Text>
                 <TouchableOpacity
@@ -221,49 +216,47 @@ export default function AppleConnect() {
                   style={{
                     height: 112,
                     width: 112,
-                    alignSelf: "center",
-                  }}
-                >
+                    alignSelf: 'center',
+                  }}>
                   <Image
                     style={{
                       height: 110,
                       width: 110,
                       borderRadius: 100,
-                      backgroundColor: "white",
-                      overflow: "hidden",
+                      backgroundColor: 'white',
+                      overflow: 'hidden',
                     }}
                     source={{
                       uri: dp
                         ? dp
-                        : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png",
+                        : 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
                     }}
                     // defaultSource={require("../Assets/avatar.jpg")}
                   />
                   <TouchableOpacity
                     style={{
-                      position: "absolute",
+                      position: 'absolute',
                       bottom: 5,
-                      alignSelf: "flex-end",
+                      alignSelf: 'flex-end',
                     }}
                     noBg
                     onPress={() => {
                       // onProfileImage();
-                    }}
-                  >
+                    }}>
                     {/* <PencilSvg width={20} height={20} color={"#5E72E4"} /> */}
                   </TouchableOpacity>
                 </TouchableOpacity>
                 <TextInput
                   value={firstName}
-                  placeholder='First name'
-                  onChangeText={(e) => {
+                  placeholder="First name"
+                  onChangeText={e => {
                     setFirstName(e);
                   }}
                 />
                 <TextInput
                   value={lastName}
-                  placeholder='Last name'
-                  onChangeText={(e) => {
+                  placeholder="Last name"
+                  onChangeText={e => {
                     setLastName(e);
                   }}
                 />
@@ -277,10 +270,10 @@ export default function AppleConnect() {
                 /> */}
                 <TextInput
                   value={modalEmail}
-                  placeholder='Email'
-                  inputMode='email'
-                  keyboardType='email-address'
-                  onChangeText={(e) => {
+                  placeholder="Email"
+                  inputMode="email"
+                  keyboardType="email-address"
+                  onChangeText={e => {
                     setModalEmail(e);
                   }}
                 />
@@ -289,23 +282,21 @@ export default function AppleConnect() {
                   onPress={updateAppleSignup}
                   style={{
                     backgroundColor: theme.black,
-                    alignItems: "center",
-                    justifyContent: "center",
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     height: 40,
-                    width: "70%",
-                    alignSelf: "center",
+                    width: '70%',
+                    alignSelf: 'center',
                     marginTop: 20,
                     marginBottom: 45,
                     borderRadius: 5,
-                  }}
-                >
+                  }}>
                   <Text
                     style={{
                       color: theme.white,
                       fontSize: 16,
-                      fontWeight: "500",
-                    }}
-                  >
+                      fontWeight: '500',
+                    }}>
                     Continue
                   </Text>
                 </Pressable>

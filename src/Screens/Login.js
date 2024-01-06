@@ -16,18 +16,15 @@ import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scrol
 import Text from '../Components/Text';
 import TextInput from '../Components/TextInput';
 import GoogleBTN from '../Components/GoogleBTN';
-import {Email, Password} from '../Assets/Svgs';
 import AppleConnect from '../Components/AppleConnect';
 import TouchableOpacity from '../Components/TouchableOpacity';
 import {SignInApi, SignInGuest} from '../Store/Actions/auth';
 import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
-import {LightMode} from '../Store/Actions/theme';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
-  const [guestLoading, setGuestLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -38,12 +35,6 @@ const Login = () => {
       password: pass,
     };
     dispatch(SignInApi(body, navigation, setLoading));
-  };
-
-  const signInGuestHandle = () => {
-    setGuestLoading(true);
-
-    dispatch(SignInGuest(navigation, setGuestLoading));
   };
 
   return (
@@ -65,12 +56,10 @@ const Login = () => {
             style={{
               alignItems: 'flex-end',
               backgroundColor: '#303D5B',
-              height: 50,
             }}>
             <Text
               style={{
                 color: '#fff',
-                fontSize: 18,
                 fontWeight: 'bold',
               }}>
               Sign Up
@@ -80,24 +69,19 @@ const Login = () => {
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 45,
           }}>
-          {/* <View style={{ flex: 1 }} /> */}
-
           <View
             style={{
               flex: 1,
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'center',
-              marginTop: 20,
             }}>
             <Image
               source={require('../Assets/MAINLOGO.png')}
               style={{
                 width: Dimensions.get('window').width - 150,
                 height: 150,
-                // marginTop: 20,
               }}
               resizeMode="contain"
             />
@@ -132,9 +116,8 @@ const Login = () => {
         </View>
       </View>
 
-      <View style={{marginTop: '15%'}}>
+      <View style={{marginTop: 12}}>
         <TextInput
-          // icon={<Email />}
           value={email}
           placeholder="Email"
           inputMode="email"
@@ -163,7 +146,6 @@ const Login = () => {
       <View
         style={{
           flexDirection: 'row',
-          // marginVertical: 10,
           justifyContent: 'space-between',
         }}>
         <TouchableOpacity
@@ -198,11 +180,8 @@ const Login = () => {
       <View
         style={{
           flexDirection: 'row',
-          marginTop: 15,
+          marginTop: 20,
           alignItems: 'center',
-
-          // width: Dimensions.get("screen").width - 35,
-          // backgroundColor: "red",
           overflow: 'hidden',
         }}>
         <View style={{justifyContent: 'center'}}>
@@ -225,63 +204,7 @@ const Login = () => {
         </View>
         <GoogleBTN />
         <AppleConnect />
-        <View
-          style={{
-            backgroundColor: '#383E50',
-            width: 3,
-            marginLeft: 15,
-            height: 65,
-          }}
-        />
-        <TouchableOpacity
-          style={{
-            height: 48,
-            width: 75,
-            backgroundColor: '#303D5B',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 5,
-            marginLeft: 15,
-          }}
-          // onPress={}
-          onPress={signInGuestHandle}>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: '700',
-              fontSize: 16,
-            }}>
-            Guest
-          </Text>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: '700',
-              fontSize: 16,
-            }}>
-            Mode
-          </Text>
-        </TouchableOpacity>
       </View>
-      {/* <AppleConnect />
-
-      <GoogleBTN />
-
-      <TouchableOpacity
-        noBg
-        style={{
-          marginTop: 15,
-        }}
-        onPress={signInGuestHandle}
-      >
-        {guestLoading ? (
-          <ActivityIndicator color={"white"} />
-        ) : (
-          <Text style={{ color: "white", fontWeight: "bold" }}>
-            Continue as Guest
-          </Text>
-        )}
-      </TouchableOpacity> */}
     </KeyboardAwareScrollView>
   );
 };

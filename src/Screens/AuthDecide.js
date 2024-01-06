@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   Linking,
+  StyleSheet,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
@@ -15,6 +16,7 @@ import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {API} from '../Api';
 import {useDispatch} from 'react-redux';
+import {AppleSVG} from '../Assets/Svgs';
 
 const AuthDecide = () => {
   const navigation = useNavigation();
@@ -88,71 +90,72 @@ const AuthDecide = () => {
         source={require('../Assets/MAINLOGO.png')}
         style={{
           width: Dimensions.get('screen').width - 15,
-          height: Dimensions.get('screen').height * 0.4,
+          height: Dimensions.get('screen').height * 0.3,
         }}
         resizeMode="contain"
       />
 
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
-          style={{
-            width: Dimensions.get('screen').width * 0.3,
-            backgroundColor: '#263047',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 120,
-          }}>
-          <Image
-            source={require('../Assets/partyEmail.png')}
-            style={{
-              width: '30%',
-            }}
-            resizeMode="contain"
-          />
-          <Text style={{color: 'white', paddingBottom: 7}}>Use Email </Text>
-        </TouchableOpacity>
+      <Text
+        style={{
+          textAlign: 'center',
+          color: 'white',
+          fontSize: 24,
+          marginBottom: 20,
+        }}>
+        Sign Up
+      </Text>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
-          style={{
-            width: Dimensions.get('screen').width * 0.3,
-            backgroundColor: '#263047',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 120,
-            marginHorizontal: 5,
-          }}>
-          <Image
-            source={require('../Assets/funlogo.png')}
-            style={{
-              width: '30%',
-              height: 70,
-            }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleOnApplePress}
-          style={{
-            width: Dimensions.get('screen').width * 0.3,
-            backgroundColor: '#263047',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 120,
-          }}>
-          <Image
-            source={require('../Assets/partyApple.png')}
-            style={{
-              width: '30%',
-              height: 70,
-            }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+      <View style={{flexDirection: 'row'}}>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
+            style={[styles.logos, {alignItems: 'center'}]}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../Assets/EmailLogo.png')}
+                style={{
+                  width: '30%',
+                  height: 25,
+                }}
+                resizeMode="contain"
+              />
+              <Text style={{color: '#ccc', marginLeft: 3}}>Use Email</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
+            style={styles.logos}>
+            <Image
+              source={require('../Assets/funLogoBtn.png')}
+              style={{
+                // width: '30%',
+                height: 30,
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={handleOnApplePress} style={[styles.logos]}>
+            <Image
+              source={require('../Assets/AppleLogo.png')}
+              style={{
+                //width: '30%',
+                height: 30,
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View
@@ -192,7 +195,7 @@ const AuthDecide = () => {
               style={{paddingHorizontal: 0}}
               noBg
               onPress={() => {
-                Linking.openURL('https://www.shareslate.fun/terms');
+                Linking.openURL('https://www.shareslate.fun/privacypolicy');
               }}>
               <Text style={{color: '#5E72E4', fontSize: 12, fontWeight: '700'}}>
                 {' '}
@@ -216,6 +219,7 @@ const AuthDecide = () => {
             padding: 7,
             marginBottom: 15,
             borderRadius: 25,
+            paddingVertical: 8,
             borderWidth: 2,
             borderColor: '#263047',
           }}>
@@ -227,3 +231,16 @@ const AuthDecide = () => {
 };
 
 export default AuthDecide;
+
+const styles = StyleSheet.create({
+  logos: {
+    width: Dimensions.get('screen').width * 0.3,
+    backgroundColor: '#263047',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 120,
+    marginHorizontal: 3,
+    height: 51,
+  },
+});
