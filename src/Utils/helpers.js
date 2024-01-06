@@ -3,7 +3,7 @@ import {Types} from '../Store/Types/type';
 import {API} from '../Api';
 import {store} from '../Store/store';
 import Share from 'react-native-share';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
+import dynamicLinks, {firebase} from '@react-native-firebase/dynamic-links';
 import ImagePicker from 'react-native-image-crop-picker';
 // import {
 //   IronSource,
@@ -140,7 +140,31 @@ const convertMentionsToPlainText = text => {
   const plainText = text.replace(entityRegex, '$1$2');
   return plainText;
 };
-const generateLink = async (mini_id) => {
+
+import DeviceInfo from 'react-native-device-info';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+const isGooglePlayServicesAvailable = async () => {
+  try {
+    await GoogleSignin.hasPlayServices();
+    return true;
+  } catch (error) {
+    console.error('Google Play Services are not available:', error);
+    return false;
+  }
+};
+
+// Example usage
+const checkAvailability = async () => {
+  if (await isGooglePlayServicesAvailable()) {
+    console.log(
+      '🚀 ~ file: helpers.js:161 ~ checkAvailability ~ isGooglePlayServicesAvailable:',
+    );
+  } else {
+  }
+};
+
+const generateLink = async mini_id => {
   try {
     var link = await dynamicLinks().buildShortLink(
       {
@@ -158,9 +182,10 @@ const generateLink = async (mini_id) => {
       },
       dynamicLinks.ShortLinkType.DEFAULT,
     );
+    console.log('🚀 ~ file: helpers.js:165 ~ generateLink ~ link:', link);
     return link;
   } catch (error) {
-    console.log('error raised', error);
+    console.log('🚀 ~ file: helpers.js:163 ~ generateLink ~ error:', error);
   }
 };
 
