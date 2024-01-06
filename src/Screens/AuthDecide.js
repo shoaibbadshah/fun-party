@@ -17,6 +17,7 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import {API} from '../Api';
 import {useDispatch} from 'react-redux';
 import {AppleSVG} from '../Assets/Svgs';
+import GoogleBTN from '../Components/GoogleBTN';
 
 const AuthDecide = () => {
   const navigation = useNavigation();
@@ -144,18 +145,24 @@ const AuthDecide = () => {
           </TouchableOpacity>
         </View>
 
-        <View>
-          <TouchableOpacity onPress={handleOnApplePress} style={[styles.logos]}>
-            <Image
-              source={require('../Assets/AppleLogo.png')}
-              style={{
-                //width: '30%',
-                height: 30,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
+        {Platform.OS === 'ios' ? (
+          <View>
+            <TouchableOpacity
+              onPress={handleOnApplePress}
+              style={[styles.logos]}>
+              <Image
+                source={require('../Assets/AppleLogo.png')}
+                style={{
+                  //width: '30%',
+                  height: 30,
+                }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <GoogleBTN onStart={true} />
+        )}
       </View>
 
       <View

@@ -221,6 +221,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    LogBox.ignoreAllLogs()
     socketServcies.initializeSocket();
     // Smartlook?.setupAndStartRecording(
     //   "6d95f80aeaf20eddb4cf074342ca27d909d2d9ba",

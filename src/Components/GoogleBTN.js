@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {
   ActivityIndicator,
   Alert,
+  Dimensions,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -25,7 +26,6 @@ export default function GoogleBTN() {
   async function googleSignup() {
     setLoading(true);
     GoogleSignin.configure({
-      //webClientId is required if you need offline access app/funRelease.keystore
       offlineAccess: true,
       // webClientId:
       //   '363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com',
@@ -45,31 +45,12 @@ export default function GoogleBTN() {
     googleUp();
   }
 
-  const check = async () => {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
-    console.log('🚀 ~ file: GoogleBTN.js:40 ~ check ~ idToken:', idToken);
-
-    // Create a Google credential with the token
-    // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    // return auth().signInWithCredential(googleCredential);
-  };
   async function googleUp() {
     GoogleSignin.hasPlayServices()
       .then(hasPlayService => {
         if (hasPlayService) {
           GoogleSignin.signIn()
             .then(userInfo => {
-              console.log(
-                '🚀 ~ file: GoogleBTN.js:37 ~ .then ~ userInfo:',
-                userInfo.idToken,
-              );
-              // Alert.alert("Token", userInfo.idToken);
-
               const currentUser = GoogleSignin.getTokens().then(res => {
                 dispatch(
                   googleLogin(
