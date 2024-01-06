@@ -174,11 +174,11 @@ const Signup = () => {
             <Image
               source={require("../Assets/MAINLOGO.png")}
               style={{
-                width: Dimensions.get("window").width - 150,
-                height: 150,
+                width: Dimensions.get("window").width - 170,
+                height: 170,
                 // marginTop: 20,
               }}
-              resizeMode='cover'
+              resizeMode='contain'
             />
             <View
               style={{

@@ -151,6 +151,7 @@ const FunPartyInvite = ({route, navigation}) => {
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
       navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
+      setChecked([]);
       // navigation.reset({
       //   index: 0,
       //   routes: [{ name: NAVIGATION_ROUTES.JITSI, RoomID: RoomID }],

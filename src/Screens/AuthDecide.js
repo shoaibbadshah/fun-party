@@ -15,6 +15,7 @@ import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {API} from '../Api';
 import {useDispatch} from 'react-redux';
+import GoogleBTN from '../Components/GoogleBTN';
 
 const AuthDecide = () => {
   const navigation = useNavigation();
@@ -93,25 +94,37 @@ const AuthDecide = () => {
         resizeMode="contain"
       />
 
-      <View style={{flexDirection: 'row'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
         <TouchableOpacity
           onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
           style={{
             width: Dimensions.get('screen').width * 0.3,
             backgroundColor: '#263047',
-            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 120,
+            paddingVertical: 5,
           }}>
           <Image
             source={require('../Assets/partyEmail.png')}
             style={{
-              width: '30%',
+              width: '27%',
+              // height:  22,
             }}
             resizeMode="contain"
           />
-          <Text style={{color: 'white', paddingBottom: 7}}>Use Email </Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 12,
+              // paddingBottom: Platform.OS == 'ios' ? 0 : 9,
+            }}>
+            Use Email{' '}
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -123,36 +136,39 @@ const AuthDecide = () => {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 120,
-            marginHorizontal: 5,
           }}>
           <Image
             source={require('../Assets/funlogo.png')}
             style={{
-              width: '30%',
-              height: 70,
+              width: '27%',
+              height: 50,
             }}
             resizeMode="contain"
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleOnApplePress}
-          style={{
-            width: Dimensions.get('screen').width * 0.3,
-            backgroundColor: '#263047',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 120,
-          }}>
-          <Image
-            source={require('../Assets/partyApple.png')}
+        {Platform.OS == 'ios' ? (
+          <TouchableOpacity
+            onPress={handleOnApplePress}
             style={{
-              width: '30%',
-              height: 70,
-            }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+              width: Dimensions.get('screen').width * 0.3,
+              backgroundColor: '#263047',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 120,
+            }}>
+            <Image
+              source={require('../Assets/partyApple.png')}
+              style={{
+                width: '27%',
+                height: 50,
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        ) : (
+          <GoogleBTN onStart={true} />
+        )}
       </View>
 
       <View
