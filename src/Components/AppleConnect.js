@@ -59,7 +59,7 @@ export default function AppleConnect() {
       handleChangePassword();
     }
   };
-  const onAppleButtonPress = async () => {
+ const onAppleButtonPress = async () => {
     try {
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,

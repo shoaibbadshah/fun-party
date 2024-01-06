@@ -12,9 +12,66 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
+import appleAuth from '@invertase/react-native-apple-authentication';
+import {API} from '../Api';
+import {useDispatch} from 'react-redux';
 
 const AuthDecide = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleOnApplePress = async () => {
+    try {
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+
+      const credentialState = await appleAuth.getCredentialStateForUser(
+        appleAuthRequestResponse.user,
+      );
+      try {
+        const {data} = await API.v1.Auth.appleLoginVerify({
+          apple_id: appleAuthRequestResponse.user,
+          // apple_id:
+          //   '34567890vy78uioiuh9rtyuoi.34567890vy78uioiuh9rtyuoi.iouy5678',
+        });
+
+        await dispatch(setUser(data.data));
+        navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+      } catch (error) {
+        if (credentialState === appleAuth.State.REVOKED) {
+        } else if (credentialState === appleAuth.State.AUTHORIZED) {
+          if (appleAuthRequestResponse.email == null) {
+            handleChangePassword();
+            setFirstName(appleAuthRequestResponse.fullName.familyName);
+            setLastName(appleAuthRequestResponse.fullName.givenName);
+            setModalEmail(appleAuthRequestResponse.email);
+            setUserApple(appleAuthRequestResponse.user);
+          } else {
+            dispatch(
+              appleLogin(
+                {
+                  familyName: appleAuthRequestResponse.fullName.familyName,
+
+                  givenName: appleAuthRequestResponse.fullName.givenName,
+                  user: appleAuthRequestResponse.user,
+                  email: appleAuthRequestResponse.email,
+                },
+                navigation,
+              ),
+            );
+          }
+        } else {
+        }
+      }
+    } catch (error) {
+      if (error.code === appleAuth.Error.CANCELED) {
+      } else {
+        console.error('Apple login error:', error);
+      }
+    }
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -37,7 +94,8 @@ const AuthDecide = () => {
       />
 
       <View style={{flexDirection: 'row'}}>
-        <View
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
           style={{
             width: Dimensions.get('screen').width * 0.3,
             backgroundColor: '#263047',
@@ -54,9 +112,10 @@ const AuthDecide = () => {
             resizeMode="contain"
           />
           <Text style={{color: 'white', paddingBottom: 7}}>Use Email </Text>
-        </View>
+        </TouchableOpacity>
 
-        <View
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
           style={{
             width: Dimensions.get('screen').width * 0.3,
             backgroundColor: '#263047',
@@ -74,8 +133,9 @@ const AuthDecide = () => {
             }}
             resizeMode="contain"
           />
-        </View>
-        <View
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleOnApplePress}
           style={{
             width: Dimensions.get('screen').width * 0.3,
             backgroundColor: '#263047',
@@ -92,7 +152,7 @@ const AuthDecide = () => {
             }}
             resizeMode="contain"
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View
@@ -150,11 +210,11 @@ const AuthDecide = () => {
           onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
           style={{
             width: '93%',
-            height: 40,
+            //height: 40,
             justifyContent: 'center',
             alignItems: 'center',
             padding: 7,
-            marginBottom: -15,
+            marginBottom: 15,
             borderRadius: 25,
             borderWidth: 2,
             borderColor: '#263047',
