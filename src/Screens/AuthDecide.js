@@ -121,7 +121,7 @@ const AuthDecide = () => {
                 source={require('../Assets/EmailLogo.png')}
                 style={{
                   width: '30%',
-                  height: 25,
+                  height: 22,
                 }}
                 resizeMode="contain"
               />
@@ -133,12 +133,11 @@ const AuthDecide = () => {
         <View>
           <TouchableOpacity
             onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
-            style={styles.logos}>
+            style={[styles.logos, {marginHorizontal: 5}]}>
             <Image
               source={require('../Assets/funLogoBtn.png')}
               style={{
-                // width: '30%',
-                height: 30,
+                height: 32,
               }}
               resizeMode="contain"
             />
@@ -161,7 +160,9 @@ const AuthDecide = () => {
             </TouchableOpacity>
           </View>
         ) : (
-          <GoogleBTN onStart={true} />
+          <View style={styles.logos}>
+            <GoogleBTN onStart={true} />
+          </View>
         )}
       </View>
 
@@ -247,7 +248,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 120,
-    marginHorizontal: 3,
     height: 51,
   },
 });

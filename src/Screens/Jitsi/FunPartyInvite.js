@@ -12,6 +12,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
+  Image,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -33,16 +35,13 @@ import WatchPartyGuide from '../../Components/WatchPartyGuide';
 import {navigationRef} from '../../Utils/Navigation/navigationRef';
 import LeftArrow from '../../Utils/Assets/Icons/LeftArrow';
 import Menu from '../../Components/Profile/Menu';
+import {HamburgerSVG} from '../../Assets/Svgs';
 
 const {width, height} = Dimensions.get('screen');
 
 const FunPartyInvite = ({route, navigation}) => {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState([]);
-  console.log(
-    '🚀 ~ file: FunPartyInvite.js:42 ~ FunPartyInvite ~ checked:',
-    checked,
-  );
 
   const [guidCheck, setGuidCheck] = useState(true);
   const [isloading, setisloading] = useState(true);
@@ -80,37 +79,6 @@ const FunPartyInvite = ({route, navigation}) => {
     setSearch(e);
   };
 
-  const handleDynamicLink = link => {
-    console.log(
-      '🚀 ~ file: FunPartyInvite.js:81 ~ handleDynamicLink ~ link:',
-      link,
-    );
-    // Handle dynamic link inside your own application
-    if (link.url === 'https://invertase.io/offer') {
-      // ...navigate to your offers screen
-    }
-  };
-
-  // useEffect(() => {
-  //   const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
-  //   // When the component is unmounted, remove the listener
-  //   return () => unsubscribe();
-  // }, []);
-
-  // useEffect(() => {
-  //   dynamicLinks()
-  //     .getInitialLink()
-  //     .then(link => {
-  //       console.log(
-  //         '🚀 ~ file: FunPartyInvite.js:104 ~ useEffect ~ link:',
-  //         link,
-  //       );
-  //       if (link.url === 'https://invertase.io/offer') {
-  //         // ...set initial route as offers screen
-  //       }
-  //     });
-  // }, []);
-
   const handleInvitePress = async () => {
     const randomMeetId = generateRandomMeetId();
 
@@ -119,107 +87,59 @@ const FunPartyInvite = ({route, navigation}) => {
     if (guidCheck) {
       setGuidCheck(!guidCheck);
     } else {
-      // const selectedUsersIds = checked.map(index => {
-      //   if (index && friend[index] && friend[index]._id) {
-      //     const fff = friend[index]._id;
-      //     console.log(
-      //       '🚀 ~ file: FunPartyInvite.js:124 ~ selectedUsersIds ~ fff:',
-      //       fff,
-      //     );
-      //     if (!friend[index]._id) {
-      //       return null;
-      //     } else {
-      //       return friend[index]._id;
-      //     }
-      //   }
-      // });
-      // console.log(
-      //   '🚀 ~ file: FunPartyInvite.js:134 ~ selectedUsersIds ~ selectedUsersIds:',
-      //   selectedUsersIds,
-      // );
-
-      // const RoomID = `https://meet.shareslate.fun/${randomMeetId}?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI4QjIzQTRCQTg1REU4NUQyOTIyNzAzRjMxOTQ5NjkzNCIsImlzcyI6IjhCMjNBNEJBODVERTg1RDI5MjI3MDNGMzE5NDk2OTM0Iiwic3ViIjoiKiIsInJvb20iOiIqIiwiaWF0IjoxNzAxMTA4ODA3LCJuYmYiOjE3MDEwOTk3MjAsImV4cCI6MTc0MTgwODUyMH0.VuPKduPs0droOLlH05w9QeL9ZNdEDyWmeSnTFzaXcJQ`;
       const body = {
         users: checked,
         room: generate,
       };
-      console.log(
-        '🚀 ~ file: FunPartyInvite.js:146 ~ handleInvitePress ~ body:',
-        body,
-      );
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
       navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
       setChecked([]);
-      // navigation.reset({
-      //   index: 0,
-      //   routes: [{ name: NAVIGATION_ROUTES.JITSI, RoomID: RoomID }],
-      // });
     }
   };
 
   const toggleCheck = (item, index) => {
-    console.log(
-      '🚀 ~ file: FunPartyInvite.js:158 ~ toggleCheck ~ item:',
-      item._id,
-    );
     setChecked([...checked, item._id]);
-    console.log(
-      '🚀 ~ file: FunPartyInvite.js:163 ~ toggleCheck ~ checked:',
-      checked,
-    );
-    // const isSelected = checked.includes(index);
-    // if (isSelected) {
-    // setChecked(checked.filter(itemIndex => itemIndex !== index));
-
-    // } else {
-    //   if (checked.length < 5) {
-    //     setChecked([...checked, index]);
-    //   } else {
-    //     Alert.alert('Invite contact', 'Up to 5 contacts can be invited.');
-    // }
-    // }
   };
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: theme?.primary}]}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme?.primary,
+          paddingTop: Platform.OS == 'ios' ? 12 : 0,
+        },
+      ]}>
       <StatusBar barStyle={theme.StatusBar} />
 
       {guidCheck ? (
         <View style={{paddingHorizontal: 15, flex: 1}}>
-          <View
-            style={[
-              styles.flexStyle,
-              {
-                // width: width - width / 2 + 40,
-                marginBottom: height - height + 20,
-              },
-            ]}>
-            {/* <Icon
-                name='chevron-back'
-                size={23}
-                color={theme.text}
-                onPress={() => {
-                  navigation.goBack();
+          <View style={[styles.flexStyle]}>
+            <View style={{width: 60}}>
+              <Image
+                source={require('../../Assets/MAINLOGO.png')}
+                style={{
+                  width: 60,
+                  height: 60,
                 }}
-              /> */}
-            {/* <LeftArrow
-                onPress={() => navigationRef.current?.goBack()}
-                color={'white'}
-                width={24}
-                height={24}
-              /> */}
-            <Text style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
+                resizeMode="contain"
+              />
+            </View>
+
+            <Text
+              style={{
+                color: theme.text,
+                fontWeight: 'bold',
+                fontSize: 17,
+              }}>
               FunParty Invite
             </Text>
-            <Icon
-              name="settings-outline"
-              size={22}
-              color={theme.text}
-              style={{paddingRight: 12}}
-              onPress={handleMenu}
-            />
+
+            <TouchableOpacity style={{width: 50}} onPress={handleMenu}>
+              <HamburgerSVG />
+            </TouchableOpacity>
           </View>
           <View style={{position: 'relative'}}>
             <View

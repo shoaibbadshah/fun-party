@@ -122,16 +122,16 @@ const RootNavigator = ({initial}) => {
           <>
             {!isOnBaorded && (
               <Stack.Screen
-                component={OnBoard}
+                component={AuthDecide}
                 name={NAVIGATION_ROUTES.ONBOARD}
                 options={{headerShown: false}}
               />
             )}
-            <Stack.Screen
+            {/* <Stack.Screen
               name={NAVIGATION_ROUTES.AUTH_DECIDE}
               component={AuthDecide}
               options={{headerShown: false}}
-            />
+            /> */}
             <Stack.Screen
               name={NAVIGATION_ROUTES.LOGIN}
               component={Login}

@@ -30,6 +30,21 @@ const SvgMessage = ({color, width, height}) => (
 );
 export default SvgMessage;
 
+export const HamburgerSVG = () => {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      fillRule="evenodd"
+      strokeLinejoin="round"
+      strokeMiterlimit={2}
+      clipRule="evenodd"
+      viewBox="0 0 32 32"
+      width={30}
+      height={30}>
+      <Path d="M6 17v-2h14v2zm0-8V7h20v2zm0 16v-2h8v2" fill="white" />
+    </Svg>
+  );
+};
 export const GoogleSvg = () => {
   return (
     <Svg

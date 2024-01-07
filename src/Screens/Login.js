@@ -190,6 +190,7 @@ const Login = () => {
               color: 'white',
               fontWeight: '600',
               fontSize: 18,
+              marginRight: 15,
             }}>
             OR Sign In
           </Text>

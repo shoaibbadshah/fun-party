@@ -86,11 +86,10 @@ export default function GoogleBTN() {
       style={{
         height: 48,
         width: 56,
-        backgroundColor: '#303D5B',
+        backgroundColor: '#263047',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
-        marginLeft: 15,
       }}
       onPress={googleSignup}>
       <View>
