@@ -33,7 +33,7 @@ export default function GoogleBTN() {
       //   '363861774619-m818tnkj3ofr4ns2ra4on886g2lrcait.apps.googleusercontent.com',
 
       webClientId:
-        '587351668223-sirqqq6fvn423up2mg5seh7aijmj755i.apps.googleusercontent.com',
+        '587351668223-gs7d41fk3n79asnmk2r03t9j661jfm84.apps.googleusercontent.com',
       androidClientId:
         '587351668223-rq66srbd823l1tfup6osh1pnbo5uqeuk.apps.googleusercontent.com',
 
