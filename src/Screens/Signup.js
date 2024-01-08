@@ -141,7 +141,11 @@ const Signup = () => {
               navigation.navigate(NAVIGATION_ROUTES.LOGIN);
             }}
             noBg
-            style={{alignItems: 'flex-end', backgroundColor: '#303D5B'}}>
+            style={{
+              alignItems: 'flex-end',
+              backgroundColor: '#303D5B',
+              marginTop: 18,
+            }}>
             <Text
               style={{
                 color: '#fff',

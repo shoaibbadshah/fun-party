@@ -34,7 +34,7 @@ const RecoverAccount = ({ navigation }) => {
 
   return (
     <KeyboardAwareScrollView
-      style={[styles.container, { backgroundColor: '#1A2236' }]}
+      style={[styles.container, { backgroundColor: 'black' }]}
       contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
     >
       <TextInput

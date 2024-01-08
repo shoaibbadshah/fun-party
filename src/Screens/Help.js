@@ -16,8 +16,8 @@ const Help = ({ navigation }) => {
   return (
     // <Login />
     // <OnBoard />
-    <SafeAreaView style={{ flex: 1, padding: 15, backgroundColor: '#1A2236' }}>
-      <StatusBar barStyle={'default'} backgroundColor={'#1A2236'} />
+    <SafeAreaView style={{ flex: 1, padding: 15, backgroundColor: 'black' }}>
+      <StatusBar barStyle={'default'} backgroundColor={'black'} />
 
       <View
         style={{

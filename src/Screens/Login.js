@@ -56,6 +56,7 @@ const Login = () => {
             style={{
               alignItems: 'flex-end',
               backgroundColor: '#303D5B',
+              marginTop: 18,
             }}>
             <Text
               style={{
