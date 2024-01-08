@@ -113,8 +113,8 @@ const AuthDecide = () => {
           <View
             style={{
               flexDirection: 'row',
-              // justifyContent: 'center',
-              // alignItems: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
             <Image
               source={require('../Assets/EmailLogo.png')}
@@ -124,9 +124,7 @@ const AuthDecide = () => {
               }}
               resizeMode="contain"
             />
-            <Text style={{color: '#ccc', marginLeft: 3}}>
-              Use Email
-            </Text>
+            <Text style={{color: '#ccc', marginLeft: 3}}>Use Email</Text>
           </View>
         </TouchableOpacity>
 
