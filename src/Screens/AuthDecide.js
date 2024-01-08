@@ -106,59 +106,54 @@ const AuthDecide = () => {
         Sign Up
       </Text>
 
-      <View style={{flexDirection: 'row'}}>
-        <View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
-            style={[styles.logos, {alignItems: 'center'}]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../Assets/EmailLogo.png')}
-                style={{
-                  width: '30%',
-                  height: 22,
-                }}
-                resizeMode="contain"
-              />
-              <Text style={{color: '#ccc', marginLeft: 3}}>Use Email</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
-            style={[styles.logos, {marginHorizontal: 5}]}>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
+          style={[styles.logos, {alignItems: 'center'}]}>
+          <View
+            style={{
+              flexDirection: 'row',
+              // justifyContent: 'center',
+              // alignItems: 'center',
+            }}>
             <Image
-              source={require('../Assets/funLogoBtn.png')}
+              source={require('../Assets/EmailLogo.png')}
               style={{
-                height: 32,
+                width: '28%',
+                height: 22,
+              }}
+              resizeMode="contain"
+            />
+            <Text style={{color: '#ccc', marginLeft: 3}}>
+              Use Email
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
+          style={[styles.logos, {marginHorizontal: 5}]}>
+          <Image
+            source={require('../Assets/funLogoBtn.png')}
+            style={{
+              height: 32,
+              width: '50%',
+            }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
+        {Platform.OS === 'ios' ? (
+          <TouchableOpacity onPress={handleOnApplePress} style={[styles.logos]}>
+            <Image
+              source={require('../Assets/AppleLogo.png')}
+              style={{
+                //width: '30%',
+                height: 30,
               }}
               resizeMode="contain"
             />
           </TouchableOpacity>
-        </View>
-
-        {Platform.OS === 'ios' ? (
-          <View>
-            <TouchableOpacity
-              onPress={handleOnApplePress}
-              style={[styles.logos]}>
-              <Image
-                source={require('../Assets/AppleLogo.png')}
-                style={{
-                  //width: '30%',
-                  height: 30,
-                }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </View>
         ) : (
           <View style={styles.logos}>
             <GoogleBTN onStart={true} />
@@ -242,7 +237,8 @@ export default AuthDecide;
 
 const styles = StyleSheet.create({
   logos: {
-    width: Dimensions.get('screen').width * 0.3,
+    width: Dimensions.get('screen').width * 0.28,
+    // width: '0%',
     backgroundColor: '#263047',
     flexDirection: 'row',
     justifyContent: 'center',
