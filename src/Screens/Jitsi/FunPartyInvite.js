@@ -100,7 +100,14 @@ const FunPartyInvite = ({route, navigation}) => {
   };
 
   const toggleCheck = (item, index) => {
-    setChecked([...checked, item._id]);
+    if (checked.includes(item._id)) {
+      // If item is already checked, unselect it
+      setChecked(checked.filter(id => id !== item._id));
+    } else {
+      // If item is not checked, select it
+      setChecked([...checked, item._id]);
+    }
+    // setChecked([...checked, item._id]);
   };
 
   return (
