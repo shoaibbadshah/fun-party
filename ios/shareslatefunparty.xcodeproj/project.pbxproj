@@ -513,7 +513,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = shareslatefunparty/shareslatefunparty.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F93HHH9SDU;
+				DEVELOPMENT_TEAM = DQJ25TZ3M2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = shareslatefunparty/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
@@ -527,7 +527,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.shareslatefunparty;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shareslatefunpartyios;
 				PRODUCT_NAME = shareslatefunparty;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -543,7 +543,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = shareslatefunparty/shareslatefunparty.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F93HHH9SDU;
+				DEVELOPMENT_TEAM = DQJ25TZ3M2;
 				INFOPLIST_FILE = shareslatefunparty/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -556,7 +556,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.shareslatefunparty;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shareslatefunpartyios;
 				PRODUCT_NAME = shareslatefunparty;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

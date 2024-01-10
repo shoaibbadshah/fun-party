@@ -88,7 +88,12 @@ const TermsnConditions = ({route}) => {
               // textAlign: 'justify',
               // color: 'white',
               flexDirection: 'column',
-              marginBottom: Platform.OS === 'android' ? '-75%' : 35,
+              marginBottom:
+                Title == 'Copyright Policy' || Title == 'Cookie Policy'
+                  ? 35
+                  : Title == 'Privacy Policy'
+                  ? '-50%'
+                  : '-75%',
             }}>
             <Text
               style={{

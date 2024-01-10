@@ -68,10 +68,7 @@ export default function GoogleBTN() {
                 '🚀 ~ file: GoogleBTN.js:49 ~ .then ~ e:',
                 JSON.stringify(e.message),
               );
-              Alert.alert(
-                'Network Problem',
-                'Something went wrong, please try again later',
-              );
+              Alert.alert('Network Problem 1.1.1', JSON.stringify(e.message));
             });
         }
       })

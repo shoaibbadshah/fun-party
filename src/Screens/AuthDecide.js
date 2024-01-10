@@ -146,7 +146,7 @@ const AuthDecide = () => {
             <Image
               source={require('../Assets/AppleLogo.png')}
               style={{
-                //width: '30%',
+                width: '30%',
                 height: 30,
               }}
               resizeMode="contain"
