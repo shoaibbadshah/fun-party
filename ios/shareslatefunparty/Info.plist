@@ -57,7 +57,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>We need access to the camera for capturing photos and videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to the photo library to enhance your experience by allowing you to select and upload photos.</string>
+	<key>NSCalendarsUsageDescription</key>
+    	<string>We need access to calendars to schedule your FunParty.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to provide personalized recommendations based on your current area.</string>
 	<key>NSMicrophoneUsageDescription</key>
