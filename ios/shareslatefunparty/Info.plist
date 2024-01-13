@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Share Slate FunParty</string>
+	<string>FunParty</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIcons</key>
@@ -56,16 +56,16 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need access to calendars to schedule your FunParty.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to the camera for capturing photos and videos.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to the photo library to enhance your experience by allowing you to select and upload photos.</string>
-	<key>NSCalendarsUsageDescription</key>
-    	<string>We need access to calendars to schedule your FunParty.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to provide personalized recommendations based on your current area.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to the photo library to enhance your experience by allowing you to select and upload photos.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -88,10 +88,12 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>BootSplash.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
