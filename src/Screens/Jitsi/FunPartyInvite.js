@@ -90,6 +90,7 @@ const FunPartyInvite = ({route, navigation}) => {
       const body = {
         users: checked,
         room: generate,
+        web_link: `https://shareslate.fun/funparty?meet=${randomMeetId}`,
       };
 
       dispatch(inviteToFunParty(body));

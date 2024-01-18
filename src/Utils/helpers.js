@@ -201,7 +201,7 @@ const calculateAge = birthDateString => {
 };
 const generateRandomMeetId = () => {
   const characters =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+';
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let strongId = '';
 
   for (let i = 0; i < 6; i++) {
