@@ -8,6 +8,7 @@ import Login from '../../Screens/Login';
 import Signup from '../../Screens/Signup';
 import OnBoard from '../../Screens/Onboard';
 import {NAVIGATION_ROUTES} from './NavigationRoutes';
+import NotificationScreen from '../../Screens/Notifications';
 
 // import EditProfile from "../../Screens/EditProfile";
 // import SeeAll from "../../Screens/SeeAll";
@@ -220,6 +221,11 @@ const RootNavigator = ({initial}) => {
                 headerShown: false,
                 headerBackTitle: '',
               }}
+            />
+             <Stack.Screen
+              name={NAVIGATION_ROUTES.NOTIFICATON}
+              component={NotificationScreen}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name={NAVIGATION_ROUTES.JITSI}
