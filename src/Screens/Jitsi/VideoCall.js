@@ -29,8 +29,8 @@ const VideoCall = ({route, navigation}) => {
 
   const onCallEnd = async () => {
     // await interStitialAdsWithInAppSHOW();
-    // const body = { room: roomId };
-    // await dispatch(meetExpire_room(body));
+    const body = {room: roomId};
+    await dispatch(meetExpire_room(body));
     navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
   };
 
