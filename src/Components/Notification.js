@@ -43,104 +43,102 @@ export default function Notification({item}) {
     }
   };
 
-  return item.type === NOTIFICATIONS.Watch_Party_Invitation.type ? (
-    <TouchableOpacity
-      onPress={() => handleNavigation(item)}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderRadius: 12,
-        backgroundColor: item.is_read ? theme.notiRead : theme.notiUnread,
-      }}>
-      <View
+  return (
+    item?.type === NOTIFICATIONS?.Watch_Party_Invitation?.type && (
+      <TouchableOpacity
+        onPress={() => handleNavigation(item)}
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          paddingVertical: 5,
-          paddingHorizontal: 15,
+          justifyContent: 'space-between',
+          borderRadius: 12,
+          backgroundColor: item.is_read ? theme.notiRead : theme.notiUnread,
         }}>
-        <View>
-          <Image
-            source={{
-              uri: checkImageUrl(
-                item?.created_by?.profile_image,
-                `https://ui-avatars.com/api/?background=random&name=${item?.created_by?.first_name}+${item?.created_by?.last_name}`,
-              ),
-            }}
-            style={{
-              borderRadius: 40,
-              width: 55,
-              height: 55,
-              marginRight: 5,
-            }}
-            resizeMode="cover"
-          />
-        </View>
         <View
           style={{
             flexDirection: 'row',
-            flex: 1,
-            marginRight: 8,
             alignItems: 'center',
+            paddingVertical: 5,
+            paddingHorizontal: 15,
           }}>
-          <Text
+          <View>
+            <Image
+              source={{
+                uri: checkImageUrl(
+                  item?.created_by?.profile_image,
+                  `https://ui-avatars.com/api/?background=random&name=${item?.created_by?.first_name}+${item?.created_by?.last_name}`,
+                ),
+              }}
+              style={{
+                borderRadius: 40,
+                width: 55,
+                height: 55,
+                marginRight: 5,
+              }}
+              resizeMode="cover"
+            />
+          </View>
+          <View
             style={{
+              flexDirection: 'row',
               flex: 1,
-              flexWrap: 'wrap',
-              color: theme.text,
-              fontSize: 16,
+              marginRight: 8,
+              alignItems: 'center',
             }}>
             <Text
               style={{
+                flex: 1,
+                flexWrap: 'wrap',
                 color: theme.text,
                 fontSize: 16,
-                fontWeight: '800',
-                textTransform: 'capitalize',
               }}>
-              {item?.from?.first_name} {item?.from?.last_name}{' '}
-            </Text>
-
-            {item?.body}
-          </Text>
-        </View>
-        <View style={{alignItems: 'center'}}>
-          {item.type === NOTIFICATIONS.Watch_Party_Invitation.type ? (
-            <TouchableOpacity
-              disabled={item?.is_room_expired}
-              style={{
-                width: 75,
-                height: 35,
-                padding: 0,
-                borderRadius: 52,
-                justifyContent: 'center',
-                alignItems: 'center',
-                elevation: 0,
-                backgroundColor: '#5E72E4',
-              }}
-              onPress={() => handleNavigation(item)}>
               <Text
                 style={{
-                  fontWeight: 'bold',
-                  color: 'white',
+                  color: theme.text,
+                  fontSize: 16,
+                  fontWeight: '800',
+                  textTransform: 'capitalize',
                 }}>
-                {item?.is_room_expired ? 'Expired' : 'Join now'}
+                {item?.from?.first_name} {item?.from?.last_name}{' '}
               </Text>
-            </TouchableOpacity>
-          ) : (
+
+              {item?.body}
+            </Text>
+          </View>
+          <View style={{alignItems: 'center'}}>
+            {item?.type === NOTIFICATIONS.Watch_Party_Invitation.type ? (
+              <TouchableOpacity
+                disabled={item?.is_room_expired}
+                style={{
+                  width: 75,
+                  height: 35,
+                  padding: 0,
+                  borderRadius: 52,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  elevation: 0,
+                  backgroundColor: '#5E72E4',
+                }}
+                onPress={() => handleNavigation(item)}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
+                  {item?.is_room_expired ? 'Expired' : 'Join now'}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={{color: theme.textDarkGrey, fontSize: 12}}>
+                {timeSince(new Date(item.createdAt))}
+              </Text>
+            )}
             <Text style={{color: theme.textDarkGrey, fontSize: 12}}>
               {timeSince(new Date(item.createdAt))}
             </Text>
-          )}
-          <Text style={{color: theme.textDarkGrey, fontSize: 12}}>
-            {timeSince(new Date(item.createdAt))}
-          </Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  ) : (
-    <View>
-      <Text>New text</Text>
-    </View>
+      </TouchableOpacity>
+    )
   );
 }
