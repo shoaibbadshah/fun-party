@@ -14,6 +14,7 @@ export const api = axios.create({
   baseURL: "https://apis.shareslate.fun/api",
   // baseURL: "https://staging.shareslate.fun/api",
   // baseURL: "https://e718-110-38-197-162.ngrok-free.app/api",
+  // baseURL: "https://9fcb-103-12-196-72.ngrok-free.app/api",
 });
 
 api.interceptors.request.use(

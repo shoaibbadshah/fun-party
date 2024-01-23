@@ -170,19 +170,22 @@ const generateLink = async mini_id => {
       {
         link: `https://shareslatefunparty.page.link/u9DC/?${mini_id}`,
         domainUriPrefix: 'https://shareslatefunparty.page.link',
+        analytics: {
+          campaign: 'banner',
+        },
         android: {
           packageName: 'com.shareslatefunparty',
-          minimumVersion: '18',
+          minimumVersion: '1',
         },
         ios: {
           appStoreId: '1670628391',
           bundleId: 'com.ShareSlateFun',
-          minimumVersion: '18',
+          minimumVersion: '1',
         },
       },
       dynamicLinks.ShortLinkType.DEFAULT,
     );
-    console.log('🚀 ~ file: helpers.js:165 ~ generateLink ~ link:', link);
+    // console.log('🚀 ~ file: helpers.js:165 ~ generateLink ~ link:', link);
     return link;
   } catch (error) {
     console.log('🚀 ~ file: helpers.js:163 ~ generateLink ~ error:', error);

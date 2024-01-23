@@ -104,7 +104,7 @@ export default function Notification({item}) {
             {item?.body}
           </Text>
         </View>
-        <View>
+        <View style={{alignItems: 'center'}}>
           {item.type === NOTIFICATIONS.Watch_Party_Invitation.type ? (
             <TouchableOpacity
               disabled={item?.is_room_expired}
@@ -132,6 +132,9 @@ export default function Notification({item}) {
               {timeSince(new Date(item.createdAt))}
             </Text>
           )}
+          <Text style={{color: theme.textDarkGrey, fontSize: 12}}>
+            {timeSince(new Date(item.createdAt))}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
