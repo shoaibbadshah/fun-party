@@ -33,9 +33,10 @@ export default function GoogleBTN() {
       //   '363861774619-m818tnkj3ofr4ns2ra4on886g2lrcait.apps.googleusercontent.com',
 
       webClientId:
-        '587351668223-gs7d41fk3n79asnmk2r03t9j661jfm84.apps.googleusercontent.com',
+        '363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com',
       androidClientId:
-        '587351668223-rq66srbd823l1tfup6osh1pnbo5uqeuk.apps.googleusercontent.com',
+        // '587351668223-rq66srbd823l1tfup6osh1pnbo5uqeuk.apps.googleusercontent.com',
+        '5363861774619-4kls05eci6gtaa84chass694olmf8rms.apps.googleusercontent.com',
 
       iosClientId:
         '587351668223-h86u2pih1ikkds96okqo3sjcp4ma02ik.apps.googleusercontent.com',

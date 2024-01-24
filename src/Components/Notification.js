@@ -65,8 +65,8 @@ export default function Notification({item}) {
             <Image
               source={{
                 uri: checkImageUrl(
-                  item?.created_by?.profile_image,
-                  `https://ui-avatars.com/api/?background=random&name=${item?.created_by?.first_name}+${item?.created_by?.last_name}`,
+                  item?.from?.profile_image,
+                  `https://ui-avatars.com/api/?background=random&name=${item?.from?.first_name}+${item?.from?.last_name}`,
                 ),
               }}
               style={{
@@ -110,8 +110,10 @@ export default function Notification({item}) {
               <TouchableOpacity
                 disabled={item?.is_room_expired}
                 style={{
-                  width: 75,
-                  height: 35,
+                  //width: 75,
+                  paddingHorizontal: 12,
+                  //height: 35,
+                  paddingVertical: 7,
                   padding: 0,
                   borderRadius: 52,
                   justifyContent: 'center',
@@ -128,11 +130,7 @@ export default function Notification({item}) {
                   {item?.is_room_expired ? 'Expired' : 'Join now'}
                 </Text>
               </TouchableOpacity>
-            ) : (
-              <Text style={{color: theme.textDarkGrey, fontSize: 12}}>
-                {timeSince(new Date(item.createdAt))}
-              </Text>
-            )}
+            ) : null}
             <Text style={{color: theme.textDarkGrey, fontSize: 12}}>
               {timeSince(new Date(item.createdAt))}
             </Text>

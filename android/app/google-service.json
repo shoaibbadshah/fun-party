@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "734373969951",
+    "project_id": "funparty-bf8ca",
+    "storage_bucket": "funparty-bf8ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734373969951:android:253f7756f3e9e8d40c152a",
+        "android_client_info": {
+          "package_name": "com.shareslatefunparty"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoV20d1tAhEtRqgIFkX1T-9vO_bfavRpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

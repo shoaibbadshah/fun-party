@@ -1,62 +1,21 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Linking,
-} from 'react-native';
-import {TermsandConditions} from '../Utils/PolicyStrings';
-import {convertMentionsToPlainText} from '../Utils/helpers';
+import {Text, View, Linking, ScrollView, StyleSheet} from 'react-native';
 
 const TermsnConditions = ({route}) => {
   const textData = route?.params?.textData.data;
   const Title = route?.params?.textData.title;
-  // const textData = TermsandConditions;
-  // const singleWord = textData.split(" ");
-  const words = textData?.split(' ');
+
   const emailRegex = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,})/g;
-  // const emailRegex = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,})/g;
 
-  const Regex = /[\n\r\s]/g;
-
-  // Split the text into parts using the emailRegex
   const parts = textData?.split(emailRegex);
-  // const words = singleWord;
+
   const highlightedText = parts?.map((part, index) =>
-    // emailRegex.test(part) ? (
-    //   <Text
-    //     onPress={() => {
-    //       if (part.split("\n")[0].endsWith(".")) {
-    //         Linking.openURL(`mailto:${part.split("\n")[0].slice(0, -1)}`);
-    //       } else {
-    //         Linking.openURL(`mailto:${part.split("\n")[0]}`);
-    //       }
-    //     }}
-    //     key={index}
-    //     style={{ color: "blue" }}
-    //   >
-    //     {part}{" "}
-    //   </Text>
-    // ) : (
-    //   <Text key={index}>{part} </Text>
-    // ),
     index % 2 === 0 ? (
       <Text key={index}>{part}</Text>
     ) : (
       <Text
         onPress={() => {
-          // Alert.alert(part);
-
           Linking.openURL(`mailto:${part}`);
-          // if (part.split("\n")[0].endsWith(".")) {
-          //   Linking.openURL(`mailto:${part.split("\n")[0].slice(0, -1)}`);
-          // } else {
-          //   Linking.openURL(`mailto:${part.split("\n")[0]}`);
-          // }
         }}
         key={index}
         style={{color: 'blue', fontWeight: 'bold'}}>
@@ -70,63 +29,37 @@ const TermsnConditions = ({route}) => {
       <ScrollView
         style={styles.componentView}
         showsVerticalScrollIndicator={false}>
-        <>
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Text
-              style={{
-                fontSize: 25,
-                fontWeight: 'bold',
-                color: 'white',
-                marginBottom: 15,
-              }}>
-              {Title}
-            </Text>
-          </View>
-
-          <View
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Text
             style={{
-              // textAlign: 'justify',
-              // color: 'white',
-              flexDirection: 'column',
-              marginBottom:
-                Title == 'Copyright Policy' || Title == 'Cookie Policy'
-                  ? 35
-                  : Title == 'Privacy Policy'
-                  ? '-50%'
-                  : '-75%',
+              fontSize: 25,
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: 15,
             }}>
-            <Text
-              style={{
-                textAlign: 'justify',
-                color: 'white',
-              }}>
-              {highlightedText}
-              {/* {words.map((word, index) => {
-                if (word.includes("@shareslate.fun")) {
-                  return (
-                    <Text
-                      onPress={() => {
-                        console.log("Press");
-                      }}
-                      key={index}
-                      style={{ textAlign: "justify", color: "red" }}
-                    >
-                      {word}
-                    </Text>
-                  );
-                }
-                return (
-                  <Text
-                    key={index}
-                    style={{ textAlign: "justify", color: "white" }}
-                  >
-                    {convertMentionsToPlainText(word)}{" "}
-                  </Text>
-                );
-              })} */}
-            </Text>
-          </View>
-        </>
+            {Title}
+          </Text>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'column',
+            marginBottom:
+              Title == 'Copyright Policy' || Title == 'Cookie Policy'
+                ? 35
+                : Title == 'Privacy Policy'
+                ? '-10%'
+                : 0,
+            //: '-75%',
+          }}>
+          <Text
+            style={{
+              textAlign: 'justify',
+              color: 'white',
+            }}>
+            {highlightedText}
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );

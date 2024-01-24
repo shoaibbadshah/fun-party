@@ -1,28 +1,26 @@
-import axios from "axios";
+import axios from 'axios';
 
-import Auth from "./Auth";
-import Chat from "./Chat";
-import Minis from "./Minis";
-import Support from "./Support";
-import Profile from "./Profile";
-import { store } from "../Store/store";
-import Notifications from "./Notifications";
+import Auth from './Auth';
+import Chat from './Chat';
+import Minis from './Minis';
+import Support from './Support';
+import Profile from './Profile';
+import {store} from '../Store/store';
+import Notifications from './Notifications';
 
-export const PATHS = "";
+export const PATHS = '';
 
 export const api = axios.create({
-  baseURL: "https://apis.shareslate.fun/api",
-  // baseURL: "https://staging.shareslate.fun/api",
-  // baseURL: "https://e718-110-38-197-162.ngrok-free.app/api",
-  // baseURL: "https://9fcb-103-12-196-72.ngrok-free.app/api",
+  baseURL: 'https://apis.shareslate.fun/api',
+  // baseURL: 'https://da21-37-111-154-252.ngrok-free.app/api',
 });
 
 api.interceptors.request.use(
-  async (config) => {
+  async config => {
     const user = store.getState().user;
 
     if (user && user.data && user.data.token) {
-      config.headers = { Authorization: `Bearer ${user.data.token}` };
+      config.headers = {Authorization: `Bearer ${user.data.token}`};
       // config.headers = {
       //   Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDgwYWM5NTgyOTQyZGYxNTY1YjgyOTMiLCJwaG9uZV9ubyI6InNob2FpYi5yZWFjdG5hdGl2ZUBnbWFpbC5jb20iLCJpYXQiOjE2OTA5MTQ3ODN9.HzXqreqF4jRma1Yb__t0tnOwG1ucRngGDnXrFmkJxEM`,
       // };
@@ -32,7 +30,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
   },
 );

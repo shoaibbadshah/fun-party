@@ -1,26 +1,135 @@
 {
   "project_info": {
-    "project_number": "734373969951",
-    "project_id": "funparty-bf8ca",
-    "storage_bucket": "funparty-bf8ca.appspot.com"
+    "project_number": "363861774619",
+    "project_id": "shareslate-fun-c26f1",
+    "storage_bucket": "shareslate-fun-c26f1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:734373969951:android:253f7756f3e9e8d40c152a",
+        "mobilesdk_app_id": "1:363861774619:android:a270c8e17319e431ffc3be",
         "android_client_info": {
-          "package_name": "com.shareslatefunparty"
+          "package_name": "com.shareslatefun"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "363861774619-l3d7a4g403soer14he8ui5c2ens7bl2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefun",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "363861774619-m818tnkj3ofr4ns2ra4on886g2lrcait.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefun",
+            "certificate_hash": "3d9b871029ff8470e15eaa7eac90700ced33cf65"
+          }
+        },
+        {
+          "client_id": "363861774619-o5gg2ji9j8ek4a1qcubvchevrrau1lfb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefun",
+            "certificate_hash": "051ed7cd13f85aef1cc2244030377a2118bd6704"
+          }
+        },
+        {
+          "client_id": "363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBoV20d1tAhEtRqgIFkX1T-9vO_bfavRpw"
+          "current_key": "AIzaSyAiGtvZUBf1cZWUgf1EG85zzwrCWbQ1hfM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363861774619-2vkmdbeqlk2ssp23s494e25lpc2g2hd5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "363861774619-1oa99eq99q3qm6pimbpb36vod7n147ol.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ShareSlateFun"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363861774619:android:96068625bc5d5a78ffc3be",
+        "android_client_info": {
+          "package_name": "com.shareslatefunparty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363861774619-2tbgs06e155s17pbhv411ohj805d3pae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefunparty",
+            "certificate_hash": "e460dc1f4236ae6733b5819dd9518296f62c372c"
+          }
+        },
+        {
+          "client_id": "363861774619-4kls05eci6gtaa84chass694olmf8rms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefunparty",
+            "certificate_hash": "8b1ad49f8e7806d344c460190c903f13d6fc14ab"
+          }
+        },
+        {
+          "client_id": "363861774619-an92m9ivgs41hvb007almltkvct8j7tv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefunparty",
+            "certificate_hash": "64fffbbf72e0a776cfdabf3ec9dadca56b3a739b"
+          }
+        },
+        {
+          "client_id": "363861774619-e6q3i7ic55hiqiaa10j6keb6a7dski07.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shareslatefunparty",
+            "certificate_hash": "92a99bacb8cbd2a1b3f55eddac9659ed770a6131"
+          }
+        },
+        {
+          "client_id": "363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiGtvZUBf1cZWUgf1EG85zzwrCWbQ1hfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363861774619-2vkmdbeqlk2ssp23s494e25lpc2g2hd5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "363861774619-1oa99eq99q3qm6pimbpb36vod7n147ol.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ShareSlateFun"
+              }
+            }
+          ]
         }
       }
     }
