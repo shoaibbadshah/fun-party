@@ -166,8 +166,8 @@ const NotificationScreen = ({navigation}) => {
           Notifications
         </Text>
 
-        {/* <ITouchableOpacity
-          onPress={openSheet}
+        <ITouchableOpacity
+          // onPress={openSheet}
           style={{
             justifyContent: 'center',
             alignItems: 'flex-end',
@@ -175,8 +175,8 @@ const NotificationScreen = ({navigation}) => {
             boxShadow: 'none',
             width: '20%',
           }}>
-          <ThreeDots width={18} height={18} color={theme.text} />
-        </ITouchableOpacity> */}
+          {/* <ThreeDots width={18} height={18} color={theme.text} /> */}
+        </ITouchableOpacity>
       </View>
 
       {isLoading ? (
@@ -223,7 +223,7 @@ const NotificationScreen = ({navigation}) => {
               onRefresh={onRefresh}
             />
           }
-        //   onEndReached={onEndReachedHandle}
+          //   onEndReached={onEndReachedHandle}
           onEndReachedThreshold={0.5}
           ItemSeparatorComponent={() => <View style={{height: 12}} />}
         />

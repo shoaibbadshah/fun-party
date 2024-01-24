@@ -56,6 +56,7 @@ const VideoCall = ({route, navigation}) => {
         onReadyToClose: async e => {
           onCallEnd();
         },
+
         onParticipantJoined: e => console.log(e, 'onParticipantJoined'),
         onConferenceFocused: e => console.log(e, 'onConferenceFocused'),
         onConferenceLeft: e => {

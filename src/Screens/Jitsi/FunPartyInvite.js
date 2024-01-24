@@ -3,8 +3,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
-  Alert,
+  Image,
   FlatList,
+  Platform,
   TextInput,
   StatusBar,
   StyleSheet,
@@ -12,17 +13,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  Platform,
-  Image,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector, useDispatch} from 'react-redux';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {fetchUserFollowersAndFollowing} from '../../Store/Actions/profile';
 import {inviteToFunParty} from '../../Store/Actions/minis';
 import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 import {
   searchByName,
@@ -32,8 +28,6 @@ import {
 } from '../../Utils/helpers';
 import MinisSearch from '../../Assets/MinisSearch';
 import WatchPartyGuide from '../../Components/WatchPartyGuide';
-import {navigationRef} from '../../Utils/Navigation/navigationRef';
-import LeftArrow from '../../Utils/Assets/Icons/LeftArrow';
 import Menu from '../../Components/Profile/Menu';
 import {HamburgerSVG} from '../../Assets/Svgs';
 import {Path, Svg} from 'react-native-svg';
@@ -82,6 +76,7 @@ const FunPartyInvite = ({route, navigation}) => {
 
   const handleInvitePress = async () => {
     const randomMeetId = generateRandomMeetId();
+    setSearch('');
 
     const generate = await generateLink(randomMeetId);
     console.log(generate, 'new generate', randomMeetId);
@@ -92,8 +87,9 @@ const FunPartyInvite = ({route, navigation}) => {
         users: checked,
         room: generate,
         web_link: `https://shareslate.fun/funparty?meet=${randomMeetId}`,
+        room_code: randomMeetId,
       };
-      console.log(body,'new thingss');
+      console.log(body, 'new thingss');
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);

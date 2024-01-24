@@ -81,7 +81,7 @@ const AuthDecide = () => {
       style={{
         paddingHorizontal: 15,
         backgroundColor: 'black',
-        paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 10,
+        paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 35,
       }}
       contentContainerStyle={{flex: 1}}
       showsVerticalScrollIndicator={false}>
@@ -91,7 +91,7 @@ const AuthDecide = () => {
         source={require('../Assets/MAINLOGO.png')}
         style={{
           width: Dimensions.get('screen').width - 15,
-          height: Dimensions.get('screen').height * 0.3,
+          height: Dimensions.get('screen').height * 0.2,
         }}
         resizeMode="contain"
       />
@@ -100,45 +100,55 @@ const AuthDecide = () => {
         style={{
           textAlign: 'center',
           color: 'white',
-          fontSize: 24,
+          fontSize: 28,
+          marginTop: 40,
           marginBottom: 20,
+          //marginVertical: 15,
         }}>
         Sign Up
       </Text>
 
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity
           onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
-          style={[styles.logos, {alignItems: 'center'}]}>
+          style={[styles.logos]}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Image
-              source={require('../Assets/EmailLogo.png')}
-              style={{
-                width: '28%',
-                height: 22,
-              }}
-              resizeMode="contain"
-            />
+            <View
+              style={[
+                styles.imageViewStyle,
+                {justifyContent: 'center', alignItems: 'center', width: 35},
+              ]}>
+              <Image
+                source={require('../Assets/EmailLogo.png')}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+                resizeMode="contain"
+              />
+            </View>
             <Text style={{color: '#ccc', marginLeft: 3}}>Use Email</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
-          style={[styles.logos, {marginHorizontal: 5}]}>
-          <Image
-            source={require('../Assets/funLogoBtn.png')}
-            style={{
-              height: 32,
-              width: '50%',
-            }}
-            resizeMode="contain"
-          />
+          style={[styles.logos]}>
+          <View style={styles.imageViewStyle}>
+            <Image
+              source={require('../Assets/funLogoBtn.png')}
+              style={{
+                height: '100%',
+                width: '100%',
+              }}
+              resizeMode="contain"
+            />
+          </View>
         </TouchableOpacity>
 
         {Platform.OS === 'ios' ? (
@@ -235,13 +245,17 @@ export default AuthDecide;
 
 const styles = StyleSheet.create({
   logos: {
-    width: Dimensions.get('screen').width * 0.28,
-    // width: '0%',
+    //width: Dimensions.get('screen').width * 0.3,
     backgroundColor: '#263047',
-    flexDirection: 'row',
+
+    paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 120,
-    height: 51,
+    paddingVertical: 5,
+  },
+  imageViewStyle: {
+    height: 35,
+    width: 70,
   },
 });

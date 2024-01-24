@@ -168,8 +168,8 @@ const generateLink = async mini_id => {
   try {
     var link = await dynamicLinks().buildShortLink(
       {
-        link: `https://shareslatefunparty.page.link/u9DC/?${mini_id}`,
-        domainUriPrefix: 'https://shareslatefunparty.page.link',
+        link: `https://appshareslatefun.page.link/PZXe?${mini_id}`,
+        domainUriPrefix: 'https://appshareslatefun.page.link',
         analytics: {
           campaign: 'banner',
         },
@@ -185,7 +185,7 @@ const generateLink = async mini_id => {
       },
       dynamicLinks.ShortLinkType.DEFAULT,
     );
-    // console.log('🚀 ~ file: helpers.js:165 ~ generateLink ~ link:', link);
+    console.log('🚀 ~ file: helpers.js:165 ~ generateLink ~ link:', link);
     return link;
   } catch (error) {
     console.log('🚀 ~ file: helpers.js:163 ~ generateLink ~ error:', error);

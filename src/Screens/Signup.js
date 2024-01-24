@@ -111,8 +111,17 @@ const Signup = () => {
         });
       } catch (error) {
         setIsClicked(false);
-
-        Alert.alert('Registration Error', error.response.data.message);
+        console.log('error deleted', error.response.data);
+        if (error.response.data.message === 'User already exists.') {
+          Alert.alert('Registration error', 'Email already exists.');
+        } else {
+          Alert.alert(
+            'Deleted Account',
+            'The account linked to this email was already deleted. Please contact support for assistance.',
+            // 'There is something wrong with your provided information. Please contact support for assistance.',
+          );
+        }
+        // Alert.alert('Registration Error', error.response.data.message);
       }
     }
   };

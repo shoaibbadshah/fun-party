@@ -223,7 +223,7 @@ const Settings = () => {
 
         <Text style={styles.heading}>Privacy Settings</Text>
         <View style={styles.container}>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.rowText}>Private account</Text>
             <Switch
               trackColor={{false: theme.primary, true: theme.secondary}}
@@ -232,7 +232,7 @@ const Settings = () => {
               onValueChange={val => togglePrivate(val)}
               value={isPrivate}
             />
-          </View>
+          </View> */}
           {/* <TouchableOpacity
             onPress={() => {
               handleRBSheetFollow();
