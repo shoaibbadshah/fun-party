@@ -10,6 +10,8 @@ import {Email, Password} from '../Assets/Svgs';
 import TouchableOpacity from '../Components/TouchableOpacity';
 import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import * as yup from 'yup';
 
 const ForgetPassword = () => {
   const [opt, setOpt] = useState(false);
@@ -62,61 +64,151 @@ const ForgetPassword = () => {
       step: 'second',
       otp: otpVerify,
     };
+    console.log(
+      '🚀 ~ file: ForgetPassword.js:69 ~ otpVerification ~ body:',
+      body,
+    );
     try {
       const {data} = await API.v1.Auth.forgetPassword(body);
+      console.log(
+        '🚀 ~ file: ForgetPassword.js:69 ~ otpVerification ~ data:',
+        data,
+      );
 
       if (data.status == 200) {
         setOpt(!opt);
         setisResetPass(!isResetPass);
       }
     } catch (error) {
+      console.log(
+        '🚀 ~ file: ForgetPassword.js:75 ~ otpVerification ~ error:',
+        error,
+      );
       Alert.alert('OTP Verification Error', 'error while submitting otp');
     }
   };
 
-  const handleSendOtp = async () => {
-    if (!email) {
-      Alert.alert('Error', 'Enter valid email');
-    } else {
-      const body = {
-        step: 'first',
-        email: email,
-      };
+  const handleSendOtp = async (values, resetForm) => {
+    setEmail(values.emailAdress);
+    const body = {
+      step: 'first',
+      email: values.emailAdress,
+    };
 
-      try {
-        const {data} = await API.v1.Auth.forgetPassword(body);
-        setOpt(true);
-        Alert.alert('Verification code sent to your registered email.');
-      } catch (error) {
-        Alert.alert(
-          'Invalid email',
-          'Email does not exist. Please check the email associated with the account',
-        );
-      }
+    try {
+      const {data} = await API.v1.Auth.forgetPassword(body);
+      console.log(
+        '🚀 ~ file: ForgetPassword.js:87 ~ handleSendOtp ~ data:',
+        data,
+      );
+      // resetForm();
+      setOpt(true);
+
+      Alert.alert('Verification code sent to your registered email.');
+    } catch (error) {
+      console.log(
+        '🚀 ~ file: ForgetPassword.js:94 ~ handleSendOtp ~ error:',
+        error,
+      );
+      Alert.alert(
+        'Invalid email',
+        'Email does not exist. Please check the email associated with the account',
+      );
     }
   };
 
+  const loginValidationSchema = yup.object().shape({
+    emailAdress: yup
+      .string()
+      .email('Please enter valid email')
+      .required('Email is required'),
+  });
+
   return (
     <View style={[styles.container, {backgroundColor: 'black'}]}>
-      {isResetPass ? (
-        <TextInput
-          style={{
-            backgroundColor: '#293145',
-            color: 'white',
-            display: opt ? 'none' : 'flex',
-          }}
-          icon={<Email />}
-          placeholder="Email"
-          autoCorrect={false}
-          inputMode="email"
-          keyboardType="email-address"
-          onChangeText={e => {
-            setEmail(e);
-          }}
-        />
-      ) : (
+      <Formik
+        validationSchema={loginValidationSchema}
+        initialValues={{
+          emailAdress: '',
+        }}
+        onSubmit={(values, {resetForm}) => handleSendOtp(values, resetForm)}>
+        {({handleChange, handleSubmit, values, errors}) => (
+          <>
+            {!opt && isResetPass ? (
+              <>
+                <TextInput
+                  style={[
+                    {
+                      backgroundColor: '#293145',
+                      color: 'white',
+                      display: opt ? 'none' : 'flex',
+                    },
+                    errors.emailAdress && {borderColor: 'red'},
+                  ]}
+                  icon={<Email />}
+                  placeholder="Email"
+                  autoCorrect={false}
+                  inputMode="email"
+                  keyboardType="email-address"
+                  // onChangeText={e => {
+                  // setEmail(e);
+                  //}}
+                  value={values.emailAdress}
+                  onChangeText={handleChange('emailAdress')}
+                />
+
+                {errors.emailAdress && (
+                  <Text style={{color: 'red'}}>{errors.emailAdress}</Text>
+                )}
+
+                <TouchableOpacity
+                  style={{marginTop: 15}}
+                  onPress={handleSubmit}>
+                  <Text style={{color: 'white'}}>Send OTP</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
+
+            {opt && isResetPass ? (
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: 'white', fontWeight: '800', fontSize: 18}}>
+                  Enter OTP Code
+                </Text>
+                <OTPInputView
+                  style={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                    height: 55,
+                    marginVertical: 12,
+                    paddingHorizontal: 35,
+                    left: 20,
+                  }}
+                  pinCount={4}
+                  autoFocusOnLoad
+                  codeInputFieldStyle={styles.underlineStyleBase}
+                  onCodeFilled={code => {
+                    otpVerification(code);
+                  }}
+                />
+                <Text style={{color: 'white', fontWeight: '800', fontSize: 14}}>
+                  Didn't get the code?{' '}
+                  <Text
+                    onPress={handleSubmit}
+                    style={{
+                      color: '#5E72E4',
+                      fontWeight: '800',
+                      fontSize: 14,
+                    }}>
+                    Resend
+                  </Text>
+                </Text>
+              </View>
+            ) : null}
+          </>
+        )}
+      </Formik>
+      {!opt && !isResetPass && (
         <>
-          {/* ========================Reset password ========================*/}
           <TextInput
             icon={<Password fill={'#B7B7B7'} />}
             style={{backgroundColor: '#293145', color: 'white'}}
@@ -135,47 +227,11 @@ const ForgetPassword = () => {
               setConfirmPass(e);
             }}
           />
-        </>
-      )}
 
-      {!opt && isResetPass ? (
-        <TouchableOpacity style={{marginTop: 15}} onPress={handleSendOtp}>
-          <Text style={{color: 'white'}}>Send OTP</Text>
-        </TouchableOpacity>
-      ) : isResetPass ? (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{color: 'white', fontWeight: '800', fontSize: 18}}>
-            Enter OTP Code
-          </Text>
-          <OTPInputView
-            style={{
-              backgroundColor: 'black',
-              color: 'white',
-              height: 55,
-              marginVertical: 12,
-              paddingHorizontal: 35,
-              left: 20,
-            }}
-            pinCount={4}
-            autoFocusOnLoad
-            codeInputFieldStyle={styles.underlineStyleBase}
-            onCodeFilled={code => {
-              otpVerification(code);
-            }}
-          />
-          <Text style={{color: 'white', fontWeight: '800', fontSize: 14}}>
-            Didn't get the code?{' '}
-            <Text
-              onPress={handleSendOtp}
-              style={{color: '#5E72E4', fontWeight: '800', fontSize: 14}}>
-              Resend
-            </Text>
-          </Text>
-        </View>
-      ) : (
-        <TouchableOpacity style={{marginTop: 15}} onPress={handleUpdatePass}>
-          <Text style={{color: 'white'}}>Update Password</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={{marginTop: 15}} onPress={handleUpdatePass}>
+            <Text style={{color: 'white'}}>Update Password</Text>
+          </TouchableOpacity>
+        </>
       )}
     </View>
   );
