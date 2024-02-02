@@ -1,4 +1,4 @@
-import { Types } from "../Types/type";
+import {Types} from '../Types/type';
 
 const initialState = {
   profile: [],
@@ -12,7 +12,7 @@ const initialState = {
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
     case Types.FETCH_PROFILE:
-      return { ...state, profile: action.payload.profile };
+      return {...state, profile: action.payload.profile};
     case Types.FETCH_USER_INVITABLES:
       return {
         ...state,
@@ -25,14 +25,14 @@ export default function profileReducer(state = initialState, action) {
       };
     case Types.ON_INVITABLE_USER_TAP:
       let tempUsers = [...state.invitablesUsers];
-      tempUsers = tempUsers.map((user) =>
+      tempUsers = tempUsers.map(user =>
         user._id === action.payload
-          ? { ...user, isSelected: !user.isSelected }
+          ? {...user, isSelected: !user.isSelected}
           : user,
       );
       let tempSelectedUsers = tempUsers
-        .filter((user) => user.isSelected)
-        .map((u) => u._id);
+        .filter(user => user.isSelected)
+        .map(u => u._id);
 
       return {
         ...state,
@@ -42,13 +42,13 @@ export default function profileReducer(state = initialState, action) {
 
     case Types.ON_SELECT_INVITABLE_USERS:
       let allUsers = [...state.invitablesUsers];
-      allUsers = allUsers.map((user) => ({
+      allUsers = allUsers.map(user => ({
         ...user,
-        isSelected: action.payload === "select" ? true : false,
+        isSelected: action.payload === 'select' ? true : false,
       }));
       let tempFilteredSelectedUsers = allUsers
-        .filter((user) => user.isSelected)
-        .map((u) => u._id);
+        .filter(user => user.isSelected)
+        .map(u => u._id);
       return {
         ...state,
         invitablesUsers: allUsers,
@@ -63,7 +63,7 @@ export default function profileReducer(state = initialState, action) {
     case Types.UNBLOCKED_ACCOUNT:
       let tempBlockedAccounts = [...state.blockedAccounts];
       tempBlockedAccounts = tempBlockedAccounts.filter(
-        (acc) => acc._id !== action.payload,
+        acc => acc._id !== action.payload,
       );
     case Types.FETCH_OTHER_PROFILE:
       // let tempBlockedAccounts = [...state.blockedAccounts];
@@ -73,8 +73,6 @@ export default function profileReducer(state = initialState, action) {
         profile: action.payload,
       };
 
-    case Types.SIGN_OUT:
-      return null;
     case Types.OWNER_COUNTRY:
       return {
         ...state,

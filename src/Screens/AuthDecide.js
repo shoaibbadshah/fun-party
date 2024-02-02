@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -18,10 +18,36 @@ import {API} from '../Api';
 import {useDispatch} from 'react-redux';
 import {AppleSVG} from '../Assets/Svgs';
 import GoogleBTN from '../Components/GoogleBTN';
+import AppleConnect from '../Components/AppleConnect';
+import {appOpenAd} from '../Utils/helpers';
+import {interstitial} from '../../App';
+import {AdEventType} from 'react-native-google-mobile-ads';
 
 const AuthDecide = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  console.log('🚀 ~ App ~ loaded:', loaded);
+
+  useEffect(() => {
+    const unsubscribe = interstitial.addAdEventListener(
+      AdEventType.LOADED,
+      () => {
+        setLoaded(true);
+      },
+    );
+
+    // Start loading the interstitial straight away
+    interstitial.load();
+
+    // Unsubscribe from events on unmount
+    return unsubscribe;
+  }, []);
+
+  // No advert ready to show yet
+  if (!loaded) {
+    return null;
+  }
 
   const handleOnApplePress = async () => {
     try {
@@ -79,7 +105,7 @@ const AuthDecide = () => {
   return (
     <KeyboardAwareScrollView
       style={{
-        paddingHorizontal: 15,
+        // paddingHorizontal: 15,
         backgroundColor: 'black',
         paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 35,
       }}
@@ -92,6 +118,7 @@ const AuthDecide = () => {
         style={{
           width: Dimensions.get('screen').width - 15,
           height: Dimensions.get('screen').height * 0.2,
+          paddingHorizontal: 15,
         }}
         resizeMode="contain"
       />
@@ -108,8 +135,14 @@ const AuthDecide = () => {
         Sign Up
       </Text>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          // backgroundColor: 'red',
+        }}>
         <TouchableOpacity
+          // onPress={() => interstitial.show()}
           onPress={() => navigation.navigate(NAVIGATION_ROUTES.SIGNUP)}
           style={[styles.logos]}>
           <View
@@ -136,7 +169,7 @@ const AuthDecide = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate(NAVIGATION_ROUTES.LOGIN)}
           style={[styles.logos]}>
           <View style={styles.imageViewStyle}>
@@ -149,20 +182,27 @@ const AuthDecide = () => {
               resizeMode="contain"
             />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {Platform.OS === 'ios' ? (
-          <TouchableOpacity onPress={handleOnApplePress} style={[styles.logos]}>
-            <Image
-              source={require('../Assets/AppleLogo.png')}
-              style={{
-                width: '30%',
-                height: 30,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+          // <TouchableOpacity onPress={handleOnApplePress} style={[styles.logos]}>
+          //   <Image
+          //     source={require('../Assets/AppleLogo.png')}
+          //     style={{
+          //       width: '30%',
+          //       height: 30,
+          //     }}
+          //     resizeMode="contain"
+          //   />
+          // </TouchableOpacity>
+          // <View style={styles.logos}>
+          // {/* <GoogleBTN onStart={true} />s */}
+          <>
+            <AppleConnect isDecide={true} />
+            <GoogleBTN onStart={true} />
+          </>
         ) : (
+          // </View>
           <View style={styles.logos}>
             <GoogleBTN onStart={true} />
           </View>
@@ -176,6 +216,7 @@ const AuthDecide = () => {
           alignItems: 'center',
           width: '100%',
           paddingBottom: '10%',
+          paddingHorizontal: 15,
         }}>
         <View
           style={{

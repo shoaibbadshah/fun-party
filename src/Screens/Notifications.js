@@ -107,7 +107,6 @@ const NotificationScreen = ({navigation}) => {
   };
   const onEndReachedHandle = () => {
     if (totalPages >= page) {
-      debugger;
       dispatch(
         fetchPaginatedNotificationsList(
           page + 1,
@@ -223,7 +222,7 @@ const NotificationScreen = ({navigation}) => {
               onRefresh={onRefresh}
             />
           }
-          //   onEndReached={onEndReachedHandle}
+          onEndReached={onEndReachedHandle}
           onEndReachedThreshold={0.5}
           ItemSeparatorComponent={() => <View style={{height: 12}} />}
         />

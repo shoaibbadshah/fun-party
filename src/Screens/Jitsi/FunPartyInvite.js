@@ -31,6 +31,8 @@ import WatchPartyGuide from '../../Components/WatchPartyGuide';
 import Menu from '../../Components/Profile/Menu';
 import {HamburgerSVG} from '../../Assets/Svgs';
 import {Path, Svg} from 'react-native-svg';
+import {interstitial} from '../../../App';
+import {AdEventType} from 'react-native-google-mobile-ads';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -62,7 +64,27 @@ const FunPartyInvite = ({route, navigation}) => {
     : userFollowing;
 
   const LOADING = useSelector(e => e.userFollowerFollowing?.isLoading);
+  const [loaded, setLoaded] = useState(false);
 
+  useEffect(() => {
+    const unsubscribe = interstitial.addAdEventListener(
+      AdEventType.LOADED,
+      () => {
+        setLoaded(true);
+      },
+    );
+
+    // Start loading the interstitial straight away
+    interstitial.load();
+
+    // Unsubscribe from events on unmount
+    return unsubscribe;
+  }, []);
+
+  // No advert ready to show yet
+  // if (!loaded) {
+  //   return null;
+  // }
   useEffect(() => {
     dispatch(fetchUserFollowersAndFollowing(setisloading));
     setFriend(allUser);
@@ -93,6 +115,7 @@ const FunPartyInvite = ({route, navigation}) => {
 
       dispatch(inviteToFunParty(body));
       setGuidCheck(!guidCheck);
+      interstitial.loaded ? interstitial.show() : interstitial.load();
       navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
       setChecked([]);
     }
@@ -224,9 +247,7 @@ const FunPartyInvite = ({route, navigation}) => {
                 {isloading ? (
                   <ActivityIndicator color={theme.text} size={'large'} />
                 ) : (
-                  <Text style={{color: theme.text}}>
-                    you don't have any friends yet
-                  </Text>
+                  <Text style={{color: theme.text}}>Ops! No match found.</Text>
                 )}
               </View>
             )}
@@ -286,7 +307,7 @@ const FunPartyInvite = ({route, navigation}) => {
           />
         </View>
       ) : (
-        <WatchPartyGuide />
+        <WatchPartyGuide guidCheck={guidCheck} setGuidCheck={setGuidCheck} />
       )}
       <TouchableOpacity
         onPress={handleInvitePress}

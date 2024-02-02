@@ -24,7 +24,7 @@ import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 
 import ImageCropPicker from 'react-native-image-crop-picker';
 
-export default function AppleConnect() {
+export default function AppleConnect({isDecide}) {
   const theme = useSelector(s => s.theme);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -173,8 +173,8 @@ export default function AppleConnect() {
               backgroundColor: '#303D5B',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 5,
-              marginLeft: 15,
+              borderRadius: isDecide ? 50 : 5,
+              marginLeft: isDecide ? 0 : 15,
             }}>
             <Ionicons name="logo-apple" size={25} color={'white'} />
           </TouchableOpacity>

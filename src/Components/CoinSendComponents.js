@@ -1,21 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, {useRef, useState} from 'react';
 import {
   Dimensions,
   TouchableOpacity,
   View,
   Alert,
   FlatList,
-} from "react-native";
-import RBSheet from "react-native-raw-bottom-sheet";
+} from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 
-import { KeyboardAwareScrollView } from "@codler/react-native-keyboard-aware-scroll-view";
+import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 
-import Text from "./Text";
-import * as ITouchableOpacity from "./TouchableOpacity";
-import { SendCoinAction } from "../Store/Actions/minis";
-import { MinisCOIN, MinisCOINNew } from "../Assets/MinisLike";
+import Text from './Text';
+import * as ITouchableOpacity from './TouchableOpacity';
+import {SendCoinAction} from '../Store/Actions/minis';
+import {MinisCOIN, MinisCOINNew} from '../Assets/MinisLike';
 import {
   BouquetSvg,
   CrownSvg,
@@ -23,64 +23,64 @@ import {
   KissSvg,
   StarsSvg,
   ThumbUpSvg,
-} from "../Assets/Svgs";
+} from '../Assets/Svgs';
 
-const CoinComponent = ({ user, refRBSheetCoin, navigation, onMoveProfile }) => {
+const CoinComponent = ({user, refRBSheetCoin, navigation, onMoveProfile}) => {
   console.log(
-    "🚀 ~ file: CoinSendComponents.js:22 ~ CoinComponent ~ user:",
+    '🚀 ~ file: CoinSendComponents.js:22 ~ CoinComponent ~ user:',
     user,
   );
   const dispatch = useDispatch();
-  const theme = useSelector((e) => e.theme);
+  const theme = useSelector(e => e.theme);
   const amout = [
-    { amt: "10", name: "Flowers" },
-    { amt: "20", name: "Thumbs up" },
-    { amt: "50", name: "Stars" },
-    { amt: "100", name: "Love" },
-    { amt: "250", name: "Kiss" },
-    { amt: "500", name: "Crown" },
+    {amt: '10', name: 'Flowers'},
+    {amt: '20', name: 'Thumbs up'},
+    {amt: '50', name: 'Stars'},
+    {amt: '100', name: 'Love'},
+    {amt: '250', name: 'Kiss'},
+    {amt: '500', name: 'Crown'},
   ];
 
-  const [selectedCoin, setSelectedCoin] = useState("");
+  const [selectedCoin, setSelectedCoin] = useState('');
 
-  const SendCoin = (amt) => {
+  const SendCoin = amt => {
     const body = {
       reciver: user?._id,
       send_coins: amt,
     };
-    console.log("🚀 ~ file: CoinSendComponents.js:39 ~ SendCoin ~ body:", body);
+    console.log('🚀 ~ file: CoinSendComponents.js:39 ~ SendCoin ~ body:', body);
     refRBSheetCoin?.current?.close();
     dispatch(SendCoinAction(body, refRBSheetCoin));
   };
 
-  const yesHandle = (item) => {
-    console.log("🚀 ~ file: CoinSendComponents.js:57 ~ yesHandle ~ amt:", item);
+  const yesHandle = item => {
+    console.log('🚀 ~ file: CoinSendComponents.js:57 ~ yesHandle ~ amt:', item);
     Alert.alert(
-      "Appreciate creator",
+      'Appreciate creator',
       `Sending ${item.name} to ${user?.first_name} ${user?.last_name}. Send?`,
       [
         {
-          text: "Not now",
-          onPress: () => console.log("Cancel option selected"),
-          style: "cancel",
+          text: 'Not now',
+          onPress: () => console.log('Cancel option selected'),
+          style: 'cancel',
         },
         {
-          text: "Send",
+          text: 'Send',
           onPress: () => SendCoin(item.amt),
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
   };
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <>
         <TouchableOpacity
           style={{
-            backgroundColor: selectedCoin == item.amt ? "#687598" : "#303d5b",
-            width: Dimensions.get("screen").width / 2.4,
-            justifyContent: "center",
-            alignItems: "center",
+            backgroundColor: selectedCoin == item.amt ? '#687598' : '#303d5b',
+            width: Dimensions.get('screen').width / 2.4,
+            justifyContent: 'center',
+            alignItems: 'center',
             borderRadius: 12,
             margin: 12,
             //marginBottom: 12,
@@ -92,51 +92,47 @@ const CoinComponent = ({ user, refRBSheetCoin, navigation, onMoveProfile }) => {
           onPress={() => {
             // setSelectedCoin(item.amt);
             yesHandle(item);
-          }}
-        >
-          {item.amt === "10" ? (
+          }}>
+          {item.amt === '10' ? (
             // <HeartSvg size={68} />
             <BouquetSvg size={68} />
-          ) : item.amt === "20" ? (
+          ) : item.amt === '20' ? (
             <ThumbUpSvg size={68} />
-          ) : item.amt === "50" ? (
+          ) : item.amt === '50' ? (
             <StarsSvg size={68} />
-          ) : item.amt === "100" ? (
+          ) : item.amt === '100' ? (
             <HeartSvg size={68} />
-          ) : item.amt === "250" ? (
+          ) : item.amt === '250' ? (
             <KissSvg size={68} />
           ) : (
-            item.amt === "500" && <CrownSvg size={68} />
+            item.amt === '500' && <CrownSvg size={68} />
           )}
           <Text
             style={{
-              color: "white",
+              color: 'white',
 
               fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            {item.name}{" "}
+              fontWeight: 'bold',
+            }}>
+            {item.name}{' '}
           </Text>
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Text
               style={{
-                color: "white",
+                color: 'white',
 
                 fontSize: 18,
-                fontWeight: "bold",
-              }}
-            >
-              {item.amt}{" "}
+                fontWeight: 'bold',
+              }}>
+              {item.amt}{' '}
             </Text>
             <MinisCOINNew
-              color={"#fff"}
+              color={'#fff'}
               // color={guestUser ? '#fff' : likeCOlor}
               width={18}
               height={18}
@@ -156,36 +152,35 @@ const CoinComponent = ({ user, refRBSheetCoin, navigation, onMoveProfile }) => {
         closeOnDragDown={true}
         closeOnPressMask={true}
         dragFromTopOnly={true}
-        height={Dimensions.get("window").height / 1.8}
+        height={Dimensions.get('window').height / 1.8}
         closeOnPressBack={true}
         closeDuration={50}
         onClose={() => {
-          setSelectedCoin("");
+          setSelectedCoin('');
         }}
         openDuration={50}
         customStyles={{
           draggableIcon: {
-            backgroundColor: "grey",
+            backgroundColor: 'grey',
           },
           container: {
-            backgroundColor: "black",
+            backgroundColor: 'black',
             borderRadius: 15,
           },
-        }}
-      >
+        }}>
         {/* <KeyboardAwareScrollView
           contentContainerStyle={{ flex: 1 }}
           extraHeight={30}
         > */}
-        <View style={{ padding: 15 }}>
+        <View style={{padding: 15}}>
           <FlatList
             data={amout}
             numColumns={2}
             showsVerticalScrollIndicator={false}
             renderItem={renderItem}
             contentContainerStyle={{
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
               paddingBottom: 15,
             }}
             // ListFooterComponent={

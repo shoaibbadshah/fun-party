@@ -13,7 +13,7 @@ import {
   Linking,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import CheckBox from 'react-native-check-box';
+
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import OTPInputView from '@twotalltotems/react-native-otp-input';

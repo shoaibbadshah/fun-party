@@ -17,8 +17,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {GoogleSvg} from '../Assets/Svgs';
 import {googleLogin} from '../Store/Actions/auth';
 
-export default function GoogleBTN() {
-  const theme = useSelector(s => s.theme);
+export default function GoogleBTN({onStart}) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -31,7 +30,7 @@ export default function GoogleBTN() {
       //   '363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com',
       // androidClientId:
       //   '363861774619-m818tnkj3ofr4ns2ra4on886g2lrcait.apps.googleusercontent.com',
-
+      // 363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com
       webClientId:
         '363861774619-srob0g3ug0pljnji334gq645l3r6d8js.apps.googleusercontent.com',
       androidClientId:
@@ -39,7 +38,8 @@ export default function GoogleBTN() {
         '5363861774619-4kls05eci6gtaa84chass694olmf8rms.apps.googleusercontent.com',
 
       iosClientId:
-        '587351668223-h86u2pih1ikkds96okqo3sjcp4ma02ik.apps.googleusercontent.com',
+        // '587351668223-h86u2pih1ikkds96okqo3sjcp4ma02ik.apps.googleusercontent.com',
+        '363861774619-bvutkovcb2m24tno902ohb9vnracv7t1.apps.googleusercontent.com',
       scopes: ['profile', 'email'],
     });
 
@@ -69,13 +69,20 @@ export default function GoogleBTN() {
                 '🚀 ~ file: GoogleBTN.js:49 ~ .then ~ e:',
                 JSON.stringify(e.message),
               );
-              Alert.alert('Network Problem 1.1.1', JSON.stringify(e.message));
+              Alert.alert(
+                'Google Connect',
+                'There is a problem connecting to Google, please try again later',
+              );
             });
         }
       })
       .catch(e => {
         setLoading(false);
         console.log('🚀 ~ file: GoogleBTN.js:52 ~ googleUp ~ e:', e);
+        Alert.alert(
+          'Google Connect',
+          'There is a problem connecting to Google, please try again later',
+        );
       });
   }
 
@@ -87,7 +94,8 @@ export default function GoogleBTN() {
         backgroundColor: '#263047',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 5,
+        borderRadius: onStart ? 50 : 5,
+        // left: onStart ? 10 : 0,
       }}
       onPress={googleSignup}>
       <View>

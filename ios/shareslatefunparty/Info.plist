@@ -35,12 +35,36 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.587351668223-h86u2pih1ikkds96okqo3sjcp4ma02ik</string>
+				<string>com.googleusercontent.apps.363861774619-bvutkovcb2m24tno902ohb9vnracv7t1</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>AppBundle</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>org.reactjs.native.example.shareslatefunparty</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>org.reactjs.native.example.shareslatefunparty</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>shareslate.fun</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://funparty.page.link/jofZ</string>
+	</array>
 	<key>LSApplicationCategoryType</key>
 	<string>NSMicrophoneUsageDescriptionin</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -66,6 +90,13 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to the photo library to enhance your experience by allowing you to select and upload photos.</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>SU67R6K2V3.skadnetwork</string>
+		</dict>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

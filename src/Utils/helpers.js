@@ -14,11 +14,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 //   IronSourceBanner,
 // } from '@wowmaking/react-native-iron-source';
 import {useDispatch} from 'react-redux';
-// import {
-//   AdEventType,
-//   InterstitialAd,
-//   TestIds,
-// } from "react-native-google-mobile-ads";
+import {
+  AdEventType,
+  AppOpenAd,
+  InterstitialAd,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 import socketServcies from './socketServcie';
 import CustomAlert from '../Components/CustomAlert';
 import {NAVIGATION_ROUTES} from './Navigation/NavigationRoutes';
@@ -168,8 +169,10 @@ const generateLink = async mini_id => {
   try {
     var link = await dynamicLinks().buildShortLink(
       {
-        link: `https://appshareslatefun.page.link/PZXe?${mini_id}`,
-        domainUriPrefix: 'https://appshareslatefun.page.link',
+        link: `https://funparty.page.link/jofZ?${mini_id}`,
+        domainUriPrefix: 'https://funparty.page.link',
+        // link: `https://appshareslatefun.page.link/PZXe?${mini_id}`,
+        // domainUriPrefix: 'https://appshareslatefun.page.link',
         analytics: {
           campaign: 'banner',
         },
@@ -178,8 +181,8 @@ const generateLink = async mini_id => {
           minimumVersion: '1',
         },
         ios: {
-          appStoreId: '1670628391',
-          bundleId: 'com.ShareSlateFun',
+          appStoreId: '6474907392',
+          bundleId: 'org.reactjs.native.example.shareslatefunparty',
           minimumVersion: '1',
         },
       },
@@ -191,7 +194,11 @@ const generateLink = async mini_id => {
     console.log('🚀 ~ file: helpers.js:163 ~ generateLink ~ error:', error);
   }
 };
+const adUnitId = TestIds.APP_OPEN;
 
+const appOpenAd = AppOpenAd.createForAdRequest(adUnitId, {
+  keywords: ['fashion', 'clothing'],
+});
 const calculateAge = birthDateString => {
   var birthDate = new Date(birthDateString);
   var currentDate = new Date();
@@ -464,5 +471,6 @@ export {
   formatTime,
   handleAddVideo,
   decodeMeetID,
+  appOpenAd,
   // showAlert,
 };

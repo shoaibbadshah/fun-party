@@ -2,24 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>363861774619-bvutkovcb2m24tno902ohb9vnracv7t1.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.363861774619-bvutkovcb2m24tno902ohb9vnracv7t1</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>363861774619-2tbgs06e155s17pbhv411ohj805d3pae.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBq5iZGank2my3lh6qTU34KfAM4KAg2C9U</string>
+	<string>AIzaSyBmMRyvFqaaF9qLBchzv2TnbK1hWpQbOWM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>363861774619</string>
+	<string>734373969951</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>org.reactjs.native.example.shareslatefunparty</string>
 	<key>PROJECT_ID</key>
-	<string>shareslate-fun-c26f1</string>
+	<string>funparty-bf8ca</string>
 	<key>STORAGE_BUCKET</key>
-	<string>shareslate-fun-c26f1.appspot.com</string>
+	<string>funparty-bf8ca.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:363861774619:ios:343256cb676d41d7ffc3be</string>
+	<string>1:734373969951:ios:c97ed1dde79ba38a0c152a</string>
 </dict>
 </plist>
