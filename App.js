@@ -57,7 +57,11 @@ export const appOpenAd = AppOpenAd.createForAdRequest(adUnitIdOPENAPP, {
 const App = () => {
   LogBox.ignoreAllLogs();
   const [initialURL, setInitialURL] = useState();
-
+  useEffect(() => {
+    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+    // When the component is unmounted, remove the listener
+    return () => unsubscribe();
+  }, []);
   useEffect(() => {
     dynamicLinks()
       .getInitialLink()
@@ -127,13 +131,11 @@ const App = () => {
   };
 
   const handleDynamicLink = async link => {
+    console.log('🚀 ~ handleDynamicLink ~ link:', link);
     if (link?.url) {
-      let getId = link.url.split('?').pop();
-      const miniID = getId.split('=').pop();
-
       const getRoute = link.url?.split('?')[1];
+      console.log('🚀 ~ handleDynamicLink ~ getRoute:', getRoute);
 
-      const from = getRoute.split('=')[0];
       navigate(NAVIGATION_ROUTES.JITSI, {
         roomId: getRoute,
       });

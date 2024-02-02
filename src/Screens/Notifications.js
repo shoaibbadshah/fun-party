@@ -43,6 +43,10 @@ const NotificationScreen = ({navigation}) => {
   const [notificationsList, setNotificationsList] = useState([]);
   const [isLoading1, setIsLoading] = useState(false);
 
+  console.log(
+    '🚀 ~ NotificationScreen ~ filteredNotifications:',
+    filteredNotifications[0],
+  );
   const [selectedFilter, setSelectedFilter] = useState({
     value: 'Fun party',
   });
@@ -126,9 +130,6 @@ const NotificationScreen = ({navigation}) => {
     setIsLoading(false);
   };
 
-  console.log(
-    '🚀 ~ file: Notifications.js:42 ~ NotificationScreen ~ navigation:',
-  );
   return (
     <SafeAreaView
       style={{

@@ -166,6 +166,7 @@ const checkAvailability = async () => {
 };
 
 const generateLink = async mini_id => {
+  console.log('🚀 ~ generateLink ~ mini_id:', mini_id);
   try {
     var link = await dynamicLinks().buildShortLink(
       {

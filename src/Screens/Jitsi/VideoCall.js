@@ -14,25 +14,26 @@ import {interstitial} from '../../../App';
 import {AdEventType} from 'react-native-google-mobile-ads';
 
 const VideoCall = ({route, navigation}) => {
-  const roomId = route?.params.roomId;
+  const roomId = route?.params?.roomId; //roomId
+  console.log('🚀 ~ VideoCall ~ roomId:', roomId);
 
   // const rndm = decodeMeetID(roomId);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = interstitial.addAdEventListener(
-      AdEventType.LOADED,
-      () => {
-        setLoaded(true);
-      },
-    );
+  // useEffect(() => {
+  //   const unsubscribe = interstitial.addAdEventListener(
+  //     AdEventType.LOADED,
+  //     () => {
+  //       setLoaded(true);
+  //     },
+  //   );
 
-    // Start loading the interstitial straight away
-    interstitial.load();
+  //   // Start loading the interstitial straight away
+  //   interstitial.load();
 
-    // Unsubscribe from events on unmount
-    return unsubscribe;
-  }, []);
+  //   // Unsubscribe from events on unmount
+  //   return unsubscribe;
+  // }, []);
 
   // useEffect(() => {
   //   const interval = setInterval(

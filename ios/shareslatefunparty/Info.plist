@@ -69,6 +69,8 @@
 	<string>NSMicrophoneUsageDescriptionin</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>  
+<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -80,6 +82,7 @@
 			</dict>
 		</dict>
 	</dict>
+
 	<key>NSCalendarsUsageDescription</key>
 	<string>We need access to calendars to schedule your FunParty.</string>
 	<key>NSCameraUsageDescription</key>
