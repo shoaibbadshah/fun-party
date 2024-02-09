@@ -167,9 +167,9 @@ const FunPartyInvite = ({route, navigation}) => {
             </Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
-                onPress={() =>
-                  // navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)
-                  navigation.navigate(NAVIGATION_ROUTES.PROFILE)
+                onPress={
+                  () => navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)
+                  // navigation.navigate(NAVIGATION_ROUTES.PROFILE)
                 }>
                 <Svg
                   xmlns="http://www.w3.org/2000/svg"
