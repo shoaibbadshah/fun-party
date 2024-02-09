@@ -68,6 +68,7 @@ import LeftArrow from '../Assets/Icons/LeftArrow';
 import TabRoutes from './TabRoutes';
 import Settings from '../../Screens/Settings';
 import AuthDecide from '../../Screens/AuthDecide';
+import Profile from '../../Screens/Profile';
 // import CameraScreenNew from "../../Screens/DeepAR/screens/CameraScreenNew";
 
 const Stack = createStackNavigator();
@@ -222,7 +223,7 @@ const RootNavigator = ({initial}) => {
                 headerBackTitle: '',
               }}
             />
-             <Stack.Screen
+            <Stack.Screen
               name={NAVIGATION_ROUTES.NOTIFICATON}
               component={NotificationScreen}
               options={{headerShown: false}}
@@ -253,6 +254,11 @@ const RootNavigator = ({initial}) => {
                 headerBackTitleVisible: false,
                 title: '',
               }}
+            />
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.PROFILE}
+              component={Profile}
+              options={{headerShown: false}}
             />
           </>
         )}

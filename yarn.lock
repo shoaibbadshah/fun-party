@@ -1513,16 +1513,7 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
-"@jitsi/js-utils@2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@jitsi/js-utils/-/js-utils-2.1.3.tgz#80ff6f2d3e8f3f3b73af1c2694366300e85a4427"
-  integrity sha512-fXoNLu2JHQGPgzjCDG5qWPPStiXI+AxSzu1JIVY4dMULIFsw4a+doMgcjTIlSfB393J2xccKQYwZSejZUn9MEw==
-  dependencies:
-    "@hapi/bourne" "^3.0.0"
-    bowser "2.7.0"
-    js-md5 "0.7.3"
-
-"@jitsi/js-utils@^2.0.0":
+"@jitsi/js-utils@2.2.1", "@jitsi/js-utils@^2.0.0", "@jitsi/js-utils@^2.2.0":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@jitsi/js-utils/-/js-utils-2.2.1.tgz#fffe0340295ea2db1c9f436c90a520e37d760e1a"
   integrity sha512-4Ia4hWO7aTMGbYftzeBr+IHIu5YxiWwTlhsSK34z6925oNAUNI863WgYYGTcXkW/1yuM6LBZrnuZBySDqosISA==
@@ -1536,12 +1527,12 @@
   resolved "https://registry.yarnpkg.com/@jitsi/logger/-/logger-2.0.2.tgz#33491045e8c4b760df9c59e9885f401589f30c13"
   integrity sha512-qwbpRwuwkBFgh0F5jivq/5fAm46yVoXURc5LCklEs8lAShYVangFEXKW7RLpZuZ5nQnrHrlvU8MswQNREmvahg==
 
-"@jitsi/react-native-sdk@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@jitsi/react-native-sdk/-/react-native-sdk-0.5.0.tgz#988248d6358bd03ec9f019250726f2d12d1e392a"
-  integrity sha512-0A/LGRNhEnua1hGguQVHaxj99/bKP0XP9EmdHBoi/+1Dzf4cWFVtOcxkKATX5IrryhDcUEUYxH8I17858izW8A==
+"@jitsi/react-native-sdk@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@jitsi/react-native-sdk/-/react-native-sdk-1.0.3.tgz#1303a38e6fb8bbfa739797bd368fcef307c1acf5"
+  integrity sha512-4rcEmBqY0z9iphhdbvijocQW5Ackz4ilPW2sE58fJWbRqNy6CcPX73mYhSZAD4zPMbRjwW1Dwckqw59nemDcEg==
   dependencies:
-    "@jitsi/js-utils" "2.1.3"
+    "@jitsi/js-utils" "2.2.1"
     "@jitsi/logger" "2.0.2"
     "@jitsi/rtcstats" "9.5.1"
     "@react-navigation/bottom-tabs" "6.5.8"
@@ -1558,7 +1549,7 @@
     js-md5 "0.6.1"
     js-sha512 "0.8.0"
     jwt-decode "2.2.0"
-    lib-jitsi-meet "https://github.com/jitsi/lib-jitsi-meet/releases/download/v1691.0.0+255d8f49/lib-jitsi-meet.tgz"
+    lib-jitsi-meet "https://github.com/jitsi/lib-jitsi-meet/releases/download/v1716.0.0+93c167d3/lib-jitsi-meet.tgz"
     lodash "4.17.21"
     moment "2.29.4"
     moment-duration-format "2.2.2"
@@ -1588,6 +1579,16 @@
   integrity sha512-UDcsNwPvweQ6owV/chwabd6DsQd2aB4qjqrOB+BlJnETZ+zssGYAey3ezaiNK6nxevwBkbHj980/S9v+2y4btg==
   dependencies:
     "@jitsi/js-utils" "^2.0.0"
+    sdp "^3.0.3"
+    uuid "^8.3.2"
+
+"@jitsi/rtcstats@9.6.0":
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/@jitsi/rtcstats/-/rtcstats-9.6.0.tgz#915833ca9f4d944a54743f77e1675796c2d864c1"
+  integrity sha512-eFFD6vp1dFwvjAR+NRjsxlvclFvqo/nbU2RcSLzXbIjG/WraMHyxMSzllZyT1T3S2iPehS4dnZ/ZYyz5WYHTaA==
+  dependencies:
+    "@jitsi/js-utils" "^2.2.0"
+    "@jitsi/logger" "2.0.2"
     sdp "^3.0.3"
     uuid "^8.3.2"
 
@@ -2906,11 +2907,6 @@ boolbase@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
-
-bowser@2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.7.0.tgz#96eab1fa07fab08c1ec4c75977a7c8ddf8e0fe1f"
-  integrity sha512-aIlMvstvu8x+34KEiOHD3AsBgdrzg6sxALYiukOWhFvGMbQI6TRP/iY0LMhUrHs56aD6P1G0Z7h45PUJaa5m9w==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -5722,13 +5718,13 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-"lib-jitsi-meet@https://github.com/jitsi/lib-jitsi-meet/releases/download/v1691.0.0+255d8f49/lib-jitsi-meet.tgz":
+"lib-jitsi-meet@https://github.com/jitsi/lib-jitsi-meet/releases/download/v1716.0.0+93c167d3/lib-jitsi-meet.tgz":
   version "0.0.0"
-  resolved "https://github.com/jitsi/lib-jitsi-meet/releases/download/v1691.0.0+255d8f49/lib-jitsi-meet.tgz#0aebf9cb9dbe02ae8e3fe6b0fac312fdfb9882c9"
+  resolved "https://github.com/jitsi/lib-jitsi-meet/releases/download/v1716.0.0+93c167d3/lib-jitsi-meet.tgz#40c57cb68f69457f5e3d52176d59c240f1719a14"
   dependencies:
-    "@jitsi/js-utils" "2.1.3"
+    "@jitsi/js-utils" "2.2.1"
     "@jitsi/logger" "2.0.2"
-    "@jitsi/rtcstats" "9.5.1"
+    "@jitsi/rtcstats" "9.6.0"
     "@jitsi/sdp-interop" "git+https://github.com/jitsi/sdp-interop#3d49eb4aa26863a3f8d32d7581cdb4321244266b"
     "@jitsi/sdp-simulcast" "0.4.0"
     "@testrtc/watchrtc-sdk" "1.36.3"
@@ -5822,7 +5818,7 @@ lodash.isboolean@^3.0.3:
   resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
   integrity sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==
 
-lodash.isequal@4.5.0:
+lodash.isequal@4.5.0, lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
@@ -6437,12 +6433,17 @@ moment-duration-format@2.2.2:
   resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.2.2.tgz#b957612de26016c9ad9eb6087c054573e5127779"
   integrity sha512-NR6qiYywjQ6UdLCpfpg1WhaWdpAg4EHIaUGaTTgTLrPVooUKp7Q7eN/gmcUxp/dIL7+Rya+P0ApI/Ve1Nq7ycw==
 
+moment-duration-format@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.3.2.tgz#5fa2b19b941b8d277122ff3f87a12895ec0d6212"
+  integrity sha512-cBMXjSW+fjOb4tyaVHuaVE/A5TqkukDWiOfxxAjY+PEqmmBQlLwn+8OzwPiG3brouXKY5Un4pBjAeB6UToXHaQ==
+
 moment@2.29.4:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
-moment@^2.29.4, moment@^2.30.1:
+moment@^2.29.4:
   version "2.30.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
@@ -7262,6 +7263,11 @@ react-native-image-crop-picker@0.38.1:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.38.1.tgz#5973b4a8b55835b987e6be2064de411e849ac005"
   integrity sha512-cF5UQnWplzHCeiCO+aiGS/0VomWaLmFf3nSsgTMPfY+8+99h8N/eHQvVdSF7RsGw50B8394wGeGyqHjjp8YRWw==
 
+react-native-image-viewing@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-viewing/-/react-native-image-viewing-0.2.2.tgz#fb26e57d7d3d9ce4559a3af3d244387c0367242b"
+  integrity sha512-osWieG+p/d2NPbAyonOMubttajtYEYiRGQaJA54slFxZ69j1V4/dCmcrVQry47ktVKy8/qpFwCpW1eT6MH5T2Q==
+
 react-native-immersive-mode@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-immersive-mode/-/react-native-immersive-mode-2.0.1.tgz#3625424511a43863f07d36c700440aa9c0cf0869"
@@ -7339,15 +7345,17 @@ react-native-raw-bottom-sheet@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-raw-bottom-sheet/-/react-native-raw-bottom-sheet-2.2.0.tgz#d11dabb86aadb014273767ef7b554924b13633c5"
   integrity sha512-qL4JKIqvbcVxbkKzeh51hjV7suoJN3ouxzvLmOg0FBUV1yiJAfEbacjQdtRCI6+OU5pyGFBIifLsTXcFDwHggg==
 
-react-native-reanimated@^3.6.1:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.6.2.tgz#8a48c37251cbd3b665a659444fa9778f5b510356"
-  integrity sha512-IIMREMOrxhtK35drfpzh2UhxNqAOHnuvGgtMofj7yHcMj16tmWZR2zFvMUf6z2MfmXv+aVgFQ6TRZ6yKYf7LNA==
+react-native-reanimated@^2.17.0:
+  version "2.17.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.17.0.tgz#eae2308235961cdd79810e01dfdd7e88b1ae5b5c"
+  integrity sha512-bVy+FUEaHXq4i+aPPqzGeor1rG4scgVNBbBz21ohvC7iMpB9IIgvGsmy1FAoodZhZ5sa3EPF67Rcec76F1PXlQ==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.16.7"
     "@babel/preset-typescript" "^7.16.7"
-    convert-source-map "^2.0.0"
     invariant "^2.2.4"
+    lodash.isequal "^4.5.0"
+    setimmediate "^1.0.5"
+    string-hash-64 "^1.0.3"
 
 react-native-safe-area-context@4.7.1:
   version "4.7.1"
@@ -8169,6 +8177,11 @@ strict-uri-encode@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
   integrity sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==
+
+string-hash-64@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/string-hash-64/-/string-hash-64-1.0.3.tgz#0deb56df58678640db5c479ccbbb597aaa0de322"
+  integrity sha512-D5OKWKvDhyVWWn2x5Y9b+37NUllks34q1dCDhk/vYcso9fmhs+Tl3KR/gE4v5UNj2UA35cnX4KdVVGkG1deKqw==
 
 string-length@^4.0.1:
   version "4.0.2"
