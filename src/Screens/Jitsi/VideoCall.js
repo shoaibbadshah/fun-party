@@ -8,17 +8,23 @@ import {
   decodeMeetID,
   generateRandomMeetId,
   interStitialAdsWithInAppSHOW,
+  isIos,
 } from '../../Utils/helpers';
-import {Text, View} from 'react-native';
+import {Text, View, StatusBar} from 'react-native';
 import {interstitial} from '../../../App';
 import {AdEventType} from 'react-native-google-mobile-ads';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 
 const VideoCall = ({route, navigation}) => {
+  const adUnitId = __DEV__
+    ? TestIds.ADAPTIVE_BANNER
+    : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
   const roomId = route?.params?.roomId; //roomId
   console.log('🚀 ~ VideoCall ~ roomId:', roomId);
 
   // const rndm = decodeMeetID(roomId);
   const [loaded, setLoaded] = useState(false);
+  const [adLoaded, setAdLoaded] = useState(true);
 
   // useEffect(() => {
   //   const unsubscribe = interstitial.addAdEventListener(
@@ -57,7 +63,44 @@ const VideoCall = ({route, navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'black',
+        paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 25,
+        // paddingTop: Platform.OS === 'ios' ? '12%' : '8%',
+      }}>
+      <View
+        style={{
+          // borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'black',
+          marginBottom: 5,
+          overflow: 'hidden',
+          display: adLoaded ? 'flex' : 'none',
+        }}>
+        <BannerAd
+          unitId={adUnitId}
+          // unitId={
+          //   isIos
+          //     ? "ca-app-pub-3686012001393355/1947713354"
+          //     : "ca-app-pub-3686012001393355/2445325230"
+          // }
+          size={BannerAdSize.BANNER}
+          onAdFailedToLoad={() => {
+            setAdLoaded(false);
+          }}
+          onAdLoaded={() => {
+            setAdLoaded(true);
+          }}
+          requestOptions={{
+            networkExtras: {
+              collapsible: 'top',
+            },
+          }}
+        />
+      </View>
       <JitsiMeeting
         flags={{
           'call-integration.enabled': true,
