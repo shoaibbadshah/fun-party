@@ -53,7 +53,13 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
           alignItems: 'center',
           //   marginTop: "2%",
         }}>
-        <Text style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
+        <Text
+          style={{
+            color: theme.text,
+            fontWeight: 'bold',
+            fontSize: 17,
+            marginTop: 55,
+          }}>
           Invite sent
         </Text>
 
