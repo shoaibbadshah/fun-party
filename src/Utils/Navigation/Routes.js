@@ -69,6 +69,7 @@ import TabRoutes from './TabRoutes';
 import Settings from '../../Screens/Settings';
 import AuthDecide from '../../Screens/AuthDecide';
 import Profile from '../../Screens/Profile';
+import SearchMini from '../../Screens/SearchMinis';
 // import CameraScreenNew from "../../Screens/DeepAR/screens/CameraScreenNew";
 
 const Stack = createStackNavigator();
@@ -274,6 +275,11 @@ const RootNavigator = ({initial}) => {
             <Stack.Screen
               name={NAVIGATION_ROUTES.EDIT_PROFILE}
               component={EditProfile}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.SEARCH}
+              component={SearchMini}
               options={{headerShown: false}}
             />
           </>

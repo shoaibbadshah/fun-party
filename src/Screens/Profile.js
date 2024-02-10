@@ -12,6 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
+import {navigate} from '../Utils/Navigation/navigationRef';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
@@ -259,16 +260,6 @@ const UserProfile = ({route, navigation}) => {
             }}>
             @{data?.user_name?.toLowerCase()}
           </Text>
-          {/* <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 12,
-            fontWeight: '700',
-            color: theme.text,
-            marginTop: 14,
-          }}>
-          Beautiful emaige shwoing the beach name of the beach and name of
-        </Text> */}
         </View>
         <View
           style={{
@@ -339,30 +330,6 @@ const UserProfile = ({route, navigation}) => {
               Followers
             </Text>
           </TouchableOpacity>
-          {/* <View
-          style={{
-            justifyContent: 'space-evenly',
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-              marginBottom: 6,
-            }}>
-            {Math.abs(data?.fun_count)}
-          </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-            }}>
-            Fun Party
-          </Text>
-        </View> */}
         </View>
         {/* ======================================================= Followers End ========================================= */}
         {/* ======================================================= Edit Profile Start ========================================= */}
@@ -374,7 +341,7 @@ const UserProfile = ({route, navigation}) => {
           }}>
           <ITouchableOpacity
             onPress={() => {
-              navigation.navigate(NAVIGATION_ROUTES.EDIT_PROFILE, {
+              navigate(NAVIGATION_ROUTES.EDIT_PROFILE, {
                 profileData: data,
               });
             }}
@@ -400,33 +367,13 @@ const UserProfile = ({route, navigation}) => {
           <ITouchableOpacity
             style={{
               alignSelf: 'flex-end',
+            }}
+            onPress={() => {
+              navigate(NAVIGATION_ROUTES.SEARCH);
+              // navigate(NAVIGATION_ROUTES.SEARCH)
             }}>
             <GradiantButton />
           </ITouchableOpacity>
-          {/* <RBSheet
-              ref={refRBSheet}
-              closeOnDragDown={true}
-              closeOnPressMask={true}
-              height={Dimensions.get("screen").height / 2.3}
-              closeOnPressBack={true}
-              openDuration={50}
-              customStyles={{
-                draggableIcon: {
-                  backgroundColor: "grey",
-                },
-                container: {
-                  borderRadius: 15,
-                  backgroundColor: theme.primary,
-                },
-              }}
-            >
-              <GradiantButton
-                mini_id={data?._id}
-                onSubmit={handleShareCLose}
-                getRef={(c) => setProductQRref(c)}
-                from={"profile"}
-              />
-            </RBSheet> */}
         </View>
 
         {/* ======================================================= Edit Profile End ========================================= */}
@@ -439,7 +386,7 @@ const UserProfile = ({route, navigation}) => {
             backgroundColor: 'gray',
           }}
         />
-        {/* =======================================================  Line Start ========================================= */}
+        {/* =======================================================  Line End ========================================= */}
 
         <View
           style={{
@@ -494,61 +441,68 @@ const UserProfile = ({route, navigation}) => {
             Previous Fun Party
           </Text>
         </View>
-        {filteredNotifications.map((item, i) => {
-          return (
-            <View style={{marginTop: 16, flexDirection: 'row'}}>
-              <View
-                style={{
-                  width: 30,
-                  height: 30,
-                  borderRadius: 70,
-                  backgroundColor: '#303D5B',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginRight: 10,
-                  alignSelf: 'center',
-                }}>
-                <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
-              </View>
-              <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: theme.text,
-                    marginBottom: 10,
-                  }}>
-                  {item?.from?.first_name} {item?.from?.last_name}{' '}
-                </Text>
+        <View
+        //  style={{height:'10%'}}
+        >
+          {filteredNotifications.map((item, i) => {
+            return (
+              <View style={{marginTop: 16, flexDirection: 'row'}}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    // backgroundColor: 'red',
-                    width: '87%',
+                    width: 30,
+                    height: 30,
+                    borderRadius: 70,
+                    backgroundColor: '#303D5B',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginRight: 10,
+                    alignSelf: 'center',
                   }}>
+                  <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
+                </View>
+                <View>
                   <Text
                     style={{
                       fontSize: 16,
                       fontWeight: '600',
                       color: theme.text,
+                      marginBottom: 10,
                     }}>
-                    invited your for a watch party{' '}
+                    {item?.from?.first_name} {item?.from?.last_name}{' '}
                   </Text>
-
-                  <Text
+                  <View
                     style={{
-                      fontSize: 16,
-                      fontWeight: 'bold',
-                      color: theme.text,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      // backgroundColor: 'red',
+                      width: '87%',
                     }}>
-                    {timeSince(new Date(item.createdAt))}
-                  </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: '600',
+                        color: theme.text,
+                      }}>
+                      invited your for a watch party{' '}
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        color: theme.text,
+                      }}>
+                      {timeSince(new Date(item.createdAt))}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
+        </View>
+        <View>
+          <Text style={{color: 'white'}}>hdfhdfd</Text>
+        </View>
         <Menu ref={refRBSheetFarward} />
       </ScrollView>
     </>
