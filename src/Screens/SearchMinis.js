@@ -10,15 +10,17 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
-import {TabView, SceneMap} from 'react-native-tab-view';
 
 import {
   fetchPreviewMinis,
   fetchSearchMinisAndUsers,
+  userFollow,
+  userFollowing,
 } from '../Store/Actions/minis';
 import Text from '../Components/Text';
 import MinisSearch from '../Assets/MinisSearch';
@@ -26,12 +28,18 @@ import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 import {checkImageUrl} from '../Utils/helpers';
 import {API} from '../Api';
 import LeftArrow from '../Utils/Assets/Icons/LeftArrow';
+import {
+  fetchOtherUserFollowersAndFollowing,
+  fetchUserFollowersAndFollowing,
+} from '../Store/Actions/profile';
 
 const SearchMini = ({route}) => {
   const navigation = useNavigation();
+  const dataProfile = useSelector(e => e.profile?.profile);
+  const screenName = route?.params?.item?.screenName;
 
-  // const {users} = useSelector(({previewMinis}) => previewMinis);
-
+  const data =
+    screenName === 'OtherProfile' ? route?.params?.item?.item : dataProfile;
   const [caption, setCaption] = useState(
     route?.params && route?.params?.hashTag
       ? `${route?.params?.hashTag}`
@@ -43,26 +51,68 @@ const SearchMini = ({route}) => {
   const [page, setPage] = useState(1);
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
+  const [isLoading1, setIsLoading] = useState(false);
+  const [loadingFollow, setLoadingFollow] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const {users} = useSelector(({previewMinis}) => previewMinis);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPreviewMinis(page));
-  }, [page]);
+    setProfileData(
+      route?.params?.item?.item?.is_followed ? 'following' : 'Follow',
+    );
+    if (screenName !== 'OtherProfile') {
+      dispatch(fetchPreviewMinis(page));
+      dispatch(fetchUserFollowersAndFollowing());
+    } else {
+      dispatch(
+        fetchOtherUserMinis(
+          page,
+          {user_id: data?._id},
+          setLoading,
+          // setMinisLoading,
+        ),
+      );
+      dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
+      // dispatch(fetchOtherUserLv(page, {user_id: data?._id}, setLoading)); //long videos instead of mentions
+    }
+  }, [data?._id, page]);
 
   const searchHandle = async () => {
     setIsFocus(true);
     dispatch(fetchSearchMinisAndUsers(caption));
   };
-
-  const _handleIndexChange = index => setIndex(index);
-
+  const handleFollow = async () => {
+    if (profileData === 'following') {
+      const body = {
+        following_id: data?._id,
+      };
+      dispatch(userFollowing(body, setProfileData, setLoadingFollow));
+      data.follower_count = data.follower_count > 0 && data.follower_count - 1;
+    } else {
+      const body = {
+        following_id: data?._id,
+      };
+      dispatch(userFollow(body, setProfileData, false, setLoadingFollow));
+      data.follower_count = data.follower_count + 1;
+    }
+    dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
+  };
   useEffect(() => {
     if (route.params) {
       searchHandle();
     }
   }, [route.params]);
+  const onRefresh = () => {
+    // setSelectedFilter({value: 'all'});
+    setCaption(true);
+    setIsLoading(true);
+    dispatch(fetchSearchMinisAndUsers(1, []));
 
+    setIsLoading(false);
+  };
   const UsersTab = () => (
     <View style={{flex: 1, justifyContent: 'center', marginTop: 15}}>
       {users.length > 0 ? (
@@ -81,23 +131,18 @@ const SearchMini = ({route}) => {
     </View>
   );
 
-  const renderScene = SceneMap({
-    users: UsersTab,
-  });
-  // const [routes] = React.useState([{key: 'users', title: 'Users'}]);
-
   const theme = useSelector(e => e.theme);
 
   const renderProfile = ({item}) => {
     return (
       <Pressable
-        onPress={async () => {
-          const otherUser = await API.v1.Profile.fetchOtherProfile(item?._id);
+        // onPress={async () => {
+        //   const otherUser = await API.v1.Profile.fetchOtherProfile(item?._id);
 
-          navigation.navigate(NAVIGATION_ROUTES.PROFILE_OTHER, {
-            item: {item: otherUser?.data?.data, screenName: 'OtherProfile'},
-          });
-        }}
+        //   navigation.navigate(NAVIGATION_ROUTES.PROFILE_OTHER, {
+        //     item: {item: otherUser?.data?.data, screenName: 'OtherProfile'},
+        //   });
+        // }}
         style={{
           flexDirection: 'row',
           marginBottom: 10,
@@ -133,6 +178,42 @@ const SearchMini = ({route}) => {
               </Text>
             </View>
           </View>
+
+          <TouchableOpacity
+            style={{
+              width: screenName === 'OtherProfile' ? '20%' : '30%',
+              height: 35,
+              padding: 0,
+              borderRadius: 52,
+              elevation: 0,
+              backgroundColor: '#5E72E4',
+              alignSelf: 'flex-end',
+            }}
+            onPress={() =>
+              screenName === 'OtherProfile' ? handleFollow() : ''
+            }>
+            {loadingFollow ? (
+              <ActivityIndicator color={'white'} size={15} />
+            ) : (
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
+                  {profileData === 'following'
+                    ? 'Following'
+                    : data?.following?.includes(dataProfile?._id)
+                    ? 'Follow back'
+                    : 'Follow'}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
       </Pressable>
     );
@@ -176,16 +257,13 @@ const SearchMini = ({route}) => {
         </Text>
 
         <TouchableOpacity
-          // onPress={openSheet}
           style={{
             justifyContent: 'center',
             alignItems: 'flex-end',
             paddingRight: 15,
             boxShadow: 'none',
             width: '20%',
-          }}>
-          {/* <ThreeDots width={18} height={18} color={theme.text} /> */}
-        </TouchableOpacity>
+          }}></TouchableOpacity>
       </View>
 
       <View style={[styles.componentView, {backgroundColor: theme.primary}]}>
@@ -208,16 +286,16 @@ const SearchMini = ({route}) => {
           </TouchableOpacity>
         </View>
         {isFocus ? (
-          <TabView
-            style={{flex: 1, height: 50, width: '100%'}}
-            navigationState={{index, routes}}
-            renderScene={renderScene}
-            indicatorStyle={{backgroundColor: 'white'}}
-            // renderTabBar={_renderTabBar}
-            onIndexChange={_handleIndexChange}
-            animationEnabled
-            tabBarPosition="top"
-            initialLayout={{width: layout.width - 25}}
+          <FlatList
+            data={users}
+            renderItem={UsersTab}
+            refreshControl={
+              <RefreshControl
+                tintColor={'black'}
+                refreshing={isLoading1}
+                onRefresh={onRefresh}
+              />
+            }
           />
         ) : (
           ''

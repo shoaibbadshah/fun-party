@@ -51,6 +51,7 @@ import {
 import {store} from '../Store/store';
 import {fetchNotificationsList} from '../Store/Actions/notifications';
 import Menu from '../Components/Profile/Menu';
+import RightArrow from '../Utils/Assets/Icons/RightArrow';
 
 const UserProfile = ({route, navigation}) => {
   const [visible, setIsVisible] = useState(false);
@@ -369,7 +370,7 @@ const UserProfile = ({route, navigation}) => {
               alignSelf: 'flex-end',
             }}
             onPress={() => {
-              navigate(NAVIGATION_ROUTES.SEARCH);
+              navigation.navigate(NAVIGATION_ROUTES.SEARCH);
               // navigate(NAVIGATION_ROUTES.SEARCH)
             }}>
             <GradiantButton />
@@ -500,11 +501,32 @@ const UserProfile = ({route, navigation}) => {
             );
           })}
         </View>
-        <View>
-          <Text style={{color: 'white'}}>hdfhdfd</Text>
-        </View>
+
         <Menu ref={refRBSheetFarward} />
       </ScrollView>
+      <View style={{backgroundColor: 'black', height: '6%'}}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginLeft: 15,
+              marginTop: 5,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginRight: 15,
+              }}>
+              More activities
+            </Text>
+            <RightArrow width={12} height={10} color={theme.text} />
+          </View>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
