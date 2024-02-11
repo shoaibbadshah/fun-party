@@ -236,7 +236,16 @@ const FunPartyInvite = ({route, navigation}) => {
                 {isloading ? (
                   <ActivityIndicator color={theme.text} size={'large'} />
                 ) : (
-                  <Text style={{color: theme.text}}>Ops! No match found.</Text>
+                  <Text
+                    style={{
+                      color: theme.text,
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      paddingHorizontal: 15,
+                    }}>
+                    Looks like you don't have any friends yet! Invite your
+                    friends for a watch party!
+                  </Text>
                 )}
               </View>
             )}

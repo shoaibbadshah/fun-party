@@ -81,12 +81,12 @@ const VideoCall = ({route, navigation}) => {
           display: adLoaded ? 'flex' : 'none',
         }}>
         <BannerAd
-          unitId={adUnitId}
-          // unitId={
-          //   isIos
-          //     ? "ca-app-pub-3686012001393355/1947713354"
-          //     : "ca-app-pub-3686012001393355/2445325230"
-          // }
+          // unitId={adUnitId}
+          unitId={
+            isIos
+              ? "ca-app-pub-3686012001393355/1947713354"
+              : "ca-app-pub-3686012001393355/2445325230"
+          }
           size={BannerAdSize.BANNER}
           onAdFailedToLoad={() => {
             setAdLoaded(false);
