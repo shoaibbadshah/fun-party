@@ -19,7 +19,7 @@ export const SignInApi = (body, navigation, setLoading) => async dispatch => {
     const data = await API.v1.Auth.login(body);
 
     await dispatch(setUser(data.data.data));
-    navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+    navigation.navigate(NAVIGATION_ROUTES.PROFILE);
     // setLoading(false);
   } catch (error) {
     console.log('🚀 ~ file: auth.js:24 ~ SignInApi ~ error:', error);
@@ -41,7 +41,7 @@ export const SignInGuest = (navigation, setGuestLoading) => async dispatch => {
         guestUser: data?.data?.data,
       },
     });
-    navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+    navigation.navigate(NAVIGATION_ROUTES.PROFILE);
     setGuestLoading(false);
   } catch (error) {
     console.log('🚀 ~ file: auth.js:43 ~ SignInGuest ~ error:', error);
@@ -66,7 +66,7 @@ export const googleLogin = (body, navigation) => async dispatch => {
     const data = await API.v1.Auth.googleLogin(body);
 
     await dispatch(setUser(data.data.data));
-    navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+    navigation.navigate(NAVIGATION_ROUTES.PROFILE);
   } catch (error) {
     Alert.alert(
       'Connecting with google failed',
@@ -81,7 +81,7 @@ export const appleLogin = (body, navigation) => async dispatch => {
 
     if (data.data.data.token) {
       await dispatch(setUser(data.data.data));
-      navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+      navigation.navigate(NAVIGATION_ROUTES.PROFILE);
     } else {
       Alert.alert('login with apple', 'no Token found for this user ');
     }

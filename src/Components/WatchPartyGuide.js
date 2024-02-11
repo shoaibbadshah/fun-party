@@ -53,7 +53,13 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
           alignItems: 'center',
           //   marginTop: "2%",
         }}>
-        <Text style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
+        <Text
+          style={{
+            color: theme.text,
+            fontWeight: 'bold',
+            fontSize: 17,
+            marginTop: 55,
+          }}>
           Invite sent
         </Text>
 
@@ -63,7 +69,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
             // justifyContent: "center",
             // alignItems: "center",ellipsis-horizontal-outline
             marginTop: '12%',
-            height: '62%',
+            // height: '62%',
             borderRadius: 15,
             backgroundColor: theme.name === 'dark' ? '#303d5b' : '#ECECEC',
             padding: 20,
@@ -135,6 +141,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
               width: '100%',
               marginTop: '10%',
               maxHeight: '50%',
+              display: 'none',
               // height: '55%',
               // flex: 0.9,
               //   backgroundColor: "red",
@@ -147,6 +154,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
                 // justifyContent: "center",
                 alignItems: 'center',
                 borderRadius: 15,
+
                 overflow: 'hidden',
               }}>
               <Text
@@ -254,7 +262,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
             color: theme.text,
             fontWeight: 'bold',
             fontSize: 17,
-            marginTop: 50,
+            marginTop: '45%',
           }}>
           Enjoy your FunParty!
         </Text>

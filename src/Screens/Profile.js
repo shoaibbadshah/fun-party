@@ -8,8 +8,11 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
+import {navigate} from '../Utils/Navigation/navigationRef';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
@@ -17,7 +20,7 @@ import Notification from '../Utils/Assets/Icons/Notification';
 import ThreeDotss from './assets/images/ThreeDotss';
 import King from './assets/images/premium-quality';
 import GradiantButton from './assets/images/GradiantButton';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {Path, Svg} from 'react-native-svg';
 import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 
@@ -27,6 +30,7 @@ import {
   convertMentionsToPlainText,
   countFormatter,
   onShareLink,
+  timeSince,
 } from '../Utils/helpers';
 import {
   fetchUserLv,
@@ -45,6 +49,8 @@ import {
   fetchPaginatedOtherUserMinis,
 } from '../Store/Actions/profile';
 import {store} from '../Store/store';
+import {fetchNotificationsList} from '../Store/Actions/notifications';
+import Menu from '../Components/Profile/Menu';
 
 const UserProfile = ({route, navigation}) => {
   const [visible, setIsVisible] = useState(false);
@@ -60,23 +66,22 @@ const UserProfile = ({route, navigation}) => {
   const dispatch = useDispatch();
   const theme = useSelector(e => e.theme);
   const dataProfile = useSelector(e => e.profile?.profile);
-  const otherUserMinisData = useSelector(state => state.otherUserMinis);
-  const userMinisSelfData = useSelector(state => state.userMinis);
-
-  console.log('check username dataProfile=======================', dataProfile);
 
   const screenName = route?.params?.item?.screenName;
-  console.log('check username screenName=======================', screenName);
+  const refRBSheetFarward = useRef(null);
+  const handleMenu = () => {
+    refRBSheetFarward.current.handleMenu();
+  };
+  const {notifications, totalPages, filteredNotifications, isLoading} =
+    useSelector(({notifications}) => notifications);
   // const data = route?.params?.item?.item;
   const data =
     screenName === 'OtherProfile' ? route?.params?.item?.item : dataProfile;
-  console.log('check username data=======================', data);
-
-  const userMinisData =
-    screenName === 'OtherProfile'
-      ? otherUserMinisData?.otherUserMinis
-      : userMinisSelfData?.userMinis;
-
+  console.log('🚀 ~ UserProfile ~ data:', data);
+  const renderItem = useCallback(
+    ({item}) => <Notification item={item} />,
+    [filteredNotifications],
+  );
   useEffect(() => {
     setProfileData(
       route?.params?.item?.item?.is_followed ? 'following' : 'Follow',
@@ -97,38 +102,19 @@ const UserProfile = ({route, navigation}) => {
       dispatch(fetchOtherUserLv(page, {user_id: data?._id}, setLoading)); //long videos instead of mentions
     }
   }, [data?._id]);
-
-  // const handleFollow = async () => {
-  //   if (profileData === 'following') {
-  //     const body = {
-  //       following_id: data?._id,
-  //     };
-  //     dispatch(userFollowing(body, setProfileData, setLoadingFollow));
-  //     data.follower_count = data.follower_count > 0 && data.follower_count - 1;
-  //   } else {
-  //     const body = {
-  //       following_id: data?._id,
-  //     };
-  //     dispatch(userFollow(body, setProfileData, false, setLoadingFollow));
-  //     data.follower_count = data.follower_count + 1;
-  //   }
-  //   dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
-  // };
+  useEffect(() => {
+    dispatch(fetchNotificationsList(1, []));
+  }, []);
 
   return (
-    <KeyboardAwareScrollView
-      style={{
-        paddingHorizontal: 15,
-        backgroundColor: 'black',
-        paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
-      }}
-      contentContainerStyle={{flex: 1}}
-      showsVerticalScrollIndicator={false}>
-      {/* =======================================================Header Start========================================= */}
+    <>
       <View
         style={{
           flexDirection: 'row',
           width: '100%',
+          paddingHorizontal: 15,
+          backgroundColor: 'black',
+          paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
         }}>
         <ITouchableOpacity
           style={{
@@ -147,10 +133,9 @@ const UserProfile = ({route, navigation}) => {
             }}>
             {/* <Notification width={18} height={18} color={theme.text} /> */}
             <TouchableOpacity
-            // onPress={() =>
-            //   navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)
-            // }
-            >
+              onPress={() =>
+                navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)
+              }>
               <Svg
                 xmlns="http://www.w3.org/2000/svg"
                 id="Outline"
@@ -173,9 +158,12 @@ const UserProfile = ({route, navigation}) => {
             fontWeight: 'bold',
             color: theme.text,
           }}>
-          {data?.user_name?.toLowerCase()}
+          {data?.first_name} {data?.last_name}
         </Text>
         <ITouchableOpacity
+          onPress={() => {
+            handleMenu();
+          }}
           style={{
             justifyContent: 'center',
             alignItems: 'flex-end',
@@ -184,394 +172,338 @@ const UserProfile = ({route, navigation}) => {
           <ThreeDotss width={18} height={18} color={theme.text} />
         </ITouchableOpacity>
       </View>
-      {/* =======================================================Header End ========================================= */}
-      {/* =======================================================Image Start========================================= */}
 
-      <View
+      <ScrollView
         style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 10,
-        }}>
+          paddingHorizontal: 15,
+          backgroundColor: 'black',
+          // paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
+        }}
+        contentContainerStyle={{paddingBottom: 75}}
+        showsVerticalScrollIndicator={false}>
+        {/* =======================================================Header Start========================================= */}
+
+        {/* =======================================================Header End ========================================= */}
+        {/* =======================================================Image Start========================================= */}
+
         <View
           style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            backgroundColor: '#303D5B',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 10,
+          }}>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              backgroundColor: '#303D5B',
+            }}>
+            <ITouchableOpacity
+              onPress={() => {
+                setIsVisible(true);
+              }}>
+              <Image
+                source={{
+                  uri: checkImageUrl(
+                    data?.profile_image,
+                    `https://ui-avatars.com/api/?background=random&name=${data?.first_name}+${data?.last_name}`,
+                  ),
+                }}
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+                  resizeMode: 'contain',
+                }}
+              />
+            </ITouchableOpacity>
+            <ImageView
+              images={[
+                {
+                  uri: checkImageUrl(
+                    data?.profile_image,
+                    `https://ui-avatars.com/api/?background=random&name=${data?.first_name}+${data?.last_name}`,
+                  ),
+                },
+              ]}
+              imageIndex={0}
+              visible={visible}
+              animationType={'slide'}
+              onRequestClose={() => setIsVisible(false)}
+            />
+            <King
+              style={{
+                width: 35,
+                height: 35,
+                position: 'absolute',
+
+                left: -18,
+                bottom: -10,
+                display: data?.is_bot ? 'flex' : 'none',
+              }}
+            />
+          </View>
+        </View>
+        {/* =======================================================Image End ========================================= */}
+        {/* =======================================================Image Text & Caption Start ========================================= */}
+
+        <View>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 12,
+              fontWeight: '400',
+              color: theme.text,
+              marginTop: 10,
+            }}>
+            @{data?.user_name?.toLowerCase()}
+          </Text>
+        </View>
+        <View
+          style={{
+            marginTop: 30,
+            alignItems: 'center',
+            display: data?.user_bio ? 'flex' : 'none',
+          }}>
+          <Text numberOfLines={0} style={{fontSize: 12, color: theme.text}}>
+            {data?.user_bio}
+          </Text>
+        </View>
+        {/* =======================================================Image Text & Caption End ========================================= */}
+        {/* ======================================================= Followers Start ========================================= */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            marginTop: 28,
+          }}>
+          <View
+            style={{
+              justifyContent: 'space-evenly',
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 12,
+                fontWeight: '700',
+                color: theme.text,
+                marginBottom: 6,
+              }}>
+              {Math.abs(data?.following_count)}
+            </Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 12,
+                fontWeight: '700',
+                color: theme.text,
+              }}>
+              Following
+            </Text>
+          </View>
+          <TouchableOpacity
+            disabled={true}
+            style={{
+              justifyContent: 'space-evenly',
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 12,
+                fontWeight: '700',
+                color: theme.text,
+                marginBottom: 6,
+              }}>
+              {Math.abs(data?.follower_count)}
+            </Text>
+
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 12,
+                fontWeight: '700',
+                color: theme.text,
+              }}>
+              Followers
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* ======================================================= Followers End ========================================= */}
+        {/* ======================================================= Edit Profile Start ========================================= */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            marginTop: 23,
           }}>
           <ITouchableOpacity
             onPress={() => {
-              setIsVisible(true);
+              navigate(NAVIGATION_ROUTES.EDIT_PROFILE, {
+                profileData: data,
+              });
+            }}
+            style={{
+              alignItems: 'flex-end',
+              backgroundColor: '#303D5B',
+              height: 35,
+              width: 250,
+              borderRadius: 25,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '600',
+                color: theme.text,
+              }}>
+              Edit Profile
+            </Text>
+          </ITouchableOpacity>
+
+          <ITouchableOpacity
+            style={{
+              alignSelf: 'flex-end',
+            }}
+            onPress={() => {
+              // navigate(NAVIGATION_ROUTES.SEARCH);
+              // navigate(NAVIGATION_ROUTES.SEARCH)
+            }}>
+            <GradiantButton />
+          </ITouchableOpacity>
+        </View>
+
+        {/* ======================================================= Edit Profile End ========================================= */}
+        {/* =======================================================  Line Start ========================================= */}
+        <View
+          style={{
+            marginTop: 20,
+            height: 1,
+            width: '100%',
+            backgroundColor: 'gray',
+          }}
+        />
+        {/* =======================================================  Line End ========================================= */}
+
+        <View
+          style={{
+            marginTop: 20,
+            alignSelf: 'center',
+          }}>
+          <ITouchableOpacity
+            onPress={() => {
+              navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+            }}
+            style={{
+              backgroundColor: '#303D5B',
+              alignItems: 'center',
+              height: 45,
+              width: 320,
+              borderRadius: 25,
+              flexDirection: 'row',
             }}>
             <Image
-              source={{
-                uri: checkImageUrl(
-                  data?.profile_image,
-                  `https://ui-avatars.com/api/?background=random&name=${data?.first_name}+${data?.last_name}`,
-                ),
-              }}
+              source={require('../Assets/landing.png')}
               style={{
-                width: 50,
-                height: 50,
-                borderRadius: 25,
-                resizeMode: 'contain',
+                width: 40,
+                height: 40,
+                paddingHorizontal: 15,
+                marginRight: 10,
+                marginLeft: 38,
               }}
+              resizeMode="contain"
             />
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: theme.text,
+              }}>
+              Start Fun Party
+            </Text>
           </ITouchableOpacity>
-          <ImageView
-            images={[
-              {
-                uri: checkImageUrl(
-                  data?.profile_image,
-                  `https://ui-avatars.com/api/?background=random&name=${data?.first_name}+${data?.last_name}`,
-                ),
-              },
-            ]}
-            imageIndex={0}
-            visible={visible}
-            animationType={'slide'}
-            onRequestClose={() => setIsVisible(false)}
-          />
-          <King
-            style={{
-              width: 35,
-              height: 35,
-              position: 'absolute',
-              left: -18,
-              bottom: -10,
-            }}
-          />
         </View>
-      </View>
-      {/* =======================================================Image End ========================================= */}
-      {/* =======================================================Image Text & Caption Start ========================================= */}
-
-      <View>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 12,
-            fontWeight: '400',
-            color: theme.text,
-            marginTop: 10,
-          }}>
-          @{data?.user_name?.toLowerCase()}
-        </Text>
-        {/* <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 12,
-            fontWeight: '700',
-            color: theme.text,
-            marginTop: 14,
-          }}>
-          Beautiful emaige shwoing the beach name of the beach and name of
-        </Text> */}
-      </View>
-      <View
-        style={{
-          marginTop: 30,
-          alignItems: 'center',
-          display: data?.user_bio ? 'flex' : 'none',
-        }}>
-        <Text numberOfLines={0} style={{fontSize: 12, color: theme.text}}>
-          {data?.user_bio}
-        </Text>
-      </View>
-      {/* =======================================================Image Text & Caption End ========================================= */}
-      {/* ======================================================= Followers Start ========================================= */}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          marginTop: 28,
-        }}>
         <View
           style={{
-            justifyContent: 'space-evenly',
+            marginTop: 24,
+            // alignSelf: 'center',
           }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-              marginBottom: 6,
-            }}>
-            {Math.abs(data?.following_count)}
-          </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-            }}>
-            Following
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={{
-            justifyContent: 'space-evenly',
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-              marginBottom: 6,
-            }}>
-            {Math.abs(data?.follower_count)}
-          </Text>
-
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-            }}>
-            Followers
-          </Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            justifyContent: 'space-evenly',
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-              marginBottom: 6,
-            }}>
-            {Math.abs(data?.fun_count)}
-          </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '700',
-              color: theme.text,
-            }}>
-            Fun Party
-          </Text>
-        </View>
-      </View>
-      {/* ======================================================= Followers End ========================================= */}
-      {/* ======================================================= Edit Profile Start ========================================= */}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginTop: 23,
-        }}>
-        <ITouchableOpacity
-          style={{
-            alignItems: 'flex-end',
-            backgroundColor: '#303D5B',
-            height: 35,
-            width: 250,
-            borderRadius: 25,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '600',
-              color: theme.text,
-            }}>
-            Edit Profile
-          </Text>
-        </ITouchableOpacity>
-
-        <ITouchableOpacity
-          style={{
-            alignSelf: 'flex-end',
-          }}>
-
-          <GradiantButton />
-        </ITouchableOpacity>
-        {/* <RBSheet
-              ref={refRBSheet}
-              closeOnDragDown={true}
-              closeOnPressMask={true}
-              height={Dimensions.get("screen").height / 2.3}
-              closeOnPressBack={true}
-              openDuration={50}
-              customStyles={{
-                draggableIcon: {
-                  backgroundColor: "grey",
-                },
-                container: {
-                  borderRadius: 15,
-                  backgroundColor: theme.primary,
-                },
-              }}
-            >
-              <GradiantButton
-                mini_id={data?._id}
-                onSubmit={handleShareCLose}
-                getRef={(c) => setProductQRref(c)}
-                from={"profile"}
-              />
-            </RBSheet> */}
-
-      </View>
-
-      {/* ======================================================= Edit Profile End ========================================= */}
-      {/* =======================================================  Line Start ========================================= */}
-      <View
-        style={{
-          marginTop: 20,
-          height: 1,
-          width: '100%',
-          backgroundColor: 'gray',
-        }}
-      />
-      {/* =======================================================  Line Start ========================================= */}
-
-      <View
-        style={{
-          marginTop: 20,
-          alignSelf: 'center',
-        }}>
-        <ITouchableOpacity
-          style={{
-            backgroundColor: '#303D5B',
-            alignItems: 'center',
-            height: 45,
-            width: 320,
-            borderRadius: 25,
-            flexDirection: 'row',
-          }}>
-          <Image
-            source={require('../Assets/landing.png')}
-            style={{
-              width: 40,
-              height: 40,
-              paddingHorizontal: 15,
-              marginRight: 10,
-              marginLeft: 38,
-            }}
-            resizeMode="contain"
-          />
           <Text
             style={{
               fontSize: 16,
               fontWeight: 'bold',
-              color: theme.text,
+              color: '#6B6B6B',
+              paddingLeft: 15,
             }}>
-            Start Fun Party
+            Previous Fun Party
           </Text>
-        </ITouchableOpacity>
-      </View>
-      <View
-        style={{
-          marginTop: 24,
-          // alignSelf: 'center',
-        }}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: '#6B6B6B',
-            paddingLeft: 15,
-          }}>
-          Previous Fun Party
-        </Text>
-      </View>
-      <View style={{marginTop: 16, flexDirection: 'row'}}>
+        </View>
         <View
-          style={{
-            width: 30,
-            height: 30,
-            borderRadius: 70,
-            backgroundColor: '#303D5B',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-            alignSelf: 'center',
-          }}>
-          <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
+        //  style={{height:'10%'}}
+        >
+          {filteredNotifications.map((item, i) => {
+            return (
+              <View style={{marginTop: 16, flexDirection: 'row'}}>
+                <View
+                  style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: 70,
+                    backgroundColor: '#303D5B',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginRight: 10,
+                    alignSelf: 'center',
+                  }}>
+                  <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: theme.text,
+                      marginBottom: 10,
+                    }}>
+                    {item?.from?.first_name} {item?.from?.last_name}{' '}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      // backgroundColor: 'red',
+                      width: '87%',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: '600',
+                        color: theme.text,
+                      }}>
+                      invited your for a watch party{' '}
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        color: theme.text,
+                      }}>
+                      {timeSince(new Date(item.createdAt))}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            );
+          })}
         </View>
-        <View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '600',
-              color: theme.text,
-              marginBottom: 10,
-            }}>
-            @linelinelinelineline
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '600',
-              color: theme.text,
-            }}>
-            invited your for a watch party{' '}
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: theme.text,
-              }}>
-              3d ago
-            </Text>
-          </Text>
-        </View>
-      </View>
-      <View style={{marginTop: 16, flexDirection: 'row'}}>
-        <View
-          style={{
-            width: 30,
-            height: 30,
-            borderRadius: 70,
-            backgroundColor: '#303D5B',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-            alignSelf: 'center',
-          }}>
-          <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '600',
-              color: theme.text,
-              marginBottom: 10,
-            }}>
-            @linelinelinelineline
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '600',
-              color: theme.text,
-            }}>
-            invited your for a watch party{' '}
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: theme.text,
-              }}>
-              3d ago
-            </Text>
-          </Text>
-        </View>
-      </View>
-    </KeyboardAwareScrollView>
+       
+        <Menu ref={refRBSheetFarward} />
+      </ScrollView>
+    </>
   );
 };
 

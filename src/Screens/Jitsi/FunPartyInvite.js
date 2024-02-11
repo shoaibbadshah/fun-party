@@ -33,6 +33,7 @@ import {HamburgerSVG} from '../../Assets/Svgs';
 import {Path, Svg} from 'react-native-svg';
 import {interstitial} from '../../../App';
 import {AdEventType} from 'react-native-google-mobile-ads';
+import LeftArrow from '../../Utils/Assets/Icons/LeftArrow';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -146,15 +147,18 @@ const FunPartyInvite = ({route, navigation}) => {
       {guidCheck ? (
         <View style={{paddingHorizontal: 15, flex: 1}}>
           <View style={[styles.flexStyle]}>
-            <View style={{width: 50}}>
-              <Image
-                source={require('../../Assets/MAINLOGO.png')}
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-                resizeMode="contain"
-              />
+            <View>
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                // style={{
+                //   justifyContent: 'center',
+                //   alignItems: 'flex-start',
+                //   paddingLeft: 15,
+                //   width: '20%',
+                // }}
+              >
+                <LeftArrow width={18} height={18} color={theme.text} />
+              </TouchableOpacity>
             </View>
 
             <Text
@@ -165,28 +169,12 @@ const FunPartyInvite = ({route, navigation}) => {
               }}>
               FunParty Invite
             </Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity
-                onPress={() =>
-                  // navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)
-                  navigation.navigate(NAVIGATION_ROUTES.PROFILE)
-                }>
-                <Svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  id="Outline"
-                  viewBox="0 0 24 24"
-                  width={24}
-                  height={24}>
-                  <Path
-                    fill={'white'}
-                    d="M22.555,13.662l-1.9-6.836A9.321,9.321,0,0,0,2.576,7.3L1.105,13.915A5,5,0,0,0,5.986,20H7.1a5,5,0,0,0,9.8,0h.838a5,5,0,0,0,4.818-6.338ZM12,22a3,3,0,0,1-2.816-2h5.632A3,3,0,0,1,12,22Zm8.126-5.185A2.977,2.977,0,0,1,17.737,18H5.986a3,3,0,0,1-2.928-3.651l1.47-6.616a7.321,7.321,0,0,1,14.2-.372l1.9,6.836A2.977,2.977,0,0,1,20.126,16.815Z"
-                  />
-                </Svg>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleMenu}>
-                <HamburgerSVG />
-              </TouchableOpacity>
-            </View>
+            {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
+
+            <TouchableOpacity onPress={handleMenu}>
+              <HamburgerSVG />
+            </TouchableOpacity>
+            {/* </View> */}
           </View>
           <View style={{position: 'relative'}}>
             <View

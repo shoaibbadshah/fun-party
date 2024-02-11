@@ -10,7 +10,7 @@ import OnBoard from '../../Screens/Onboard';
 import {NAVIGATION_ROUTES} from './NavigationRoutes';
 import NotificationScreen from '../../Screens/Notifications';
 
-// import EditProfile from "../../Screens/EditProfile";
+import EditProfile from '../../Screens/EditProfile';
 // import SeeAll from "../../Screens/SeeAll";
 // import Followers from "../../Screens/Followers";
 // import ProfileMiniVideo from "../../Components/ProfileMiniVideo";
@@ -69,6 +69,7 @@ import TabRoutes from './TabRoutes';
 import Settings from '../../Screens/Settings';
 import AuthDecide from '../../Screens/AuthDecide';
 import Profile from '../../Screens/Profile';
+import SearchMini from '../../Screens/SearchMinis';
 // import CameraScreenNew from "../../Screens/DeepAR/screens/CameraScreenNew";
 
 const Stack = createStackNavigator();
@@ -214,7 +215,22 @@ const RootNavigator = ({initial}) => {
                 headerTitle: 'Create FunParty',
               }}
             /> */}
-
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.PROFILE}
+              component={Profile}
+              options={{
+                title: '',
+                //headerRight: logoutHeaderRight,
+                // headerLeft: logoutHeaderLeft,
+                headerShown: false,
+                headerStyle: {
+                  borderBottomWidth: 0,
+                  shadowColor: 'transparent',
+                  elevation: 0,
+                  backgroundColor: theme.primary,
+                },
+              }}
+            />
             <Stack.Screen
               name={NAVIGATION_ROUTES.FUN_PARTY_INVITE}
               component={FunPartyInvite}
@@ -255,9 +271,15 @@ const RootNavigator = ({initial}) => {
                 title: '',
               }}
             />
+
             <Stack.Screen
-              name={NAVIGATION_ROUTES.PROFILE}
-              component={Profile}
+              name={NAVIGATION_ROUTES.EDIT_PROFILE}
+              component={EditProfile}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={NAVIGATION_ROUTES.SEARCH}
+              component={SearchMini}
               options={{headerShown: false}}
             />
           </>
