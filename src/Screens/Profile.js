@@ -369,7 +369,7 @@ const UserProfile = ({route, navigation}) => {
               alignSelf: 'flex-end',
             }}
             onPress={() => {
-              navigate(NAVIGATION_ROUTES.SEARCH);
+              // navigate(NAVIGATION_ROUTES.SEARCH);
               // navigate(NAVIGATION_ROUTES.SEARCH)
             }}>
             <GradiantButton />
@@ -500,9 +500,7 @@ const UserProfile = ({route, navigation}) => {
             );
           })}
         </View>
-        <View>
-          <Text style={{color: 'white'}}>hdfhdfd</Text>
-        </View>
+       
         <Menu ref={refRBSheetFarward} />
       </ScrollView>
     </>
