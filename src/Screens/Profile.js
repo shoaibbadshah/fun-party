@@ -474,7 +474,7 @@ const UserProfile = ({route, navigation}) => {
                   <View
                     style={{
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
+                      // justifyContent: 'space-evenly',
                       // backgroundColor: 'red',
                       width: '87%',
                     }}>
@@ -483,6 +483,7 @@ const UserProfile = ({route, navigation}) => {
                         fontSize: 16,
                         fontWeight: '600',
                         color: theme.text,
+                        marginRight:20
                       }}>
                       invited your for a watch party{' '}
                     </Text>

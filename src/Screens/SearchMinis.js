@@ -49,13 +49,11 @@ const SearchMini = ({route}) => {
   );
   const [isFocus, setIsFocus] = useState(false);
   const [page, setPage] = useState(1);
-  const layout = useWindowDimensions();
-  const [index, setIndex] = useState(0);
   const [isLoading1, setIsLoading] = useState(false);
   const [loadingFollow, setLoadingFollow] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const theme = useSelector(e => e.theme);
   const {users} = useSelector(({previewMinis}) => previewMinis);
   const dispatch = useDispatch();
 
@@ -64,19 +62,10 @@ const SearchMini = ({route}) => {
       route?.params?.item?.item?.is_followed ? 'following' : 'Follow',
     );
     if (screenName !== 'OtherProfile') {
-      dispatch(fetchPreviewMinis(page));
       dispatch(fetchUserFollowersAndFollowing());
     } else {
-      dispatch(
-        fetchOtherUserMinis(
-          page,
-          {user_id: data?._id},
-          setLoading,
-          // setMinisLoading,
-        ),
-      );
+      dispatch(fetchOtherUserMinis(page, {user_id: data?._id}, setLoading));
       dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
-      // dispatch(fetchOtherUserLv(page, {user_id: data?._id}, setLoading)); //long videos instead of mentions
     }
   }, [data?._id, page]);
 
@@ -84,6 +73,14 @@ const SearchMini = ({route}) => {
     setIsFocus(true);
     dispatch(fetchSearchMinisAndUsers(caption));
   };
+  useEffect(() => {
+    if (route.params) {
+      searchHandle();
+    }
+  }, [route.params]);
+
+  // ================================================== Handle Follow start =====================================================
+
   const handleFollow = async () => {
     if (profileData === 'following') {
       const body = {
@@ -100,20 +97,16 @@ const SearchMini = ({route}) => {
     }
     dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
   };
-  useEffect(() => {
-    if (route.params) {
-      searchHandle();
-    }
-  }, [route.params]);
+  // ================================================== Handle Follow end =====================================================
+
   const onRefresh = () => {
-    // setSelectedFilter({value: 'all'});
     setCaption(true);
     setIsLoading(true);
     dispatch(fetchSearchMinisAndUsers(1, []));
 
     setIsLoading(false);
   };
-  const UsersTab = () => (
+  const UsersSearch = () => (
     <View style={{flex: 1, justifyContent: 'center', marginTop: 15}}>
       {users.length > 0 ? (
         <FlatList data={users} renderItem={renderProfile} />
@@ -131,28 +124,26 @@ const SearchMini = ({route}) => {
     </View>
   );
 
-  const theme = useSelector(e => e.theme);
-
   const renderProfile = ({item}) => {
     return (
-      <Pressable
-        // onPress={async () => {
-        //   const otherUser = await API.v1.Profile.fetchOtherProfile(item?._id);
-
-        //   navigation.navigate(NAVIGATION_ROUTES.PROFILE_OTHER, {
-        //     item: {item: otherUser?.data?.data, screenName: 'OtherProfile'},
-        //   });
-        // }}
+      <View
         style={{
+          flex: 1,
           flexDirection: 'row',
           marginBottom: 10,
           alignSelf: 'center',
           width: '90%',
           height: 45,
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
           marginHorizontal: 15,
+          backgroundColor: 'red',
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
           <Image
             source={{
               uri: checkImageUrl(
@@ -169,41 +160,37 @@ const SearchMini = ({route}) => {
             }}
             resizeMode="cover"
           />
-          <View style={{marginLeft: 10, justifyContent: 'center'}}>
-            <View>
-              <Text style={{color: theme.text, fontWeight: 'bold'}}>
-                {item?.first_name
-                  ? item?.first_name + ' ' + item?.last_name
-                  : item?.user_name}
-              </Text>
-            </View>
+          <View style={{marginLeft: 10}}>
+            <Text style={{color: theme.text, fontWeight: 'bold'}}>
+              {item?.first_name
+                ? item?.first_name + ' ' + item?.last_name
+                : item?.user_name}
+            </Text>
           </View>
 
           <TouchableOpacity
             style={{
-              width: screenName === 'OtherProfile' ? '20%' : '30%',
+              width: 70,
               height: 35,
               padding: 0,
-              borderRadius: 52,
-              elevation: 0,
+              borderRadius: 10,
+              // elevation: 0,
               backgroundColor: '#5E72E4',
-              alignSelf: 'flex-end',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
             onPress={() =>
-              screenName === 'OtherProfile' ? handleFollow() : ''
+              handleFollow() 
             }>
             {loadingFollow ? (
               <ActivityIndicator color={'white'} size={15} />
             ) : (
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+              <View style={{}}>
                 <Text
                   style={{
                     fontWeight: 'bold',
                     color: 'white',
+                    // alignSelf: 'center',
                   }}>
                   {profileData === 'following'
                     ? 'Following'
@@ -215,7 +202,7 @@ const SearchMini = ({route}) => {
             )}
           </TouchableOpacity>
         </View>
-      </Pressable>
+      </View>
     );
   };
 
@@ -279,6 +266,7 @@ const SearchMini = ({route}) => {
             }}
             placeholder={'Enter text to search'}
           />
+
           <TouchableOpacity
             disabled={caption === '' ? true : false}
             onPress={searchHandle}>
@@ -288,7 +276,7 @@ const SearchMini = ({route}) => {
         {isFocus ? (
           <FlatList
             data={users}
-            renderItem={UsersTab}
+            renderItem={UsersSearch}
             refreshControl={
               <RefreshControl
                 tintColor={'black'}
