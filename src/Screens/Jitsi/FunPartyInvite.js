@@ -229,7 +229,8 @@ const FunPartyInvite = ({route, navigation}) => {
             ListEmptyComponent={() => (
               <View
                 style={{
-                  height: height - 200,
+                  // height: height - 200,
+                  flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>

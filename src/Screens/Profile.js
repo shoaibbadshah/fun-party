@@ -486,7 +486,7 @@ const UserProfile = ({route, navigation}) => {
                             fontWeight: '600',
                             color: theme.text,
                           }}>
-                          invited your for a watch party{' '}
+                          invited you for a watch party{' '}
                         </Text>
 
                         <Text
