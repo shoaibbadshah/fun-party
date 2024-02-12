@@ -99,12 +99,12 @@ const App = () => {
   }, []);
 
   // useEffect(() => {
-  appOpenAd.load();
-  appOpenAd.loaded ? appOpenAd.show() : appOpenAd.load();
-  // console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
-  // appOpenAd.show();
+  // appOpenAd.load();
+  // appOpenAd.loaded ? appOpenAd.show() : appOpenAd.load();
+  // // console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
+  // // appOpenAd.show();
   // }, [appOpenAd.loaded]);
-  console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
+  // console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
 
   const requestPermission = async () => {
     const authorizationStatus = await messaging().requestPermission();

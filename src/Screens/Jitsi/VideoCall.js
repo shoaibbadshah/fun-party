@@ -59,7 +59,7 @@ const VideoCall = ({route, navigation}) => {
     const body = {room: roomId};
     interstitial.loaded ? interstitial.show() : interstitial.load();
     await dispatch(meetExpire_room(body));
-    navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+    navigation.replace(NAVIGATION_ROUTES.PROFILE);
   };
 
   return (
@@ -84,8 +84,8 @@ const VideoCall = ({route, navigation}) => {
           // unitId={adUnitId}
           unitId={
             isIos
-              ? "ca-app-pub-3686012001393355/1947713354"
-              : "ca-app-pub-3686012001393355/2445325230"
+              ? 'ca-app-pub-3686012001393355/1947713354'
+              : 'ca-app-pub-3686012001393355/2445325230'
           }
           size={BannerAdSize.BANNER}
           onAdFailedToLoad={() => {

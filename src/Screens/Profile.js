@@ -457,8 +457,24 @@ const UserProfile = ({route, navigation}) => {
                     alignItems: 'center',
                     marginRight: 10,
                     alignSelf: 'center',
+                    overflow: 'hidden',
                   }}>
-                  <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
+                  {/* <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text> */}
+                  {/* <Image source={{uri}} /> */}
+                  <Image
+                    source={{
+                      uri: checkImageUrl(
+                        item?.from?.profile_image,
+                        `https://ui-avatars.com/api/?background=random&name=${item?.from?.first_name}+${item?.from?.last_name}`,
+                      ),
+                    }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      // borderRadius: 25,
+                      resizeMode: 'cover',
+                    }}
+                  />
                 </View>
                 <View>
                   <Text
@@ -500,7 +516,7 @@ const UserProfile = ({route, navigation}) => {
             );
           })}
         </View>
-       
+
         <Menu ref={refRBSheetFarward} />
       </ScrollView>
     </>
