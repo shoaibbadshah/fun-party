@@ -49,11 +49,11 @@ export const interstitial = InterstitialAd.createForAdRequest(
     keywords: ['fashion', 'clothing'],
   },
 );
-const adUnitIdOPENAPP = 'ca-app-pub-3686012001393355/2221433064';
+// const adUnitIdOPENAPP = 'ca-app-pub-3686012001393355/2221433064';
 
-export const appOpenAd = AppOpenAd.createForAdRequest(adUnitIdOPENAPP, {
-  keywords: ['fashion', 'clothing'],
-});
+// export const appOpenAd = AppOpenAd.createForAdRequest(adUnitIdOPENAPP, {
+//   keywords: ['fashion', 'clothing'],
+// });
 const App = () => {
   LogBox.ignoreAllLogs();
   const [initialURL, setInitialURL] = useState();
