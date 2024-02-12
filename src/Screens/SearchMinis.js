@@ -38,8 +38,8 @@ const SearchMini = ({route}) => {
   const dataProfile = useSelector(e => e.profile?.profile);
   const screenName = route?.params?.item?.screenName;
 
-  const data =
-    screenName === 'OtherProfile' ? route?.params?.item?.item : dataProfile;
+  const data = dataProfile;
+  console.log('check data===================================', data);
   const [caption, setCaption] = useState(
     route?.params && route?.params?.hashTag
       ? `${route?.params?.hashTag}`
@@ -65,7 +65,7 @@ const SearchMini = ({route}) => {
       dispatch(fetchUserFollowersAndFollowing());
     } else {
       dispatch(fetchOtherUserMinis(page, {user_id: data?._id}, setLoading));
-      dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
+      dispatch(fetchOtherUserFollowersAndFollowing(data?._id, setLoading));
     }
   }, [data?._id, page]);
 
@@ -106,6 +106,7 @@ const SearchMini = ({route}) => {
 
     setIsLoading(false);
   };
+  // ================================================ Users Search Start ========================================================
   const UsersSearch = () => (
     <View style={{flex: 1, justifyContent: 'center', marginTop: 15}}>
       {users.length > 0 ? (
@@ -124,6 +125,9 @@ const SearchMini = ({route}) => {
     </View>
   );
 
+  // ================================================ Users Search End ========================================================
+  // ================================================ Users Search RenderProfile Start========================================================
+
   const renderProfile = ({item}) => {
     return (
       <View
@@ -131,18 +135,16 @@ const SearchMini = ({route}) => {
           flex: 1,
           flexDirection: 'row',
           marginBottom: 10,
-          alignSelf: 'center',
           width: '90%',
           height: 45,
-          // justifyContent: 'space-between',
           marginHorizontal: 15,
-          backgroundColor: 'red',
+          alignItems: 'center',
         }}>
         <View
           style={{
+            flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
           }}>
           <Image
             source={{
@@ -167,21 +169,20 @@ const SearchMini = ({route}) => {
                 : item?.user_name}
             </Text>
           </View>
-
+        </View>
+        <View>
           <TouchableOpacity
             style={{
               width: 70,
               height: 35,
               padding: 0,
               borderRadius: 10,
-              // elevation: 0,
+              elevation: 0,
               backgroundColor: '#5E72E4',
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={() =>
-              handleFollow() 
-            }>
+            onPress={() => handleFollow()}>
             {loadingFollow ? (
               <ActivityIndicator color={'white'} size={15} />
             ) : (
@@ -190,13 +191,8 @@ const SearchMini = ({route}) => {
                   style={{
                     fontWeight: 'bold',
                     color: 'white',
-                    // alignSelf: 'center',
                   }}>
-                  {profileData === 'following'
-                    ? 'Following'
-                    : data?.following?.includes(dataProfile?._id)
-                    ? 'Follow back'
-                    : 'Follow'}
+                  {dataProfile?.following?.includes(item?._id) ? 'Follow' : 'Unfollow'}
                 </Text>
               </View>
             )}
@@ -205,6 +201,7 @@ const SearchMini = ({route}) => {
       </View>
     );
   };
+  // ================================================ Users Search RenderProfile End ========================================================
 
   return (
     <SafeAreaView
@@ -214,7 +211,7 @@ const SearchMini = ({route}) => {
         paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
       }}>
       <StatusBar barStyle={theme.statusbar} />
-
+      {/* +++++++++++++++++++++++++++++++++++++++++++++ Header Start +++++++++++++++++++++++++++++++++++++++++++ */}
       <View
         style={{
           flexDirection: 'row',
@@ -252,6 +249,8 @@ const SearchMini = ({route}) => {
             width: '20%',
           }}></TouchableOpacity>
       </View>
+      {/* +++++++++++++++++++++++++++++++++++++++++++++ Header End +++++++++++++++++++++++++++++++++++++++++++ */}
+      {/* +++++++++++++++++++++++++++++++++++++++++++++ Search Input Start +++++++++++++++++++++++++++++++++++++++++++ */}
 
       <View style={[styles.componentView, {backgroundColor: theme.primary}]}>
         <View style={[styles.searchView, {backgroundColor: '#222222'}]}>
@@ -289,6 +288,7 @@ const SearchMini = ({route}) => {
           ''
         )}
       </View>
+      {/* +++++++++++++++++++++++++++++++++++++++++++++ Search Input End +++++++++++++++++++++++++++++++++++++++++++ */}
     </SafeAreaView>
   );
 };
