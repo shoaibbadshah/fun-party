@@ -401,16 +401,21 @@ export const replyCommentAction =
   };
 
 export const userFollow =
-  (body, setProfileData, setis_followed) => async dispatch => {
+  (body, setProfileData, setis_followed, setLoadingFollow) =>
+  async dispatch => {
+    setis_followed && setis_followed(true);
+    setLoadingFollow && setLoadingFollow(true);
+
     try {
       const data = await API.v1.Minis.userFollow(body);
       console.log('🚀 ~ file: minis.js:350 ~ data:', data);
-      setis_followed(true);
+      setis_followed && setis_followed(true);
       if (data?.status == 200) {
         if (setProfileData) {
           setProfileData('following');
         }
-        setis_followed(true);
+        setis_followed && setis_followed(true);
+        setLoadingFollow && setLoadingFollow(false);
       }
 
       dispatch({
@@ -422,9 +427,12 @@ export const userFollow =
       });
     } catch (error) {
       console.log('🚀 ~ file: minis.js:280 ~ error:', error);
+      setis_followed && setis_followed(false);
+      setLoadingFollow && setLoadingFollow(false);
       Alert.alert('Error', error.response.data.message);
     }
   };
+  
 export const miniView = (body, setViews_count) => async dispatch => {
   const user = store.getState().user;
   try {
