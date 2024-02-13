@@ -495,7 +495,7 @@ const UserProfile = ({route, navigation}) => {
                             fontWeight: 'bold',
                             color: theme.text,
                           }}>
-                          {timeSince(new Date(item.createdAt))}
+                          {/* {timeSince(new Date(item.createdAt))} */}
                         </Text>
                       </View>
                     </View>

@@ -80,7 +80,7 @@ export default function AppleConnect({isDecide}) {
         //   data.data,
         // );
         await dispatch(setUser(data.data));
-        navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+        navigation.navigate(NAVIGATION_ROUTES.PROFILE);
         //
       } catch (error) {
         // console.log(
