@@ -22,11 +22,11 @@ import {
   fetchSearchMinisAndUsers,
   userFollow,
   userFollowing,
+  userUnFollow,
 } from '../Store/Actions/minis';
 import Text from '../Components/Text';
 import MinisSearch from '../Assets/MinisSearch';
 import {checkImageUrl} from '../Utils/helpers';
-import {API} from '../Api';
 import LeftArrow from '../Utils/Assets/Icons/LeftArrow';
 import {
   fetchOtherUserFollowersAndFollowing,
@@ -38,7 +38,7 @@ const SearchMini = ({route}) => {
   const dataProfile = useSelector(e => e.profile?.profile);
 
   const data = dataProfile;
-  console.log('check data===================================', data);
+  // console.log('check data===================================', data);
   const [caption, setCaption] = useState(
     route?.params && route?.params?.hashTag
       ? `${route?.params?.hashTag}`
@@ -50,17 +50,21 @@ const SearchMini = ({route}) => {
   const [page, setPage] = useState(1);
   const [isLoading1, setIsLoading] = useState(false);
   const [is_followed, setis_followed] = useState(false);
-
+  const [loadingFollowState, setLoadingFollowState] = useState({});
   const [loadingFollow, setLoadingFollow] = useState(false);
+  console.log('🚀 ~ SearchMini ~ loadingFollow:', loadingFollow);
   const [profileData, setProfileData] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const theme = useSelector(e => e.theme);
   const {users} = useSelector(({previewMinis}) => previewMinis);
+  console.log('🚀 ~ SearchMini ~ users:', users);
+
   // console.log(
-  //   'check users list =======================================',
-  //   users,
+  //   'setProfileData00000000000000000000000000000000000000000000',
+  //   users?.is_followed,
   // );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,9 +72,8 @@ const SearchMini = ({route}) => {
       route?.params?.item?.item?.is_followed ? 'following' : 'Follow',
     );
     dispatch(fetchUserFollowersAndFollowing());
-    dispatch(fetchOtherUserFollowersAndFollowing(data?._id, setLoading));
-    // }
-  }, [data?._id, page]);
+    dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
+  }, [data?._id]);
 
   const searchHandle = async () => {
     setIsFocus(true);
@@ -87,40 +90,27 @@ const SearchMini = ({route}) => {
     const body = {
       following_id: id,
     };
-    console.log('false check---------------------------------', data);
+    console.log('unFollowMe check---------------------------------');
+
     data.follower_count = data.follower_count > 0 && data.follower_count - 1;
-    dispatch(userFollow(body, '', setis_followed));
+    dispatch(
+      userFollowing(body, setProfileData, setLoadingFollow, setis_followed),
+    );
   };
 
   const followMe = id => {
     const body = {
       following_id: id,
     };
-    console.log('true check---------------------------------', data);
+    console.log('followMe check---------------------------------');
+    // console.log('followMe check---------------------------------');
 
     data.follower_count = data.follower_count > 0 && data.follower_count + 1;
-    dispatch(userFollow(body, '', setis_followed));
+    dispatch(
+      userFollow(body, setProfileData, setLoadingFollow, setis_followed),
+    );
   };
 
-  const handleFollow = async () => {
-    if (profileData === 'following') {
-      const body = {
-        following_id: data?._id,
-      };
-      console.log('true check---------------------------------', data);
-      dispatch(userFollowing(body, setProfileData, setLoadingFollow));
-      data.follower_count = data.follower_count > 0 && data.follower_count - 1;
-    } else {
-      const body = {
-        following_id: data?._id,
-      };
-      console.log('else check---------------------------------', data);
-
-      dispatch(userFollow(body, setProfileData, false, setLoadingFollow));
-      data.follower_count = data.follower_count + 1;
-    }
-    // dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
-  };
   // ================================================== Handle Follow end =====================================================
 
   const onRefresh = () => {
@@ -152,7 +142,7 @@ const SearchMini = ({route}) => {
   // ================================================ Users Search End ========================================================
   // ================================================ Users Search RenderProfile Start========================================================
 
-  const renderProfile = ({item}) => {
+  const renderProfile = ({item, index}) => {
     return (
       <View
         style={{
@@ -198,10 +188,10 @@ const SearchMini = ({route}) => {
         <View>
           <TouchableOpacity
             style={{
-              width: 70,
-              height: 35,
+              width: 65,
+              height: 30,
               padding: 0,
-              borderRadius: 10,
+              borderRadius: 5,
               elevation: 0,
               backgroundColor: '#5E72E4',
               alignItems: 'center',
@@ -210,25 +200,23 @@ const SearchMini = ({route}) => {
               // display: item?.is_followed || is_followed ? 'none' : 'flex',
             }}
             onPress={async () => {
-              if (is_followed) {
-                unFollowMe(item?._id);
-                console.log(
-                  'unfollow chala))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))',
-                );
-              } else {
-                followMe(item?._id);
-                console.log(
-                  'follow chala))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))',
-                );
-              }
+              is_followed ? unFollowMe(item?._id) : followMe(item?._id);
             }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              {item?.is_followed || is_followed ? 'Unfollow' : 'Follow'}
-            </Text>
+            {loadingFollow ? (
+              <ActivityIndicator color={'white'} size={15} />
+            ) : (
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                {profileData === 'following'
+                  ? 'Following'
+                  : item?.is_followed
+                  ? 'Unfollow'
+                  : 'Follow'}
+              </Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -309,6 +297,7 @@ const SearchMini = ({route}) => {
           <FlatList
             data={users}
             renderItem={UsersSearch}
+            // keyExtractor={item => item.id}
             refreshControl={
               <RefreshControl
                 tintColor={'black'}
