@@ -87,7 +87,7 @@ const SearchMini = ({route}) => {
     const body = {
       following_id: id,
     };
-    console.log('followMe check---------------------------------');
+    console.log('UnfollowMe check---------------------------------');
 
     data.follower_count = data.follower_count > 0 && data.follower_count - 1;
     dispatch(userFollowing(body, setProfileData, setLoadingFollow));
@@ -139,13 +139,7 @@ const SearchMini = ({route}) => {
 
   // console.log("🚀 ~ renderProfile ~ users:", users)
 
-  const [localLoading, setLocalLoading] = useState(false)
   const renderProfile = ({item, index}) => {
-    console.log(
-      '🚀 ~ renderProfile ~ item._id === users[index]._id:',
-      item._id === users[index]._id,
-    );
-
     return (
       <View
         style={{
@@ -202,15 +196,11 @@ const SearchMini = ({route}) => {
             // display: item?.is_followed || is_followed ? 'flex' : 'flex',
           }}
           onPress={async () => {
-            // setLoadingFollow(true);
-            localLoading(true)
             item?.is_followed || is_followed
               ? unFollowMe(item?._id)
               : followMe(item?._id);
-            // setLoadingFollow(false)
-            localLoading(false)
           }}>
-          {localLoading ? (
+          {loadingFollow ? (
             <ActivityIndicator color={'white'} size={15} />
           ) : (
             <Text
