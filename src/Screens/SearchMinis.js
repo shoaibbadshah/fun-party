@@ -52,14 +52,11 @@ const SearchMini = ({route}) => {
   const [is_followed, setis_followed] = useState(false);
   const [loadingFollowState, setLoadingFollowState] = useState({});
   const [loadingFollow, setLoadingFollow] = useState(false);
-  console.log('🚀 ~ SearchMini ~ loadingFollow:', loadingFollow);
   const [profileData, setProfileData] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const theme = useSelector(e => e.theme);
   const {users} = useSelector(({previewMinis}) => previewMinis);
-  console.log('🚀 ~ SearchMini ~ users:', users);
-
   // console.log(
   //   'setProfileData00000000000000000000000000000000000000000000',
   //   users?.is_followed,
@@ -90,12 +87,10 @@ const SearchMini = ({route}) => {
     const body = {
       following_id: id,
     };
-    console.log('unFollowMe check---------------------------------');
+    console.log('followMe check---------------------------------');
 
     data.follower_count = data.follower_count > 0 && data.follower_count - 1;
-    dispatch(
-      userFollowing(body, setProfileData, setLoadingFollow, setis_followed),
-    );
+    dispatch(userFollowing(body, setProfileData, setLoadingFollow));
   };
 
   const followMe = id => {
@@ -142,7 +137,15 @@ const SearchMini = ({route}) => {
   // ================================================ Users Search End ========================================================
   // ================================================ Users Search RenderProfile Start========================================================
 
+  // console.log("🚀 ~ renderProfile ~ users:", users)
+
+  const [localLoading, setLocalLoading] = useState(false)
   const renderProfile = ({item, index}) => {
+    console.log(
+      '🚀 ~ renderProfile ~ item._id === users[index]._id:',
+      item._id === users[index]._id,
+    );
+
     return (
       <View
         style={{
@@ -185,43 +188,48 @@ const SearchMini = ({route}) => {
           </View>
         </View>
 
-        <View>
-          <TouchableOpacity
-            style={{
-              width: 65,
-              height: 30,
-              padding: 0,
-              borderRadius: 5,
-              elevation: 0,
-              backgroundColor: '#5E72E4',
-              alignItems: 'center',
-              justifyContent: 'center',
+        <TouchableOpacity
+          style={{
+            width: 65,
+            height: 30,
+            padding: 0,
+            borderRadius: 5,
+            elevation: 0,
+            backgroundColor: '#5E72E4',
+            alignItems: 'center',
+            justifyContent: 'center',
 
-              // display: item?.is_followed || is_followed ? 'none' : 'flex',
-            }}
-            onPress={async () => {
-              is_followed ? unFollowMe(item?._id) : followMe(item?._id);
-            }}>
-            {loadingFollow ? (
-              <ActivityIndicator color={'white'} size={15} />
-            ) : (
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: 'white',
-                }}>
-                {profileData === 'following'
-                  ? 'Following'
-                  : item?.is_followed
-                  ? 'Unfollow'
-                  : 'Follow'}
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
+            // display: item?.is_followed || is_followed ? 'flex' : 'flex',
+          }}
+          onPress={async () => {
+            // setLoadingFollow(true);
+            localLoading(true)
+            item?.is_followed || is_followed
+              ? unFollowMe(item?._id)
+              : followMe(item?._id);
+            // setLoadingFollow(false)
+            localLoading(false)
+          }}>
+          {localLoading ? (
+            <ActivityIndicator color={'white'} size={15} />
+          ) : (
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
+              {profileData === 'following'
+                ? 'Following'
+                : item?.is_followed
+                ? 'Unfollow'
+                : 'Follow'}
+            </Text>
+          )}
+        </TouchableOpacity>
       </View>
     );
   };
+
   // ================================================ Users Search RenderProfile End ========================================================
 
   return (
@@ -293,22 +301,21 @@ const SearchMini = ({route}) => {
             <MinisSearch color={theme.text} width={24} height={24} />
           </TouchableOpacity>
         </View>
-        {isFocus ? (
-          <FlatList
-            data={users}
-            renderItem={UsersSearch}
-            // keyExtractor={item => item.id}
-            refreshControl={
-              <RefreshControl
-                tintColor={'black'}
-                refreshing={isLoading1}
-                onRefresh={onRefresh}
-              />
-            }
-          />
-        ) : (
-          ''
-        )}
+        {isFocus
+          ? // <FlatList
+            //   data={users}
+            //   renderItem={UsersSearch}
+            //   keyExtractor={item => item.id}
+            //   refreshControl={
+            //     <RefreshControl
+            //       tintColor={'black'}
+            //       refreshing={isLoading1}
+            //       onRefresh={onRefresh}
+            //     />
+            //   }
+            // />
+            UsersSearch()
+          : ''}
       </View>
       {/* +++++++++++++++++++++++++++++++++++++++++++++ Search Input End +++++++++++++++++++++++++++++++++++++++++++ */}
     </SafeAreaView>

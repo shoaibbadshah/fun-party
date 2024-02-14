@@ -401,7 +401,7 @@ export const replyCommentAction =
   };
 
 export const userFollow =
-  (body, setProfileData, setis_followed, setLoadingFollow) =>
+  (body, setProfileData, setLoadingFollow, setis_followed) =>
   async dispatch => {
     setis_followed && setis_followed(true);
     setLoadingFollow && setLoadingFollow(true);
@@ -461,6 +461,8 @@ export const userFollowing =
   (body, setProfileData, setLoadingFollow) => async dispatch => {
     try {
       setLoadingFollow(true);
+
+
 
       const data = await API.v1.Minis.userFollowing(body);
       console.log('check action', body);
