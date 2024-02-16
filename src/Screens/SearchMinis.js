@@ -137,8 +137,7 @@ const SearchMini = ({route}) => {
   // ================================================ Users Search End ========================================================
   // ================================================ Users Search RenderProfile Start========================================================
 
-  // console.log("🚀 ~ renderProfile ~ users:", users)
-
+  const [selectedId, setSelectedId] = useState(null);
   const renderProfile = ({item, index}) => {
     return (
       <View
@@ -193,14 +192,13 @@ const SearchMini = ({route}) => {
             alignItems: 'center',
             justifyContent: 'center',
 
-            // display: item?.is_followed || is_followed ? 'flex' : 'flex',
+            // display: item?.is_followed || is_followed ? 'none' : 'flex',
           }}
           onPress={async () => {
-            item?.is_followed || is_followed
-              ? unFollowMe(item?._id)
-              : followMe(item?._id);
+            setSelectedId(item?._id);
+            is_followed ? unFollowMe(item?._id) : followMe(item?._id);
           }}>
-          {loadingFollow ? (
+          {loadingFollow && item._id === selectedId ? (
             <ActivityIndicator color={'white'} size={15} />
           ) : (
             <Text

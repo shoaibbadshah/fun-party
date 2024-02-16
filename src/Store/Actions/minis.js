@@ -460,6 +460,7 @@ export const miniView = (body, setViews_count) => async dispatch => {
 export const userFollowing =
   (body, setProfileData, setLoadingFollow) => async dispatch => {
     try {
+      debugger;
       setLoadingFollow(true);
 
 
@@ -468,11 +469,15 @@ export const userFollowing =
       console.log('check action', body);
       if (data?.status == 200) {
         if (setProfileData) {
-      console.log('setProfileData00000000000000000000000000000000000000000000', setProfileData);
+          console.log(
+            'setProfileData00000000000000000000000000000000000000000000',
+            setProfileData,
+          );
 
           setProfileData('Follow');
         }
       }
+      debugger;
       dispatch(fetchOtherUserFollowersAndFollowing(body?.following_id));
 
       dispatch({
