@@ -19,35 +19,10 @@ import {useDispatch} from 'react-redux';
 import {AppleSVG} from '../Assets/Svgs';
 import GoogleBTN from '../Components/GoogleBTN';
 import AppleConnect from '../Components/AppleConnect';
-import {appOpenAd} from '../Utils/helpers';
-import {interstitial} from '../../App';
-import {AdEventType} from 'react-native-google-mobile-ads';
 
 const AuthDecide = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
-  console.log('🚀 ~ App ~ loaded:', loaded);
-
-  useEffect(() => {
-    const unsubscribe = interstitial.addAdEventListener(
-      AdEventType.LOADED,
-      () => {
-        setLoaded(true);
-      },
-    );
-
-    // Start loading the interstitial straight away
-    interstitial.load();
-
-    // Unsubscribe from events on unmount
-    return unsubscribe;
-  }, []);
-
-  // No advert ready to show yet
-  if (!loaded) {
-    return null;
-  }
 
   const handleOnApplePress = async () => {
     try {

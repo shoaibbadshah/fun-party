@@ -49,11 +49,11 @@ export const interstitial = InterstitialAd.createForAdRequest(
     keywords: ['fashion', 'clothing'],
   },
 );
-const adUnitIdOPENAPP = 'ca-app-pub-3686012001393355/2221433064';
+// const adUnitIdOPENAPP = 'ca-app-pub-3686012001393355/2221433064';
 
-export const appOpenAd = AppOpenAd.createForAdRequest(adUnitIdOPENAPP, {
-  keywords: ['fashion', 'clothing'],
-});
+// export const appOpenAd = AppOpenAd.createForAdRequest(adUnitIdOPENAPP, {
+//   keywords: ['fashion', 'clothing'],
+// });
 const App = () => {
   LogBox.ignoreAllLogs();
   const [initialURL, setInitialURL] = useState();
@@ -99,12 +99,12 @@ const App = () => {
   }, []);
 
   // useEffect(() => {
-  appOpenAd.load();
-  appOpenAd.loaded ? appOpenAd.show() : appOpenAd.load();
-  // console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
-  // appOpenAd.show();
+  // appOpenAd.load();
+  // appOpenAd.loaded ? appOpenAd.show() : appOpenAd.load();
+  // // console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
+  // // appOpenAd.show();
   // }, [appOpenAd.loaded]);
-  console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
+  // console.log('🚀 ~ App ~ appOpenAd.loaded:', appOpenAd.loaded);
 
   const requestPermission = async () => {
     const authorizationStatus = await messaging().requestPermission();

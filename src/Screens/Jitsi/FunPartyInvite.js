@@ -145,7 +145,11 @@ const FunPartyInvite = ({route, navigation}) => {
       <StatusBar barStyle={theme.StatusBar} />
 
       {guidCheck ? (
-        <View style={{paddingHorizontal: 15, flex: 1}}>
+        <View
+          style={{
+            paddingHorizontal: 15,
+            flex: 1,
+          }}>
           <View style={[styles.flexStyle]}>
             <View>
               <TouchableOpacity
@@ -223,77 +227,117 @@ const FunPartyInvite = ({route, navigation}) => {
             </View>
           </View>
 
-          <FlatList
-            data={filterSearch}
-            contentContainerStyle={{paddingBottom: 245}}
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  height: height - 200,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                {isloading ? (
-                  <ActivityIndicator color={theme.text} size={'large'} />
-                ) : (
-                  <Text style={{color: theme.text}}>Ops! No match found.</Text>
-                )}
-              </View>
-            )}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => (
-              <View style={styles.inviteUser}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View
-                    style={{
-                      width: 35,
-                      height: 35,
-                      backgroundColor: '#00000010',
-                      borderRadius: width,
-                      marginRight: 20,
-                      overflow: 'hidden',
-                    }}>
-                    <FastImage
-                      // defaultSource={require("../../Assets/avatar.jpg")}
-                      // source={{ uri: checkImageUrl(item?.profile_image) }}
-                      source={{
-                        uri: checkImageUrl(
-                          item?.profile_image,
-                          `https://ui-avatars.com/api/?background=random&name=${item?.first_name}+${item?.last_name}`,
-                        ),
-                      }}
-                      resizeMode={'cover'}
-                      style={{width: '100%', height: '100%'}}
-                    />
+          {filterSearch.length > 0 ? (
+            <FlatList
+              data={filterSearch}
+              contentContainerStyle={{
+                paddingBottom: 245,
+                // alignItems: 'center',
+              }}
+              // ListEmptyComponent={() => (
+              //   <View
+              //     style={{
+              //       height: height - 200,
+              //       flex: 1,
+              //       justifyContent: 'center',
+              //       alignItems: 'center',
+              //       backgroundColor: 'red',
+              //     }}>
+              //     {isloading ? (
+              //       <ActivityIndicator color={theme.text} size={'large'} />
+              //     ) : (
+              //       <Text
+              //         style={{
+              //           color: theme.text,
+              //           justifyContent: 'center',
+              //           textAlign: 'center',
+              //           paddingHorizontal: 15,
+              //         }}>
+              //         Looks like you don't have any friends yet! Invite your
+              //         friends for a watch party!
+              //       </Text>
+              //     )}
+              //   </View>
+              // )}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item, index}) => (
+                <View style={styles.inviteUser}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View
+                      style={{
+                        width: 35,
+                        height: 35,
+                        backgroundColor: '#00000010',
+                        borderRadius: width,
+                        marginRight: 20,
+                        overflow: 'hidden',
+                      }}>
+                      <FastImage
+                        // defaultSource={require("../../Assets/avatar.jpg")}
+                        // source={{ uri: checkImageUrl(item?.profile_image) }}
+                        source={{
+                          uri: checkImageUrl(
+                            item?.profile_image,
+                            `https://ui-avatars.com/api/?background=random&name=${item?.first_name}+${item?.last_name}`,
+                          ),
+                        }}
+                        resizeMode={'cover'}
+                        style={{width: '100%', height: '100%'}}
+                      />
+                    </View>
+                    <Text style={{color: theme.text, fontWeight: 'bold'}}>
+                      {item?.first_name} {item?.last_name}
+                    </Text>
                   </View>
-                  <Text style={{color: theme.text, fontWeight: 'bold'}}>
-                    {item?.first_name} {item?.last_name}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor:
-                      theme.name === 'dark'
-                        ? checked.includes(item?._id)
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor:
+                        theme.name === 'dark'
+                          ? checked.includes(item?._id)
+                            ? theme.secondary
+                            : 'black'
+                          : checked.includes(item?._id)
                           ? theme.secondary
-                          : 'black'
-                        : checked.includes(item?._id)
-                        ? theme.secondary
-                        : 'grey',
-                    paddingHorizontal: 10,
-                    height: 25,
-                    borderRadius: 15,
+                          : 'grey',
+                      paddingHorizontal: 10,
+                      height: 25,
+                      borderRadius: 15,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => toggleCheck(item, index)}>
+                    <Text style={{color: 'white'}}>
+                      {checked.includes(index) ? 'Invite' : 'Invite'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+          ) : (
+            <View
+              style={{
+                // height: height - 200,
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}>
+              {isloading ? (
+                <ActivityIndicator color={theme.text} size={'large'} />
+              ) : (
+                <Text
+                  style={{
+                    color: theme.text,
                     justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  onPress={() => toggleCheck(item, index)}>
-                  <Text style={{color: 'white'}}>
-                    {checked.includes(index) ? 'Invite' : 'Invite'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          />
+                    textAlign: 'center',
+                    paddingHorizontal: 15,
+                  }}>
+                  Looks like you don't have any friends yet! Invite your friends
+                  for a watch party!
+                </Text>
+              )}
+            </View>
+          )}
         </View>
       ) : (
         <WatchPartyGuide guidCheck={guidCheck} setGuidCheck={setGuidCheck} />

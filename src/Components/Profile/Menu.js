@@ -32,12 +32,14 @@ const Menu = forwardRef((props, ref) => {
         fcm.is_android = true;
       }
       dispatch(userSignOut(fcm));
-      // GoogleSignin.signOut();
-      // GoogleSignin.clearCachedAccessToken();
+      GoogleSignin.signOut();
+      GoogleSignin.clearCachedAccessToken();
       refRBSheet.current.close();
     } catch (error) {
-      console.error('Logout error ;', error);
-      Alert.alert('Logout Failed');
+      dispatch(userSignOut(fcm));
+      GoogleSignin.signOut();
+      GoogleSignin.clearCachedAccessToken();
+      refRBSheet.current.close();
     }
   };
 

@@ -1,43 +1,43 @@
-import { Alert } from "react-native";
+import {Alert} from 'react-native';
 
 // import Contacts from "react-native-contacts";
 
-import { API } from "../../Api";
-import { Types } from "../Types/type";
-import { NAVIGATION_ROUTES } from "../../Utils/Navigation/NavigationRoutes";
-import {
-  updateNoficationSetting,
-  updatePrivacyAction,
-  updateUser,
-} from "./user";
-import { navigate } from "../../Utils/Navigation/navigationRef";
-import { store } from "../store";
-import axios from "axios";
+import {API} from '../../Api';
+import {Types} from '../Types/type';
+import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
+import {updateNoficationSetting, updatePrivacyAction, updateUser} from './user';
+import {navigate} from '../../Utils/Navigation/navigationRef';
+import {store} from '../store';
+import axios from 'axios';
 
-const setProfile = (data) => {
+const setProfile = data => {
   return {
     type: Types.FETCH_PROFILE,
-    payload: { profile: data },
+    payload: {profile: data},
   };
 };
 
-const setWallet = (data) => {
+const setWallet = data => {
   return {
     type: Types.FETCH_WALLET,
     payload: data,
   };
 };
 
-export const fetchProfile = () => async (dispatch) => {
+export const fetchProfile = setLoading => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.fetchProfile();
+    setLoading && setLoading(true);
+    const {data} = await API.v1.Profile.fetchProfile();
     await dispatch(setProfile(data?.data));
-  } catch (error) {}
+    setLoading && setLoading(false);
+  } catch (error) {
+    setLoading && setLoading(false);
+  }
 };
 
-export const fetchOtherProfile = (id) => async (dispatch) => {
+export const fetchOtherProfile = id => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.fetchOtherProfile(id);
+    const {data} = await API.v1.Profile.fetchOtherProfile(id);
 
     await dispatch({
       type: Types.FETCH_OTHER_PROFILE,
@@ -53,11 +53,11 @@ export const fetchOtherProfile = (id) => async (dispatch) => {
 };
 
 export const fetchUserMinis =
-  (page, setLoading, setMinisLoading) => async (dispatch) => {
+  (page, setLoading, setMinisLoading) => async dispatch => {
     try {
       setLoading(true);
       setMinisLoading && setMinisLoading(true);
-      const { data } = await API.v1.Profile.fetchUserMini(page);
+      const {data} = await API.v1.Profile.fetchUserMini(page);
 
       dispatch({
         type: Types.FETCH_USER_MINIS,
@@ -71,13 +71,13 @@ export const fetchUserMinis =
     } catch (error) {
       setLoading(false);
       setMinisLoading && setMinisLoading(false);
-      console.log("🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:", error);
+      console.log('🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:', error);
     }
   };
-export const fetchUserLv = (page, setLoading) => async (dispatch) => {
+export const fetchUserLv = (page, setLoading) => async dispatch => {
   try {
     setLoading(true);
-    const { data } = await API.v1.Profile.fetchUserLv(page);
+    const {data} = await API.v1.Profile.fetchUserLv(page);
     setLoading(false);
 
     dispatch({
@@ -97,26 +97,25 @@ export const fetchUserLv = (page, setLoading) => async (dispatch) => {
     // });
   } catch (error) {
     setLoading(false);
-    console.log("🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:", error);
+    console.log('🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:', error);
   }
 };
 
-export const fetchPaginatedUserMinis =
-  (page, userMinis) => async (dispatch) => {
-    try {
-      const { data } = await API.v1.Profile.fetchUserMini(page);
-      dispatch({
-        type: Types.FETCH_USER_MINIS,
-        payload: {
-          userMinis: [...userMinis, ...data?.data?.get_minis],
-          totalPages: data?.data?.totalPages,
-        },
-      });
-    } catch (error) {}
-  };
+export const fetchPaginatedUserMinis = (page, userMinis) => async dispatch => {
+  try {
+    const {data} = await API.v1.Profile.fetchUserMini(page);
+    dispatch({
+      type: Types.FETCH_USER_MINIS,
+      payload: {
+        userMinis: [...userMinis, ...data?.data?.get_minis],
+        totalPages: data?.data?.totalPages,
+      },
+    });
+  } catch (error) {}
+};
 
 export const fetchOtherUserMinis =
-  (page, body, setLoading, setMinisLoading) => async (dispatch) => {
+  (page, body, setLoading, setMinisLoading) => async dispatch => {
     dispatch({
       type: Types.FETCH_OTHER_USER_MINIS,
       payload: {
@@ -127,7 +126,7 @@ export const fetchOtherUserMinis =
     try {
       setLoading(true);
       setMinisLoading && setMinisLoading(true);
-      const { data } = await API.v1.Profile.fetchOtherUserMini(page, body);
+      const {data} = await API.v1.Profile.fetchOtherUserMini(page, body);
 
       dispatch({
         type: Types.FETCH_OTHER_USER_MINIS,
@@ -144,30 +143,29 @@ export const fetchOtherUserMinis =
       setMinisLoading && setMinisLoading(false);
     }
   };
-export const fetchOtherUserLv =
-  (page, body, setLoading) => async (dispatch) => {
-    try {
-      setLoading(true);
-      const { data } = await API.v1.Profile.fetchOtherUserLv(page, body);
+export const fetchOtherUserLv = (page, body, setLoading) => async dispatch => {
+  try {
+    setLoading(true);
+    const {data} = await API.v1.Profile.fetchOtherUserLv(page, body);
 
-      setLoading(false);
+    setLoading(false);
 
-      dispatch({
-        type: Types.FETCH_LONG_VIDEOS_PROFILE_OTHER,
-        payload: {
-          lvOtherMinis: data?.data?.get_minis,
-          lvOtherTotalPages: data?.data?.totalPages,
-        },
-      });
-    } catch (error) {
-      setLoading(false);
-    }
-  };
+    dispatch({
+      type: Types.FETCH_LONG_VIDEOS_PROFILE_OTHER,
+      payload: {
+        lvOtherMinis: data?.data?.get_minis,
+        lvOtherTotalPages: data?.data?.totalPages,
+      },
+    });
+  } catch (error) {
+    setLoading(false);
+  }
+};
 
 export const fetchPaginatedOtherUserMinis =
-  (page, userMinis) => async (dispatch) => {
+  (page, userMinis) => async dispatch => {
     try {
-      const { data } = await API.v1.Profile.fetchOtherUserMini(page);
+      const {data} = await API.v1.Profile.fetchOtherUserMini(page);
 
       dispatch({
         type: Types.FETCH_OTHER_USER_MINIS,
@@ -177,31 +175,30 @@ export const fetchPaginatedOtherUserMinis =
         },
       });
     } catch (error) {
-      console.log("🚀 ~ file: profile.js:180 ~ error:", error);
+      console.log('🚀 ~ file: profile.js:180 ~ error:', error);
     }
   };
 
-export const fetchUserFollowersAndFollowing =
-  (setLoading) => async (dispatch) => {
-    try {
-      setLoading && setLoading(true);
-      const { data } = await API.v1.Profile.userFollowersAndFollowings();
-
-      dispatch({
-        type: Types.FETCH_USER_FOLLOWER_FOLLOWING,
-        payload: {
-          userFollower: data?.get_follower_user,
-          userFollowing: data?.get_following_user,
-        },
-      });
-      setLoading && setLoading(false);
-    } catch (error) {
-      setLoading && setLoading(false);
-    }
-  };
-export const fetchUserContacts = () => async (dispatch) => {
+export const fetchUserFollowersAndFollowing = setLoading => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.userContacts();
+    setLoading && setLoading(true);
+    const {data} = await API.v1.Profile.userFollowersAndFollowings();
+
+    dispatch({
+      type: Types.FETCH_USER_FOLLOWER_FOLLOWING,
+      payload: {
+        userFollower: data?.get_follower_user,
+        userFollowing: data?.get_following_user,
+      },
+    });
+    setLoading && setLoading(false);
+  } catch (error) {
+    setLoading && setLoading(false);
+  }
+};
+export const fetchUserContacts = () => async dispatch => {
+  try {
+    const {data} = await API.v1.Profile.userContacts();
 
     dispatch({
       type: Types.FETCH_USER_CONTACTS,
@@ -211,10 +208,10 @@ export const fetchUserContacts = () => async (dispatch) => {
 };
 
 export const fetchOtherUserFollowersAndFollowing =
-  (id, setLoading) => async (dispatch) => {
+  (id, setLoading) => async dispatch => {
     try {
       setLoading && setLoading(true);
-      const { data } = await API.v1.Profile.otherFollowersAndFollowings(id);
+      const {data} = await API.v1.Profile.otherFollowersAndFollowings(id);
 
       dispatch({
         type: Types.FETCH_USER_FOLLOWER_FOLLOWING,
@@ -230,19 +227,19 @@ export const fetchOtherUserFollowersAndFollowing =
   };
 
 export const updateProfile =
-  (body, navigation, setEditLoading, token) => async (dispatch) => {
-    console.log("🚀 ~ file: profile.js:234 ~ body:", body);
+  (body, navigation, setEditLoading, token) => async dispatch => {
+    console.log('🚀 ~ file: profile.js:234 ~ body:', body);
     try {
       setEditLoading(true);
 
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       };
 
-      const { data } = await API.v1.Profile.updateProfile(body, config);
-      console.log("🚀 ~ file: profile.js:237 ~ data:", data);
+      const {data} = await API.v1.Profile.updateProfile(body, config);
+      console.log('🚀 ~ file: profile.js:237 ~ data:', data);
 
       setEditLoading(false);
       // await dispatch(setProfile(data?.data));
@@ -252,23 +249,23 @@ export const updateProfile =
 
       navigation.goBack();
     } catch (error) {
-      console.log("🚀 ~ file: profile.js:137 ~ error:", error);
+      console.log('🚀 ~ file: profile.js:137 ~ error:', error);
       setEditLoading(false);
     }
   };
-export const updatePrivacy = (body) => async (dispatch) => {
+export const updatePrivacy = body => async dispatch => {
   try {
     const data = await API.v1.Profile.updatePrivacy(body);
 
     dispatch(
-      updatePrivacyAction({ privacy_setting: data.data.data.privacy_setting }),
+      updatePrivacyAction({privacy_setting: data.data.data.privacy_setting}),
     );
   } catch (error) {
-    console.error("error Profie_action", error.response.data);
+    console.error('error Profie_action', error.response.data);
   }
 };
 
-export const update_notification_setting = (body) => async (dispatch) => {
+export const update_notification_setting = body => async dispatch => {
   try {
     const data = await API.v1.Profile.updateNoficationSetting(body);
 
@@ -279,50 +276,50 @@ export const update_notification_setting = (body) => async (dispatch) => {
       }),
     );
   } catch (error) {
-    console.error("error Profie_action", error.response.data);
+    console.error('error Profie_action', error.response.data);
   }
 };
 
-export const fetchUserInvitables = () => async (dispatch) => {
+export const fetchUserInvitables = () => async dispatch => {
   try {
-    dispatch({ type: Types.USER_INVITABLES_LOADING, payload: true });
-    const { data } = await API.v1.Profile.fetchUserInvitables();
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: true});
+    const {data} = await API.v1.Profile.fetchUserInvitables();
 
     if (data && data.status === 200) {
-      let tempData = data.data.map((u) => ({ ...u, isSelected: false }));
+      let tempData = data.data.map(u => ({...u, isSelected: false}));
       dispatch({
         type: Types.FETCH_USER_INVITABLES,
         payload: tempData,
       });
     }
 
-    dispatch({ type: Types.USER_INVITABLES_LOADING, payload: false });
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: false});
   } catch (error) {
-    dispatch({ type: Types.USER_INVITABLES_LOADING, payload: false });
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: false});
   }
 };
 
-export const onInvitableUserTap = (payload) => {
+export const onInvitableUserTap = payload => {
   return {
     type: Types.ON_INVITABLE_USER_TAP,
     payload,
   };
 };
 
-export const onSelectInvitableUsers = (payload) => {
+export const onSelectInvitableUsers = payload => {
   return {
     type: Types.ON_SELECT_INVITABLE_USERS,
     payload,
   };
 };
 
-export const blockUserAccount = (body) => async (dispatch) => {
+export const blockUserAccount = body => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.blockUserAccount(body);
+    const {data} = await API.v1.Profile.blockUserAccount(body);
     if (data && data.status === 200) {
-      Alert.alert("Block Account", "Account has been blocked", [
+      Alert.alert('Block Account', 'Account has been blocked', [
         {
-          text: "OK",
+          text: 'OK',
           onPress: () => {
             dispatch({
               type: Types.IS_BLOCKED_SUCCESS,
@@ -334,14 +331,14 @@ export const blockUserAccount = (body) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const unblockUserAccount = (body) => async (dispatch) => {
+export const unblockUserAccount = body => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.unblockUserAccount(body);
+    const {data} = await API.v1.Profile.unblockUserAccount(body);
     if (data && data.status === 200) {
       dispatch(fetchBlockedAccounts());
-      Alert.alert("Account Unblocked", "Account has been unblocked", [
+      Alert.alert('Account Unblocked', 'Account has been unblocked', [
         {
-          text: "OK",
+          text: 'OK',
           onPress: () => {
             dispatch({
               type: Types.UNBLOCKED_ACCOUNT,
@@ -354,26 +351,26 @@ export const unblockUserAccount = (body) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const fetchBlockedAccounts = () => async (dispatch) => {
+export const fetchBlockedAccounts = () => async dispatch => {
   try {
-    dispatch({ type: Types.USER_INVITABLES_LOADING, payload: true });
-    const { data } = await API.v1.Profile.fetchBlockedAccounts();
-    dispatch({ type: Types.USER_INVITABLES_LOADING, payload: false });
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: true});
+    const {data} = await API.v1.Profile.fetchBlockedAccounts();
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: false});
 
     if (data && data.status === 200) {
-      dispatch({ type: Types.FETCH_BLOCKED_ACCOUNTS, payload: data.data });
+      dispatch({type: Types.FETCH_BLOCKED_ACCOUNTS, payload: data.data});
     }
   } catch (error) {
-    dispatch({ type: Types.USER_INVITABLES_LOADING, payload: false });
+    dispatch({type: Types.USER_INVITABLES_LOADING, payload: false});
   }
 };
 
-export const fetchAllUsers = () => async (dispatch) => {
+export const fetchAllUsers = () => async dispatch => {
   try {
-    dispatch({ type: Types.USER_FRIEND_LIST_LOADING, payload: true });
-    const { data } = await API.v1.Profile.fetchAllUsers();
+    dispatch({type: Types.USER_FRIEND_LIST_LOADING, payload: true});
+    const {data} = await API.v1.Profile.fetchAllUsers();
 
-    dispatch({ type: Types.USER_FRIEND_LIST_LOADING, payload: false });
+    dispatch({type: Types.USER_FRIEND_LIST_LOADING, payload: false});
 
     dispatch({
       type: Types.FETCH_ALL_FRIEND_LIST,
@@ -385,14 +382,14 @@ export const fetchAllUsers = () => async (dispatch) => {
       return data;
     }
   } catch (error) {
-    dispatch({ type: Types.USER_FRIEND_LIST_LOADING, payload: false });
+    dispatch({type: Types.USER_FRIEND_LIST_LOADING, payload: false});
     return error;
   }
 };
 
-export const fetchUserMentionMinis = (id) => async (dispatch) => {
+export const fetchUserMentionMinis = id => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.fetchUserMentionMini(id);
+    const {data} = await API.v1.Profile.fetchUserMentionMini(id);
 
     dispatch({
       type: Types.FETCH_USER_MENTION_MINIS,
@@ -401,13 +398,13 @@ export const fetchUserMentionMinis = (id) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log(error, "error");
+    console.log(error, 'error');
   }
 };
 
-export const fetchOtherUserMentionMinis = (id) => async (dispatch) => {
+export const fetchOtherUserMentionMinis = id => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.fetchOtherUserMentionMini(id);
+    const {data} = await API.v1.Profile.fetchOtherUserMentionMini(id);
 
     dispatch({
       type: Types.FETCH_OTHER_USER_MENTION_MINIS,
@@ -416,16 +413,16 @@ export const fetchOtherUserMentionMinis = (id) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log(error, "other metion minis error");
+    console.log(error, 'other metion minis error');
   }
 };
 
 export const fetchUserSavedMinis =
-  (setLoading, setMinisLoading) => async (dispatch) => {
+  (setLoading, setMinisLoading) => async dispatch => {
     setLoading(true);
     setMinisLoading && setMinisLoading(true);
     try {
-      const { data } = await API.v1.Profile.fetchUserSavedMini();
+      const {data} = await API.v1.Profile.fetchUserSavedMini();
 
       dispatch({
         type: Types.FETCH_USER_SAVED_MINIS,
@@ -438,15 +435,15 @@ export const fetchUserSavedMinis =
     } catch (error) {
       setLoading(false);
       setMinisLoading && setMinisLoading(false);
-      console.log(error, "error");
+      console.log(error, 'error');
     }
   };
 
 export const fetchUserSavedLongVideoAction =
-  (setMinisLoading) => async (dispatch) => {
+  setMinisLoading => async dispatch => {
     try {
       setMinisLoading && setMinisLoading(true);
-      const { data } = await API.v1.Profile.fetchUserSavedLongVideo();
+      const {data} = await API.v1.Profile.fetchUserSavedLongVideo();
       dispatch({
         type: Types.FETCH_USER_SAVED_LONG_VIDEOS,
         payload: {
@@ -457,14 +454,14 @@ export const fetchUserSavedLongVideoAction =
       setMinisLoading && setMinisLoading(false);
     } catch (error) {
       setMinisLoading && setMinisLoading(false);
-      console.log(error, "error, saved Long videos");
+      console.log(error, 'error, saved Long videos');
     }
   };
 
-export const fetchUserWallet = (setLoading) => async (dispatch) => {
+export const fetchUserWallet = setLoading => async dispatch => {
   try {
     setLoading && setLoading(true);
-    const { data } = await API.v1.Profile.getUserWallet();
+    const {data} = await API.v1.Profile.getUserWallet();
 
     await dispatch(setWallet(data?.data));
     setLoading && setLoading(false);
@@ -475,7 +472,7 @@ export const fetchUserWallet = (setLoading) => async (dispatch) => {
 
 //authorize.net wallet
 export const chargeCridetCard =
-  (body, setLoading, navigation) => async (dispatch) => {
+  (body, setLoading, navigation) => async dispatch => {
     try {
       setLoading(true);
       const data = await API.v1.Profile.chargeCridetCard(body);
@@ -485,15 +482,15 @@ export const chargeCridetCard =
       setLoading(false);
     } catch (error) {
       console.log(
-        "🚀 ~ file: profile.js:360 ~ chargeCreditCard ~ error:",
+        '🚀 ~ file: profile.js:360 ~ chargeCreditCard ~ error:',
         error,
       );
-      Alert.alert("Transaction Failed", error?.response?.data?.message);
+      Alert.alert('Transaction Failed', error?.response?.data?.message);
       setLoading(false);
     }
   };
 export const inAppPurchaseAction =
-  (body, setLoading, navigation) => async (dispatch) => {
+  (body, setLoading, navigation) => async dispatch => {
     try {
       setLoading(true);
       const data = await API.v1.Profile.capture_InAppPurchase(body);
@@ -502,14 +499,14 @@ export const inAppPurchaseAction =
       navigation.navigate(NAVIGATION_ROUTES.WALLET_HOME);
       setLoading(false);
     } catch (error) {
-      Alert.alert("Transaction Failed", error?.response?.data?.message);
+      Alert.alert('Transaction Failed', error?.response?.data?.message);
       setLoading(false);
     }
   };
 
-export const fetchUserMonthlyTransaction = (body) => async (dispatch) => {
+export const fetchUserMonthlyTransaction = body => async dispatch => {
   try {
-    const { data } = await API.v1.Profile.getMonthlyTransaction(body);
+    const {data} = await API.v1.Profile.getMonthlyTransaction(body);
 
     dispatch({
       type: Types.FETCH_USER_MONTHLY_TRANSACTION,
@@ -518,14 +515,14 @@ export const fetchUserMonthlyTransaction = (body) => async (dispatch) => {
       },
     });
   } catch (error) {
-    console.log("🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:", error);
+    console.log('🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:', error);
   }
 };
 export const connectLongtoMiniAction =
-  (body, setLoading, navigation, created_by) => async (dispatch) => {
+  (body, setLoading, navigation, created_by) => async dispatch => {
     try {
       setLoading(true);
-      const { data } = await API.v1.Profile.connectionMiniLong(body);
+      const {data} = await API.v1.Profile.connectionMiniLong(body);
 
       setLoading(false);
 
@@ -533,7 +530,7 @@ export const connectLongtoMiniAction =
         type: Types.EDIT_MINI,
         payload: {
           _miniId: data?.data?._id,
-          caption: "",
+          caption: '',
           new_mini: data?.data,
           user: created_by,
         },
@@ -541,7 +538,7 @@ export const connectLongtoMiniAction =
       navigation.navigate(NAVIGATION_ROUTES.PROFILE);
     } catch (error) {
       setLoading(false);
-      console.log("🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:", error);
+      console.log('🚀 ~ file: profile.js:54 ~ fetchUserMinis ~ error:', error);
     }
   };
 
