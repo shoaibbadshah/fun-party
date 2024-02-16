@@ -78,7 +78,7 @@ const UserProfile = ({route, navigation}) => {
   const isFocused = useIsFocused();
   // const data = route?.params?.item?.item;
   const data = dataProfile;
-  console.log('🚀 ~ UserProfile ~ data:', data);
+  // console.log('🚀 ~ UserProfile ~ data:', data);
 
   useEffect(() => {
     dispatch(fetchProfile());
