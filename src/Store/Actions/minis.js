@@ -4,7 +4,7 @@ import {store} from '../store';
 import {Types} from '../Types/type';
 import socketServcies from '../../Utils/socketServcie';
 import {navigate} from '../../Utils/Navigation/navigationRef';
-import {fetchOtherUserFollowersAndFollowing} from './profile';
+import {fetchOtherUserFollowersAndFollowing, fetchProfile} from './profile';
 import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
 import {chatCount} from './chat';
 
@@ -417,7 +417,7 @@ export const userFollow =
         setis_followed && setis_followed(true);
         setLoadingFollow && setLoadingFollow(false);
       }
-
+      dispatch(fetchProfile());
       dispatch({
         type: Types.USER_FOLLOW_UPDATE,
         payload: {
@@ -458,33 +458,28 @@ export const miniView = (body, setViews_count) => async dispatch => {
 };
 
 export const userFollowing =
-  (body, setProfileData, setLoadingFollow) => async dispatch => {
+  (body, setProfileData, setLoadingFollow, setis_followed) =>
+  async dispatch => {
     try {
       setLoadingFollow(true);
-
-
+      // setis_followed && setis_followed(false);
 
       const data = await API.v1.Minis.userFollowing(body);
-      console.log('check action', body);
+      console.log('🚀 ~ data:', data);
+
+      // setis_followed && setis_followed(false);
       if (data?.status == 200) {
-        if (setProfileData) {
-      console.log('setProfileData00000000000000000000000000000000000000000000', setProfileData);
-
-          setProfileData('Follow');
-        }
+        setis_followed && setis_followed(false);
+      } else {
+        setis_followed && setis_followed(true);
       }
-      dispatch(fetchOtherUserFollowersAndFollowing(body?.following_id));
 
-      dispatch({
-        type: Types.USER_FOLLOW_UPDATE,
-        payload: {
-          id: body?.following_id,
-          follow: false,
-        },
-      });
       setLoadingFollow(false);
     } catch (error) {
+      console.log('🚀 ~ error:', error);
+
       setLoadingFollow(false);
+      setis_followed && setis_followed(true);
     }
   };
 

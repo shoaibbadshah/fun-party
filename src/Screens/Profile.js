@@ -52,6 +52,7 @@ import {store} from '../Store/store';
 import {fetchNotificationsList} from '../Store/Actions/notifications';
 import Menu from '../Components/Profile/Menu';
 import RightArrow from '../Utils/Assets/Icons/RightArrow';
+import {useIsFocused} from '@react-navigation/native';
 
 const UserProfile = ({route, navigation}) => {
   const [visible, setIsVisible] = useState(false);
@@ -68,41 +69,20 @@ const UserProfile = ({route, navigation}) => {
   const theme = useSelector(e => e.theme);
   const dataProfile = useSelector(e => e.profile?.profile);
 
-  const screenName = route?.params?.item?.screenName;
   const refRBSheetFarward = useRef(null);
   const handleMenu = () => {
     refRBSheetFarward.current.handleMenu();
   };
   const {notifications, totalPages, filteredNotifications, isLoading} =
     useSelector(({notifications}) => notifications);
+  const isFocused = useIsFocused();
   // const data = route?.params?.item?.item;
-  const data =
-    screenName === 'OtherProfile' ? route?.params?.item?.item : dataProfile;
+  const data = dataProfile;
   console.log('🚀 ~ UserProfile ~ data:', data);
-  const renderItem = useCallback(
-    ({item}) => <Notification item={item} />,
-    [filteredNotifications],
-  );
-  useEffect(() => {
-    setProfileData(
-      route?.params?.item?.item?.is_followed ? 'following' : 'Follow',
-    );
 
-    if (screenName !== 'OtherProfile') {
-      dispatch(fetchProfile());
-    } else {
-      dispatch(
-        fetchOtherUserMinis(
-          page,
-          {user_id: data?._id},
-          setLoading,
-          setMinisLoading,
-        ),
-      );
-      dispatch(fetchOtherUserFollowersAndFollowing(data?._id));
-      dispatch(fetchOtherUserLv(page, {user_id: data?._id}, setLoading)); //long videos instead of mentions
-    }
-  }, [data?._id]);
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [isFocused]);
   useEffect(() => {
     dispatch(fetchNotificationsList(1, []));
   }, []);
@@ -483,7 +463,7 @@ const UserProfile = ({route, navigation}) => {
                         fontSize: 16,
                         fontWeight: '600',
                         color: theme.text,
-                        marginRight:20
+                        marginRight: 20,
                       }}>
                       invited your for a watch party{' '}
                     </Text>
