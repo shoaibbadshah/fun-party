@@ -17,10 +17,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchUserFollowersAndFollowing} from '../../Store/Actions/profile';
-import {
-  fetchSearchMinisAndUsers,
-  inviteToFunParty,
-} from '../../Store/Actions/minis';
+import {inviteToFunParty} from '../../Store/Actions/minis';
 import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
 
 import {
@@ -37,7 +34,6 @@ import {Path, Svg} from 'react-native-svg';
 import {interstitial} from '../../../App';
 import {AdEventType} from 'react-native-google-mobile-ads';
 import LeftArrow from '../../Utils/Assets/Icons/LeftArrow';
-import UserListItem from '../../Components/UserListItem';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -92,7 +88,6 @@ const FunPartyInvite = ({route, navigation}) => {
   // }
   useEffect(() => {
     dispatch(fetchUserFollowersAndFollowing(setisloading));
-    dispatch(fetchSearchMinisAndUsers(''));
     setFriend(allUser);
   }, []);
 
@@ -136,15 +131,6 @@ const FunPartyInvite = ({route, navigation}) => {
       setChecked([...checked, item._id]);
     }
     // setChecked([...checked, item._id]);
-  };
-
-  const {users} = useSelector(({previewMinis}) => previewMinis);
-  const renderProfile = ({item, index}) => {
-    return (
-      <View>
-        <UserListItem item={item} />
-      </View>
-    );
   };
 
   return (
@@ -241,10 +227,9 @@ const FunPartyInvite = ({route, navigation}) => {
             </View>
           </View>
 
-          {[].length > 0 ? (
+          {filterSearch.length > 0 ? (
             <FlatList
-              data={[]}
-              //data={filterSearch}
+              data={filterSearch}
               contentContainerStyle={{
                 paddingBottom: 245,
                 // alignItems: 'center',
@@ -334,27 +319,22 @@ const FunPartyInvite = ({route, navigation}) => {
                 // height: height - 200,
                 flex: 1,
                 justifyContent: 'center',
-                //alignItems: 'center',
+                alignItems: 'center',
                 // backgroundColor: 'red',
               }}>
               {isloading ? (
-                <>
-                  <ActivityIndicator color={theme.text} size={'large'} />
-                </>
+                <ActivityIndicator color={theme.text} size={'large'} />
               ) : (
-                <>
-                  <FlatList data={users} renderItem={renderProfile} />
-                  {/* <Text
-                    style={{
-                      color: theme.text,
-                      justifyContent: 'center',
-                      textAlign: 'center',
-                      paddingHorizontal: 15,
-                    }}>
-                    Looks like you don't have any friends yet! Invite your
-                    friends for a watch party!
-                  </Text> */}
-                </>
+                <Text
+                  style={{
+                    color: theme.text,
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    paddingHorizontal: 15,
+                  }}>
+                  Looks like you don't have any friends yet! Invite your friends
+                  for a watch party!
+                </Text>
               )}
             </View>
           )}
