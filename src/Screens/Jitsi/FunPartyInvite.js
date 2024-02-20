@@ -57,6 +57,8 @@ const FunPartyInvite = ({route, navigation}) => {
     {key: 'Friends', title: 'Friends'},
     {key: 'Suggestions', title: 'Suggestions'},
   ]);
+  const [isDataInFirstTab, setIsDataInFirstTab] = useState(false);
+
   const theme = useSelector(e => e.theme);
   const Suggestions_Users = useSelector(
     e => e.friendSuggestionsReducer?.suggested_List,
@@ -237,16 +239,17 @@ const FunPartyInvite = ({route, navigation}) => {
           {isloading ? (
             <ActivityIndicator color={theme.text} size={'large'} />
           ) : (
-            <Text
-              style={{
-                color: theme.text,
-                justifyContent: 'center',
-                textAlign: 'center',
-                paddingHorizontal: 15,
-              }}>
-              Looks like you don't have any friends yet! Invite your friends for
-              a watch party!
-            </Text>
+            setIndex(1)
+            // <Text
+            //   style={{
+            //     color: theme.text,
+            //     justifyContent: 'center',
+            //     textAlign: 'center',
+            //     paddingHorizontal: 15,
+            //   }}>
+            //   Looks like you don't have any friends yet! Invite your friends for
+            //   a watch party!
+            // </Text>
           )}
         </View>
       )}
@@ -275,9 +278,7 @@ const FunPartyInvite = ({route, navigation}) => {
     return <UserListItem item={item} />;
   };
   const onRefresh = () => {
-    // setisloading(true);
     dispatch(fetch_suggestions_list(setisloading));
-    // setisloading(false);
   };
 
   const Suggestions = () => (
@@ -362,15 +363,7 @@ const FunPartyInvite = ({route, navigation}) => {
           }}>
           <View style={[styles.flexStyle]}>
             <View>
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                // style={{
-                //   justifyContent: 'center',
-                //   alignItems: 'flex-start',
-                //   paddingLeft: 15,
-                //   width: '20%',
-                // }}
-              >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
                 <LeftArrow width={18} height={18} color={theme.text} />
               </TouchableOpacity>
             </View>
@@ -379,7 +372,7 @@ const FunPartyInvite = ({route, navigation}) => {
               style={{
                 color: theme.text,
                 fontWeight: 'bold',
-                fontSize: 17,
+                fontSize: 18,
               }}>
               FunParty Invite
             </Text>
@@ -394,7 +387,6 @@ const FunPartyInvite = ({route, navigation}) => {
             renderScene={renderScene}
             onIndexChange={setIndex}
             renderTabBar={renderTabBar}
-            initialLayout={{width: layout.width}}
           />
         </View>
       ) : (
