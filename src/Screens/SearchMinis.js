@@ -27,49 +27,17 @@ import UserListItem from '../Components/UserListItem';
 
 const SearchMini = ({route}) => {
   const navigation = useNavigation();
-
   const [caption, setCaption] = useState('');
-
   const [isFocus, setIsFocus] = useState(false);
-  const [page, setPage] = useState(1);
   const [isLoading1, setIsLoading] = useState(false);
 
-  const [profileData, setProfileData] = useState(null);
-
+  const dispatch = useDispatch();
   const theme = useSelector(e => e.theme);
   const {users} = useSelector(({previewMinis}) => previewMinis);
-
-  const dispatch = useDispatch();
 
   const searchHandle = async () => {
     setIsFocus(true);
     dispatch(fetchSearchMinisAndUsers(caption));
-  };
-
-  const unFollowMe = id => {
-    const body = {
-      following_id: id,
-    };
-    console.log('UnfollowMe check---------------------------------');
-    ref.current.ClickedID = id?._id;
-    // data.follower_count = data.follower_count > 0 && data.follower_count - 1;
-    dispatch(userFollowing(body, setProfileData, setLoadingFollow));
-  };
-
-  const followMe = id => {
-    const body = {
-      following_id: id?._id,
-    };
-    console.log('followMe check---------------------------------');
-    // console.log('followMe check---------------------------------');
-
-    ref.current.ClickedID = id?._id;
-
-    dispatch(
-      userFollow(body, setProfileData, setLoadingFollow, setis_followed),
-    );
-    // item?.is_followed
-    // id.is_followed = true;
   };
 
   const onRefresh = () => {

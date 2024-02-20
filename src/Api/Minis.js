@@ -56,6 +56,7 @@ export default {
   miniLike: (body) => api.post("/minis/create_like_dislike", body),
   miniReport: (body) => api.post("/report", body),
   notifyCount: () => api.get("/notifications/unread_count"),
+  friend_suggestions_list: () => api.get("/users/friend_suggestions_list"),
   getTrendingMiniReplies: (body, pagination) =>
     api.post(
       `/minis/get_reply_minis?limit=${pagination.limit}&page=${pagination.page}`,

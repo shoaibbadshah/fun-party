@@ -29,7 +29,6 @@ export default function UserListItem({item}) {
     };
 
     ref.current.ClickedID = id?._id;
-    // data.follower_count = data.follower_count > 0 && data.follower_count - 1;
     dispatch(userFollowing(body, null, setLoadingFollow, setis_followed));
   };
 
@@ -37,9 +36,7 @@ export default function UserListItem({item}) {
     const body = {
       following_id: id?._id,
     };
-
     ref.current.ClickedID = id?._id;
-
     dispatch(userFollow(body, null, setLoadingFollow, setis_followed));
   };
 
@@ -95,8 +92,6 @@ export default function UserListItem({item}) {
           backgroundColor: '#5E72E4',
           alignItems: 'center',
           justifyContent: 'center',
-
-          // display: item?.is_followed || is_followed ? 'flex' : 'flex',
         }}
         onPress={async () => {
           is_followed ? unFollowMe(item) : followMe(item);

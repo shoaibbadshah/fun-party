@@ -24,6 +24,7 @@ import nearMeMiniReducer from './nearmeMiniReducer';
 import chatFriendsReducer from './fetchChatFriends';
 import lvReducer from './lvReducer';
 import lvMoreVideosReducer from './lvMoreVideosReducer';
+import friendSuggestionsReducer from './friendSuggestionsReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -50,5 +51,6 @@ const rootReducer = combineReducers({
   wallet: fetchWalletReducer,
   monthlyTransaction: userMonthlyHistory,
   chatFriends: chatFriendsReducer,
+  friendSuggestionsReducer: friendSuggestionsReducer
 });
 export default rootReducer;

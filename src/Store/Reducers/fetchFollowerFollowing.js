@@ -1,4 +1,4 @@
-import { Types } from "../Types/type";
+import {Types} from '../Types/type';
 
 const initialState = {
   userFollower: [],
@@ -14,12 +14,12 @@ export default function userFollowerFollowingReducer(
 ) {
   switch (action.type) {
     case Types.FETCH_USER_FOLLOWER_FOLLOWING:
-      return { ...state, ...action.payload };
+      return {...state, ...action.payload};
 
     case Types.FETCH_ALL_FRIEND_LIST:
-      return { ...state, ...action.payload };
+      return {...state, ...action.payload};
     case Types.FETCH_USER_CONTACTS:
-      return { ...state, contacts: action.payload };
+      return {...state, contacts: action.payload};
 
     case Types.USER_FRIEND_LIST_LOADING:
       return {

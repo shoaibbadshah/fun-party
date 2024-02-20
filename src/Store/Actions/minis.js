@@ -461,7 +461,6 @@ export const userFollowing =
   (body, setProfileData, setLoadingFollow, setis_followed) =>
   async dispatch => {
     try {
-      debugger;
       setLoadingFollow(true);
       // setis_followed && setis_followed(false);
 
@@ -526,18 +525,19 @@ export const reportMini = body => async dispatch => {
     );
   } catch (error) {}
 };
-export const notificationCount = body => async dispatch => {
-  dispatch(chatCount());
+export const fetch_suggestions_list = setLoading => async dispatch => {
   try {
-    const data = await API.v1.Minis.notifyCount();
+    setLoading && setLoading(true);
+    const {data} = await API.v1.Minis.friend_suggestions_list();
+    // console.log('===============> DAta ====:::::', data?.data[0]);
 
     dispatch({
-      type: Types.FETCH_NOTIFICATIONS_COUNT,
-      payload: {count: data?.data?.count},
+      type: Types.FETCH_SUGGESTIONS_LIST,
+      payload: {suggested_List: data?.data},
     });
-    dispatch(chatCount());
+    setLoading && setLoading(false);
   } catch (error) {
-    dispatch(chatCount());
+    setLoading && setLoading(false);
   }
 };
 
