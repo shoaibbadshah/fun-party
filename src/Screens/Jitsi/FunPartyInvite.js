@@ -91,8 +91,8 @@ const FunPartyInvite = ({route, navigation}) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetch_suggestions_list(setisloading));
     dispatch(fetchUserFollowersAndFollowing(setisloading));
+    dispatch(fetch_suggestions_list(setisloading));
     setFriend(allUser);
   }, []);
 
@@ -390,7 +390,11 @@ const FunPartyInvite = ({route, navigation}) => {
           />
         </View>
       ) : (
-        <WatchPartyGuide guidCheck={guidCheck} setGuidCheck={setGuidCheck} />
+        <WatchPartyGuide
+          guidCheck={guidCheck}
+          setGuidCheck={setGuidCheck}
+          handleInvitePress={handleInvitePress}
+        />
       )}
 
       <Menu ref={refRBSheetFarward} />

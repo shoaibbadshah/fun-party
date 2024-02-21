@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 const {width, height} = Dimensions.get('screen');
-const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
+const WatchPartyGuide = ({setGuidCheck, guidCheck,handleInvitePress}) => {
   const theme = useSelector(e => e.theme);
   const navigation = useNavigation();
   return (
@@ -267,6 +267,24 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck}) => {
           Enjoy your FunParty!
         </Text>
       </View>
+      <TouchableOpacity
+        onPress={handleInvitePress}
+        // disabled={checked.length == 0 ? true : false}
+        style={{
+          position: 'absolute',
+          bottom: 30,
+          right: 30,
+          left: 30,
+          backgroundColor:  theme.secondary,
+          borderRadius: 8,
+          height: 45,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{color: 'white', fontSize: 16, padding: 10}}>
+          { 'Start FunParty'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
