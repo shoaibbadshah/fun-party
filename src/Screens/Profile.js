@@ -79,7 +79,9 @@ const UserProfile = ({route, navigation}) => {
   // const data = route?.params?.item?.item;
   const data = dataProfile;
   // console.log('🚀 ~ UserProfile ~ data:', data);
-
+  const userFollowing = useSelector(
+    e => e.userFollowerFollowing?.userFollowing,
+  );
   useEffect(() => {
     dispatch(fetchProfile());
   }, [isFocused]);
@@ -376,7 +378,7 @@ const UserProfile = ({route, navigation}) => {
           }}>
           <ITouchableOpacity
             onPress={() => {
-              navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE);
+              navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE, {index:userFollowing?.length >=1 ?  0: 1 });
             }}
             style={{
               backgroundColor: '#303D5B',

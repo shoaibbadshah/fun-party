@@ -68,3 +68,4 @@ android/gradle.properties
 yarn.lock
 android/gradle.properties
 yarn.lock
+android/app/build.gradle

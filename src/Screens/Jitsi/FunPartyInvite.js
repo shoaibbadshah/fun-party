@@ -45,10 +45,9 @@ const FunPartyInvite = ({route, navigation}) => {
   const layout = useWindowDimensions();
 
   const dispatch = useDispatch();
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(route.params?.index);
   const refRBSheetFarward = useRef(null);
-  const [search, setSearch] = useState('');
-  const [friend, setFriend] = useState([]);
+
   const [checked, setChecked] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [guidCheck, setGuidCheck] = useState(true);
@@ -57,26 +56,34 @@ const FunPartyInvite = ({route, navigation}) => {
     {key: 'Friends', title: 'Friends'},
     {key: 'Suggestions', title: 'Suggestions'},
   ]);
+  const userFollowing = useSelector(
+    e => e.userFollowerFollowing?.userFollowing,
+  );
 
+  // const [filterSearch, setListToInvite] = useState(userFollowing)
+
+  // const length = userFollowing?.length;
+  // console.log("========================================",route.params?.index)
+  // useEffect(() => {
+  //   // if (route.params) {
+  //     if (!userFollowing?.length >5) {
+  // console.log("=========================search===============",search)
+  //       handleTabIndex(1);
+  //     } else {
+  //       console.log("==========================less==============",length)
+  //       handleTabIndex(0);
+  //     }
+  //     // userFollowing.length >15? handleTabIndex(0): handleTabIndex(1)
+  //   // }
+  // }, []);
   const theme = useSelector(e => e.theme);
   const Suggestions_Users = useSelector(
     e => e.friendSuggestionsReducer?.suggested_List,
   );
-  const userFollowing = useSelector(
-    e => e.userFollowerFollowing?.userFollowing,
-  );
-  const userFollower = useSelector(e => e.userFollowerFollowing?.userFollower);
 
   const handleMenu = () => {
     refRBSheetFarward.current.handleMenu();
   };
-
-  const allUser = [...userFollowing, ...userFollower];
-  const filterSearch = search
-    ? userFollowing?.filter(x =>
-        x.first_name.toLowerCase().includes(search.toLowerCase()),
-      )
-    : userFollowing;
 
   useEffect(() => {
     const unsubscribe = interstitial.addAdEventListener(
@@ -92,14 +99,8 @@ const FunPartyInvite = ({route, navigation}) => {
   useEffect(() => {
     dispatch(fetchUserFollowersAndFollowing(setisloading));
     dispatch(fetch_suggestions_list(setisloading));
-    setFriend(allUser);
+    // setFriend(allUser);
   }, []);
-
-  const onChangeText = e => {
-    const searchName = searchByName(e, friend);
-    setFriend(searchName);
-    setSearch(e);
-  };
 
   const handleInvitePress = async () => {
     const randomMeetId = generateRandomMeetId();
@@ -136,139 +137,154 @@ const FunPartyInvite = ({route, navigation}) => {
     }
     // setChecked([...checked, item._id]);
   };
-  const FriendsList = () => (
-    <View style={[styles.scene, {backgroundColor: '#000000'}]}>
-      <View style={{position: 'relative'}}>
-        <View
-          style={{
-            backgroundColor: '#1B2438',
-            height: 40,
-            width: '100%',
-            marginHorizontal: 15,
-            marginVertical: 15,
-            borderRadius: 10,
-            alignItems: 'center',
-            alignSelf: 'center',
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-          }}>
-          <MinisSearch color={'#B3B3B3'} width={18} height={18} />
-          <TextInput
-            onChangeText={onChangeText}
+  const FriendsList = () => {
+    const [search, setSearch] = useState('');
+
+    const filterSearch = search
+      ? userFollowing?.filter(x =>
+          x.first_name.toLowerCase().includes(search.toLowerCase()),
+        )
+      : userFollowing;
+
+    const onSubmitEditing = e => {
+      console.log('🚀 ~ onSubmitEditing ~ e:', e);
+
+      setSearch(e);
+    };
+
+    return (
+      <View style={[styles.scene, {backgroundColor: '#000000'}]}>
+        <View style={{position: 'relative'}}>
+          <View
             style={{
-              width: '82%',
-              color: 'white',
-              textAlign: 'left',
-              marginLeft: 4,
-            }}
-            placeholderTextColor={'#B3B3B3'}
-            returnKeyType={'search'}
-            selectTextOnFocus={false}
-            contextMenuHidden={true}
-            placeholder={'Search contacts'}
-          />
-        </View>
-      </View>
-      {filterSearch.length > 0 ? (
-        <FlatList
-          data={filterSearch}
-          contentContainerStyle={{
-            paddingBottom: 245,
-          }}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              tintColor={'black'}
-              onRefresh={onRefresh}
-              refreshing={isloading}
+              backgroundColor: '#1B2438',
+              height: 40,
+              width: '100%',
+              marginHorizontal: 15,
+              marginVertical: 15,
+              borderRadius: 10,
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              paddingHorizontal: 15,
+            }}>
+            <MinisSearch color={'#B3B3B3'} width={18} height={18} />
+            <TextInput
+              //  onSubmitEditing={(text)=>console.log('edidtion sldfj', text.nativeEvent.text)}
+              // onSubmitEditing={(e)=>onSubmitEditing(e.nativeEvent.text)}
+              onChangeText={text => onSubmitEditing(text)}
+              style={{
+                width: '82%',
+                color: 'white',
+                textAlign: 'left',
+                marginLeft: 4,
+              }}
+              placeholderTextColor={'#B3B3B3'}
+              returnKeyType={'search'}
+              value={search}
+              placeholder={'Search friends'}
             />
-          }
-          renderItem={({item, index}) => (
-            <View style={styles.inviteUser}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View
-                  style={{
-                    width: 35,
-                    height: 35,
-                    backgroundColor: '#00000010',
-                    borderRadius: width,
-                    marginRight: 20,
-                    overflow: 'hidden',
-                  }}>
-                  <FastImage
-                    source={{
-                      uri: checkImageUrl(
-                        item?.profile_image,
-                        `https://ui-avatars.com/api/?background=random&name=${item?.first_name}+${item?.last_name}`,
-                      ),
-                    }}
-                    resizeMode={'cover'}
-                    style={{width: '100%', height: '100%'}}
-                  />
+          </View>
+        </View>
+        {!filterSearch.length <= 0 ? (
+          <FlatList
+            data={filterSearch}
+            contentContainerStyle={{
+              paddingBottom: 245,
+            }}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                tintColor={'black'}
+                // onRefresh={onRefresh}
+                // refreshing={isloading}
+              />
+            }
+            renderItem={({item, index}) => (
+              <View style={styles.inviteUser}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: '#00000010',
+                      borderRadius: width,
+                      marginRight: 20,
+                      overflow: 'hidden',
+                    }}>
+                    <FastImage
+                      source={{
+                        uri: checkImageUrl(
+                          item?.profile_image,
+                          `https://ui-avatars.com/api/?background=random&name=${item?.first_name}+${item?.last_name}`,
+                        ),
+                      }}
+                      resizeMode={'cover'}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                  <Text style={{color: theme.text, fontWeight: 'bold'}}>
+                    {item?.first_name} {item?.last_name}
+                  </Text>
                 </View>
-                <Text style={{color: theme.text, fontWeight: 'bold'}}>
-                  {item?.first_name} {item?.last_name}
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={{
-                  backgroundColor:
-                    theme.name === 'dark'
-                      ? checked.includes(item?._id)
+                <TouchableOpacity
+                  style={{
+                    backgroundColor:
+                      theme.name === 'dark'
+                        ? checked.includes(item?._id)
+                          ? theme.secondary
+                          : 'black'
+                        : checked.includes(item?._id)
                         ? theme.secondary
-                        : 'black'
-                      : checked.includes(item?._id)
-                      ? theme.secondary
-                      : 'grey',
-                  paddingHorizontal: 10,
-                  height: 25,
-                  borderRadius: 15,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                onPress={() => toggleCheck(item, index)}>
-                <Text style={{color: 'white'}}>
-                  {checked.includes(index) ? 'Invite' : 'Invite'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      ) : (
-        <View
+                        : 'grey',
+                    paddingHorizontal: 10,
+                    height: 25,
+                    borderRadius: 15,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  onPress={() => toggleCheck(item, index)}>
+                  <Text style={{color: 'white'}}>
+                    {checked.includes(index) ? 'Invite' : 'Invite'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            {isloading && (
+              <ActivityIndicator color={theme.text} size={'large'} />
+            )}
+          </View>
+        )}
+        <TouchableOpacity
+          onPress={handleInvitePress}
+          disabled={checked.length == 0 ? true : false}
           style={{
-            flex: 1,
+            position: 'absolute',
+            bottom: 30,
+            right: 30,
+            left: 30,
+            backgroundColor: checked.length == 0 ? 'grey' : theme.secondary,
+            borderRadius: 8,
+            height: 45,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {isloading ? (
-            <ActivityIndicator color={theme.text} size={'large'} />
-          ) : (
-            setIndex(1)
-          )}
-        </View>
-      )}
-      <TouchableOpacity
-        onPress={handleInvitePress}
-        disabled={checked.length == 0 ? true : false}
-        style={{
-          position: 'absolute',
-          bottom: 30,
-          right: 30,
-          left: 30,
-          backgroundColor: checked.length == 0 ? 'grey' : theme.secondary,
-          borderRadius: 8,
-          height: 45,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text style={{color: 'white', fontSize: 16, padding: 10}}>
-          {guidCheck ? 'Invite' : 'Start FunParty'}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+          <Text style={{color: 'white', fontSize: 16, padding: 10}}>
+            {guidCheck ? 'Invite' : 'Start FunParty'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   const renderItem = ({item, index}) => {
     return <UserListItem item={item} />;
@@ -323,6 +339,10 @@ const FunPartyInvite = ({route, navigation}) => {
     Friends: FriendsList,
     Suggestions: Suggestions,
   });
+
+  const handleTabIndex = index => {
+    setIndex(index);
+  };
 
   const renderTabBar = props => (
     <TabBar
@@ -382,7 +402,7 @@ const FunPartyInvite = ({route, navigation}) => {
           <TabView
             navigationState={{index, routes}}
             renderScene={renderScene}
-            onIndexChange={setIndex}
+            onIndexChange={handleTabIndex}
             renderTabBar={renderTabBar}
           />
         </View>
