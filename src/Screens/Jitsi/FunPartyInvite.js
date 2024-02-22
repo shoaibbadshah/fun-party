@@ -259,9 +259,20 @@ const FunPartyInvite = ({route, navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {isloading && (
-              <ActivityIndicator color={theme.text} size={'large'} />
-            )}
+          {isloading ? (
+            <ActivityIndicator color={theme.text} size={'large'} />
+          ) : (
+            <Text
+              style={{
+                color: theme.text,
+                justifyContent: 'center',
+                textAlign: 'center',
+                paddingHorizontal: 15,
+              }}>
+              Looks like you don't have any friends yet! Invite your friends for
+              a watch party!
+            </Text>
+          )}
           </View>
         )}
         <TouchableOpacity
