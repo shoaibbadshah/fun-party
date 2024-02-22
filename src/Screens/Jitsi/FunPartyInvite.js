@@ -57,7 +57,6 @@ const FunPartyInvite = ({route, navigation}) => {
     {key: 'Friends', title: 'Friends'},
     {key: 'Suggestions', title: 'Suggestions'},
   ]);
-  const [isDataInFirstTab, setIsDataInFirstTab] = useState(false);
 
   const theme = useSelector(e => e.theme);
   const Suggestions_Users = useSelector(
@@ -178,6 +177,13 @@ const FunPartyInvite = ({route, navigation}) => {
             paddingBottom: 245,
           }}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              tintColor={'black'}
+              onRefresh={onRefresh}
+              refreshing={isloading}
+            />
+          }
           renderItem={({item, index}) => (
             <View style={styles.inviteUser}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -240,16 +246,6 @@ const FunPartyInvite = ({route, navigation}) => {
             <ActivityIndicator color={theme.text} size={'large'} />
           ) : (
             setIndex(1)
-            // <Text
-            //   style={{
-            //     color: theme.text,
-            //     justifyContent: 'center',
-            //     textAlign: 'center',
-            //     paddingHorizontal: 15,
-            //   }}>
-            //   Looks like you don't have any friends yet! Invite your friends for
-            //   a watch party!
-            // </Text>
           )}
         </View>
       )}
@@ -306,15 +302,17 @@ const FunPartyInvite = ({route, navigation}) => {
           {isloading ? (
             <ActivityIndicator color={theme.text} size={'large'} />
           ) : (
-            <Text
-              style={{
-                color: theme.text,
-                justifyContent: 'center',
-                textAlign: 'center',
-                paddingHorizontal: 15,
-              }}>
-              Refresh page for friend suggestions
-            </Text>
+            <>
+              <Text
+                style={{
+                  color: theme.text,
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  paddingHorizontal: 15,
+                }}>
+                Refresh page for friend suggestions
+              </Text>
+            </>
           )}
         </View>
       )}
@@ -341,7 +339,6 @@ const FunPartyInvite = ({route, navigation}) => {
       renderLabel={({route, color}) => (
         <Text style={{marginBottom: 7, color}}>{route.title}</Text>
       )}
-      renderTabBar={() => null}
     />
   );
   return (

@@ -105,7 +105,7 @@ export default function UserListItem({item}) {
               fontWeight: 'bold',
               color: 'white',
             }}>
-            {is_followed ? 'Unfollow' : 'Follow'}
+            {is_followed ? 'Following' : 'Follow'}
           </Text>
         )}
       </TouchableOpacity>

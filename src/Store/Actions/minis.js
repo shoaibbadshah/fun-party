@@ -4,7 +4,7 @@ import {store} from '../store';
 import {Types} from '../Types/type';
 import socketServcies from '../../Utils/socketServcie';
 import {navigate} from '../../Utils/Navigation/navigationRef';
-import {fetchOtherUserFollowersAndFollowing, fetchProfile} from './profile';
+import {fetchOtherUserFollowersAndFollowing, fetchProfile, fetchUserFollowersAndFollowing} from './profile';
 import {NAVIGATION_ROUTES} from '../../Utils/Navigation/NavigationRoutes';
 import {chatCount} from './chat';
 
@@ -418,6 +418,8 @@ export const userFollow =
         setLoadingFollow && setLoadingFollow(false);
       }
       dispatch(fetchProfile());
+      dispatch(fetchUserFollowersAndFollowing());
+
       dispatch({
         type: Types.USER_FOLLOW_UPDATE,
         payload: {
@@ -466,7 +468,7 @@ export const userFollowing =
 
       const data = await API.v1.Minis.userFollowing(body);
       console.log('🚀 ~ data:', data);
-
+      dispatch(fetchUserFollowersAndFollowing());
       // setis_followed && setis_followed(false);
       if (data?.status == 200) {
         setis_followed && setis_followed(false);

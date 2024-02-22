@@ -40,14 +40,6 @@ const SearchMini = ({route}) => {
     dispatch(fetchSearchMinisAndUsers(caption));
   };
 
-  const onRefresh = () => {
-    setCaption(true);
-    setIsLoading(true);
-    dispatch(fetchSearchMinisAndUsers(1, []));
-
-    setIsLoading(false);
-  };
-
   const UsersSearch = () => (
     <View style={{flex: 1, justifyContent: 'center', marginTop: 15}}>
       {users.length > 0 ? (
