@@ -47,7 +47,6 @@ const FunPartyInvite = ({route, navigation}) => {
   const dispatch = useDispatch();
   const [index, setIndex] = useState(route.params?.index);
   const refRBSheetFarward = useRef(null);
-
   const [checked, setChecked] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [guidCheck, setGuidCheck] = useState(true);
@@ -60,27 +59,32 @@ const FunPartyInvite = ({route, navigation}) => {
     e => e.userFollowerFollowing?.userFollowing,
   );
 
-  // const [filterSearch, setListToInvite] = useState(userFollowing)
-
-  // const length = userFollowing?.length;
-  // console.log("========================================",route.params?.index)
-  // useEffect(() => {
-  //   // if (route.params) {
-  //     if (!userFollowing?.length >5) {
-  // console.log("=========================search===============",search)
-  //       handleTabIndex(1);
-  //     } else {
-  //       console.log("==========================less==============",length)
-  //       handleTabIndex(0);
-  //     }
-  //     // userFollowing.length >15? handleTabIndex(0): handleTabIndex(1)
-  //   // }
-  // }, []);
   const theme = useSelector(e => e.theme);
   const Suggestions_Users = useSelector(
     e => e.friendSuggestionsReducer?.suggested_List,
   );
+  const partyStart = async () => {
+    const randomMeetId = generateRandomMeetId();
+    // setSearch('');
 
+    const generate = await generateLink(randomMeetId);
+    // console.log(generate, 'new generate', randomMeetId);
+  
+      const body = {
+        users: checked,
+        room: generate,
+        web_link: `https://shareslate.fun/funparty?meet=${randomMeetId}`,
+        room_code: randomMeetId,
+      };
+      // console.log(body, 'new thingss');
+
+      dispatch(inviteToFunParty(body));
+      setGuidCheck(!guidCheck);
+      interstitial.loaded ? interstitial.show() : interstitial.load();
+      navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
+      setChecked([]);
+    
+  };
   const handleMenu = () => {
     refRBSheetFarward.current.handleMenu();
   };
@@ -102,43 +106,9 @@ const FunPartyInvite = ({route, navigation}) => {
     // setFriend(allUser);
   }, []);
 
-  const handleInvitePress = async () => {
-    const randomMeetId = generateRandomMeetId();
-    setSearch('');
-
-    const generate = await generateLink(randomMeetId);
-    // console.log(generate, 'new generate', randomMeetId);
-    if (guidCheck) {
-      setGuidCheck(!guidCheck);
-    } else {
-      const body = {
-        users: checked,
-        room: generate,
-        web_link: `https://shareslate.fun/funparty?meet=${randomMeetId}`,
-        room_code: randomMeetId,
-      };
-      // console.log(body, 'new thingss');
-
-      dispatch(inviteToFunParty(body));
-      setGuidCheck(!guidCheck);
-      interstitial.loaded ? interstitial.show() : interstitial.load();
-      navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
-      setChecked([]);
-    }
-  };
-
-  const toggleCheck = (item, index) => {
-    if (checked.includes(item._id)) {
-      // If item is already checked, unselect it
-      setChecked(checked.filter(id => id !== item._id));
-    } else {
-      // If item is not checked, select it
-      setChecked([...checked, item._id]);
-    }
-    // setChecked([...checked, item._id]);
-  };
   const FriendsList = () => {
     const [search, setSearch] = useState('');
+  
 
     const filterSearch = search
       ? userFollowing?.filter(x =>
@@ -150,6 +120,27 @@ const FunPartyInvite = ({route, navigation}) => {
       console.log('🚀 ~ onSubmitEditing ~ e:', e);
 
       setSearch(e);
+    };
+    const toggleCheck = (item, index) => {
+      if (checked.includes(item._id)) {
+        // If item is already checked, unselect it
+        setChecked(checked.filter(id => id !== item._id));
+      } else {
+        // If item is not checked, select it
+        setChecked([...checked, item._id]);
+      }
+      // setChecked([...checked, item._id]);
+    };
+
+    const handleInvitePress = async () => {
+      // const randomMeetId = generateRandomMeetId();
+      setSearch('');
+
+      // const generate = await generateLink(randomMeetId);
+      // console.log(generate, 'new generate', randomMeetId);
+      if (guidCheck) {
+        setGuidCheck(!guidCheck);
+      } 
     };
 
     return (
@@ -171,8 +162,6 @@ const FunPartyInvite = ({route, navigation}) => {
             }}>
             <MinisSearch color={'#B3B3B3'} width={18} height={18} />
             <TextInput
-              //  onSubmitEditing={(text)=>console.log('edidtion sldfj', text.nativeEvent.text)}
-              // onSubmitEditing={(e)=>onSubmitEditing(e.nativeEvent.text)}
               onChangeText={text => onSubmitEditing(text)}
               style={{
                 width: '82%',
@@ -187,7 +176,7 @@ const FunPartyInvite = ({route, navigation}) => {
             />
           </View>
         </View>
-        {!filterSearch.length <= 0 ? (
+        {userFollowing.length > 0 && filterSearch.length > 0 ? (
           <FlatList
             data={filterSearch}
             contentContainerStyle={{
@@ -197,8 +186,8 @@ const FunPartyInvite = ({route, navigation}) => {
             refreshControl={
               <RefreshControl
                 tintColor={'black'}
-                // onRefresh={onRefresh}
-                // refreshing={isloading}
+                onRefresh={onRefresh}
+                refreshing={isloading}
               />
             }
             renderItem={({item, index}) => (
@@ -259,20 +248,30 @@ const FunPartyInvite = ({route, navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-          {isloading ? (
-            <ActivityIndicator color={theme.text} size={'large'} />
-          ) : (
-            <Text
-              style={{
-                color: theme.text,
-                justifyContent: 'center',
-                textAlign: 'center',
-                paddingHorizontal: 15,
-              }}>
-              Looks like you don't have any friends yet! Invite your friends for
-              a watch party!
-            </Text>
-          )}
+            {isloading ? (
+              <ActivityIndicator color={theme.text} size={'large'} />
+            ) : !filterSearch.length <= 0 ? (
+              <Text
+                style={{
+                  color: theme.text,
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  paddingHorizontal: 15,
+                }}>
+                Looks like you don't have any friends yet! Invite your friends
+                for a watch party!
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  color: theme.text,
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  paddingHorizontal: 15,
+                }}>
+                Search not found{' '}
+              </Text>
+            )}
           </View>
         )}
         <TouchableOpacity
@@ -421,7 +420,7 @@ const FunPartyInvite = ({route, navigation}) => {
         <WatchPartyGuide
           guidCheck={guidCheck}
           setGuidCheck={setGuidCheck}
-          handleInvitePress={handleInvitePress}
+          handleInvitePress={partyStart}
         />
       )}
 
