@@ -98,11 +98,20 @@ export default function AppleConnect({isDecide}) {
           ) {
             //====== if we have got the email & full name then populate the modal
 
-            handleChangePassword();
-            setFirstName(appleAuthRequestResponse.fullName.familyName);
-            setLastName(appleAuthRequestResponse.fullName.givenName);
-            setModalEmail(appleAuthRequestResponse.email);
-            setUserApple(appleAuthRequestResponse.user);
+            Alert.alert(
+              'Stop using Apple ID & try again',
+              'Please go to setting -> apple id -> Password & Security -> Sign in with Apple -> click on the FunParty app -> Stop using Apple ID',
+            );
+
+            //
+            //commenting the following code due to rejection over the appleconnect
+            //it's modal for email, fistname lastname
+            //
+            // handleChangePassword();
+            // setFirstName(appleAuthRequestResponse.fullName.familyName);
+            // setLastName(appleAuthRequestResponse.fullName.givenName);
+            // setModalEmail(appleAuthRequestResponse.email);
+            // setUserApple(appleAuthRequestResponse.user);
           } else {
             dispatch(
               appleLogin(
