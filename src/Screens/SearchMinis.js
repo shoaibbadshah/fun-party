@@ -63,26 +63,22 @@ const SearchMini = ({route}) => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: theme.primary,
-        paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
-      }}>
+    <>
       <StatusBar barStyle={theme.statusbar} />
       {/* +++++++++++++++++++++++++++++++++++++++++++++ Header Start +++++++++++++++++++++++++++++++++++++++++++ */}
       <View
         style={{
           flexDirection: 'row',
           width: '100%',
-          paddingBottom: 12,
+          paddingHorizontal: 15,
+          backgroundColor: 'black',
+          paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{
             justifyContent: 'center',
             alignItems: 'flex-start',
-            paddingLeft: 15,
             width: '20%',
           }}>
           <LeftArrow width={18} height={18} color={theme.text} />
@@ -93,7 +89,7 @@ const SearchMini = ({route}) => {
             flex: 1,
             textAlign: 'center',
             fontSize: 20,
-            fontWeight: '600',
+            fontWeight: 'bold',
             color: theme.text,
           }}>
           Search
@@ -101,54 +97,58 @@ const SearchMini = ({route}) => {
 
         <TouchableOpacity
           style={{
-            justifyContent: 'center',
-            alignItems: 'flex-end',
-            paddingRight: 15,
+            // justifyContent: 'center',
+            // alignItems: 'flex-end',
             boxShadow: 'none',
             width: '20%',
           }}></TouchableOpacity>
       </View>
       {/* +++++++++++++++++++++++++++++++++++++++++++++ Header End +++++++++++++++++++++++++++++++++++++++++++ */}
       {/* +++++++++++++++++++++++++++++++++++++++++++++ Search Input Start +++++++++++++++++++++++++++++++++++++++++++ */}
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: theme.primary,
+        }}>
+        <View style={[styles.componentView, {backgroundColor: theme.primary}]}>
+          <View style={[styles.searchView, {backgroundColor: '#222222'}]}>
+            <TextInput
+              style={{width: '80%', height: '100%', color: theme.text}}
+              placeholderTextColor={'grey'}
+              returnKeyType={'search'}
+              value={caption}
+              onSubmitEditing={searchHandle}
+              onChangeText={e => {
+                setCaption(e);
+              }}
+              placeholder={'Enter text to search'}
+            />
 
-      <View style={[styles.componentView, {backgroundColor: theme.primary}]}>
-        <View style={[styles.searchView, {backgroundColor: '#222222'}]}>
-          <TextInput
-            style={{width: '80%', height: '100%', color: theme.text}}
-            placeholderTextColor={'grey'}
-            returnKeyType={'search'}
-            value={caption}
-            onSubmitEditing={searchHandle}
-            onChangeText={e => {
-              setCaption(e);
-            }}
-            placeholder={'Enter text to search'}
-          />
-
-          <TouchableOpacity
-            disabled={caption === '' ? true : false}
-            onPress={searchHandle}>
-            <MinisSearch color={theme.text} width={24} height={24} />
-          </TouchableOpacity>
+            <TouchableOpacity
+              disabled={caption === '' ? true : false}
+              onPress={searchHandle}>
+              <MinisSearch color={theme.text} width={24} height={24} />
+            </TouchableOpacity>
+          </View>
+          {isFocus
+            ? // <FlatList
+              //   data={users}
+              //   renderItem={UsersSearch}
+              //   keyExtractor={item => item.id}
+              //   refreshControl={
+              //     <RefreshControl
+              //       tintColor={'black'}
+              //       refreshing={isLoading1}
+              //       onRefresh={onRefresh}
+              //     />
+              //   }
+              // />
+              UsersSearch()
+            : ''}
         </View>
-        {isFocus
-          ? // <FlatList
-            //   data={users}
-            //   renderItem={UsersSearch}
-            //   keyExtractor={item => item.id}
-            //   refreshControl={
-            //     <RefreshControl
-            //       tintColor={'black'}
-            //       refreshing={isLoading1}
-            //       onRefresh={onRefresh}
-            //     />
-            //   }
-            // />
-            UsersSearch()
-          : ''}
-      </View>
-      {/* +++++++++++++++++++++++++++++++++++++++++++++ Search Input End +++++++++++++++++++++++++++++++++++++++++++ */}
-    </SafeAreaView>
+        {/* +++++++++++++++++++++++++++++++++++++++++++++ Search Input End +++++++++++++++++++++++++++++++++++++++++++ */}
+      </SafeAreaView>
+    </>
   );
 };
 

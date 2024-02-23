@@ -1,70 +1,34 @@
 import {
-  SafeAreaView,
   StyleSheet,
   StatusBar,
   Text,
   View,
   TouchableOpacity as ITouchableOpacity,
   Image,
-  Dimensions,
   TouchableOpacity,
   Platform,
   ScrollView,
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
-import {navigate} from '../Utils/Navigation/navigationRef';
 
-import {useSelector, useDispatch} from 'react-redux';
-import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
-import Notification from '../Utils/Assets/Icons/Notification';
-import ThreeDotss from './assets/images/ThreeDotss';
+import {Path, Svg} from 'react-native-svg';
+import Menu from '../Components/Profile/Menu';
 import King from './assets/images/premium-quality';
+import ThreeDotss from './assets/images/ThreeDotss';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchProfile} from '../Store/Actions/profile';
+import {useIsFocused} from '@react-navigation/native';
+import RightArrow from '../Utils/Assets/Icons/RightArrow';
+import {checkImageUrl, timeSince} from '../Utils/helpers';
+import {navigate} from '../Utils/Navigation/navigationRef';
 import GradiantButton from './assets/images/GradiantButton';
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {Path, Svg} from 'react-native-svg';
-import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
-
-import {
-  calculateAge,
-  checkImageUrl,
-  convertMentionsToPlainText,
-  countFormatter,
-  onShareLink,
-  timeSince,
-} from '../Utils/helpers';
-import {
-  fetchUserLv,
-  fetchProfile,
-  fetchUserMinis,
-  blockUserAccount,
-  fetchOtherUserLv,
-  fetchUserSavedMinis,
-  fetchOtherUserMinis,
-  fetchUserMentionMinis,
-  fetchUserFollowersAndFollowing,
-  fetchOtherUserFollowersAndFollowing,
-  fetchUserSavedLongVideoAction,
-  fetchUserContacts,
-  fetchPaginatedUserMinis,
-  fetchPaginatedOtherUserMinis,
-} from '../Store/Actions/profile';
-import {store} from '../Store/store';
 import {fetchNotificationsList} from '../Store/Actions/notifications';
-import Menu from '../Components/Profile/Menu';
-import RightArrow from '../Utils/Assets/Icons/RightArrow';
-import {useIsFocused} from '@react-navigation/native';
+import {NAVIGATION_ROUTES} from '../Utils/Navigation/NavigationRoutes';
 
 const UserProfile = ({route, navigation}) => {
   const [visible, setIsVisible] = useState(false);
-  const [item, setItem] = useState(route?.params?.item?.item);
-  const [profileData, setProfileData] = useState(null);
-  const [miniArrauy, setMiniArrauy] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [minisloading, setMinisLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [loadingFollow, setLoadingFollow] = useState(false);
 
-  const user = store.getState().user;
   const dispatch = useDispatch();
   const theme = useSelector(e => e.theme);
   const dataProfile = useSelector(e => e.profile?.profile);
@@ -76,9 +40,7 @@ const UserProfile = ({route, navigation}) => {
   const {notifications, totalPages, filteredNotifications, isLoading} =
     useSelector(({notifications}) => notifications);
   const isFocused = useIsFocused();
-  // const data = route?.params?.item?.item;
   const data = dataProfile;
-  // console.log('🚀 ~ UserProfile ~ data:', data);
   const userFollowing = useSelector(
     e => e.userFollowerFollowing?.userFollowing,
   );
@@ -91,6 +53,8 @@ const UserProfile = ({route, navigation}) => {
 
   return (
     <>
+      <StatusBar barStyle={theme.statusbar} />
+
       <View
         style={{
           flexDirection: 'row',
@@ -114,7 +78,6 @@ const UserProfile = ({route, navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {/* <Notification width={18} height={18} color={theme.text} /> */}
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate(NAVIGATION_ROUTES.NOTIFICATON)
@@ -137,7 +100,7 @@ const UserProfile = ({route, navigation}) => {
           style={{
             flex: 1,
             textAlign: 'center',
-            fontSize: 16,
+            fontSize: 20,
             fontWeight: 'bold',
             color: theme.text,
           }}>
@@ -160,7 +123,7 @@ const UserProfile = ({route, navigation}) => {
         style={{
           paddingHorizontal: 15,
           backgroundColor: 'black',
-          // paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
+          width: '100%',
         }}
         contentContainerStyle={{paddingBottom: 75}}
         showsVerticalScrollIndicator={false}>
@@ -270,7 +233,7 @@ const UserProfile = ({route, navigation}) => {
             <Text
               style={{
                 textAlign: 'center',
-                fontSize: 12,
+                // fontSize: 12,
                 fontWeight: '700',
                 color: theme.text,
                 marginBottom: 6,
@@ -295,7 +258,7 @@ const UserProfile = ({route, navigation}) => {
             <Text
               style={{
                 textAlign: 'center',
-                fontSize: 12,
+                // fontSize: 12,
                 fontWeight: '700',
                 color: theme.text,
                 marginBottom: 6,
@@ -378,7 +341,9 @@ const UserProfile = ({route, navigation}) => {
           }}>
           <ITouchableOpacity
             onPress={() => {
-              navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE, {index:userFollowing?.length >=1 ?  0: 1 });
+              navigation.navigate(NAVIGATION_ROUTES.FUN_PARTY_INVITE, {
+                index: userFollowing?.length >= 1 ? 0 : 1,
+              });
             }}
             style={{
               backgroundColor: '#303D5B',
@@ -412,7 +377,6 @@ const UserProfile = ({route, navigation}) => {
         <View
           style={{
             marginTop: 24,
-            // alignSelf: 'center',
           }}>
           <Text
             style={{
@@ -424,41 +388,52 @@ const UserProfile = ({route, navigation}) => {
             Previous Fun Party
           </Text>
         </View>
-        <View
-        //  style={{height:'10%'}}
-        >
+        <View>
           {filteredNotifications.map((item, i) => {
             return (
-              <View style={{marginTop: 16, flexDirection: 'row'}}>
+              <View
+                style={{
+                  marginTop: 16,
+                  flexDirection: 'row',
+                }}>
                 <View
                   style={{
-                    width: 30,
-                    height: 30,
+                    width: 35,
+                    height: 35,
                     borderRadius: 70,
                     backgroundColor: '#303D5B',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginRight: 10,
+                    marginLeft: 10,
                     alignSelf: 'center',
                   }}>
-                  <Text style={{color: '#FBC129', fontWeight: 'bold'}}>cw</Text>
+                  <Image
+                    source={{
+                      uri: checkImageUrl(
+                        item?.from?.profile_image,
+                        `https://ui-avatars.com/api/?background=random&name=${item?.from?.first_name}+${item?.from?.last_name}`,
+                      ),
+                    }}
+                    style={{
+                      width: 35,
+                      height: 35,
+                      borderRadius: 70,
+                      resizeMode: 'contain',
+                    }}
+                  />
                 </View>
-                <View>
+                <View style={{marginLeft: 10}}>
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: '600',
+                      fontWeight: '700',
                       color: theme.text,
-                      marginBottom: 10,
                     }}>
                     {item?.from?.first_name} {item?.from?.last_name}{' '}
                   </Text>
                   <View
                     style={{
                       flexDirection: 'row',
-                      // justifyContent: 'space-evenly',
-                      // backgroundColor: 'red',
-                      width: '87%',
                     }}>
                     <Text
                       style={{
@@ -467,7 +442,7 @@ const UserProfile = ({route, navigation}) => {
                         color: theme.text,
                         marginRight: 20,
                       }}>
-                      invited your for a watch party{' '}
+                      invited your for a watch party
                     </Text>
 
                     <Text

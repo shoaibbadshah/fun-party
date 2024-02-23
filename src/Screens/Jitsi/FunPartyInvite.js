@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  useWindowDimensions,
   RefreshControl,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -24,7 +23,6 @@ import {
   inviteToFunParty,
 } from '../../Store/Actions/minis';
 import {
-  searchByName,
   checkImageUrl,
   generateRandomMeetId,
   generateLink,
@@ -42,8 +40,6 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 const {width} = Dimensions.get('screen');
 
 const FunPartyInvite = ({route, navigation}) => {
-  const layout = useWindowDimensions();
-
   const dispatch = useDispatch();
   const [index, setIndex] = useState(route.params?.index);
   const refRBSheetFarward = useRef(null);
@@ -65,25 +61,21 @@ const FunPartyInvite = ({route, navigation}) => {
   );
   const partyStart = async () => {
     const randomMeetId = generateRandomMeetId();
-    // setSearch('');
 
     const generate = await generateLink(randomMeetId);
-    // console.log(generate, 'new generate', randomMeetId);
-  
-      const body = {
-        users: checked,
-        room: generate,
-        web_link: `https://shareslate.fun/funparty?meet=${randomMeetId}`,
-        room_code: randomMeetId,
-      };
-      // console.log(body, 'new thingss');
 
-      dispatch(inviteToFunParty(body));
-      setGuidCheck(!guidCheck);
-      interstitial.loaded ? interstitial.show() : interstitial.load();
-      navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
-      setChecked([]);
-    
+    const body = {
+      users: checked,
+      room: generate,
+      web_link: `https://shareslate.fun/funparty?meet=${randomMeetId}`,
+      room_code: randomMeetId,
+    };
+
+    dispatch(inviteToFunParty(body));
+    setGuidCheck(!guidCheck);
+    interstitial.loaded ? interstitial.show() : interstitial.load();
+    navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: randomMeetId});
+    setChecked([]);
   };
   const handleMenu = () => {
     refRBSheetFarward.current.handleMenu();
@@ -108,7 +100,6 @@ const FunPartyInvite = ({route, navigation}) => {
 
   const FriendsList = () => {
     const [search, setSearch] = useState('');
-  
 
     const filterSearch = search
       ? userFollowing?.filter(x =>
@@ -133,14 +124,10 @@ const FunPartyInvite = ({route, navigation}) => {
     };
 
     const handleInvitePress = async () => {
-      // const randomMeetId = generateRandomMeetId();
       setSearch('');
-
-      // const generate = await generateLink(randomMeetId);
-      // console.log(generate, 'new generate', randomMeetId);
       if (guidCheck) {
         setGuidCheck(!guidCheck);
-      } 
+      }
     };
 
     return (
@@ -377,7 +364,8 @@ const FunPartyInvite = ({route, navigation}) => {
         styles.container,
         {
           backgroundColor: theme?.primary,
-          paddingTop: Platform.OS == 'ios' ? 12 : 0,
+          // paddingTop: Platform.OS == 'ios' ? 12 : 0,
+          paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
         },
       ]}>
       <StatusBar barStyle={theme.StatusBar} />
@@ -399,7 +387,7 @@ const FunPartyInvite = ({route, navigation}) => {
               style={{
                 color: theme.text,
                 fontWeight: 'bold',
-                fontSize: 18,
+                fontSize: 20,
               }}>
               FunParty Invite
             </Text>

@@ -74,7 +74,12 @@ export default function UserListItem({item}) {
           resizeMode="cover"
         />
         <View style={{flex: 1, marginLeft: 10}}>
-          <Text style={{color: 'white', fontWeight: 'bold',alignSelf:'flex-start'}}>
+          <Text
+            style={{
+              color: 'white',
+              fontWeight: 'bold',
+              alignSelf: 'flex-start',
+            }}>
             {item?.first_name
               ? item?.first_name + ' ' + item?.last_name
               : item?.user_name}

@@ -162,7 +162,7 @@ const NotificationScreen = ({navigation}) => {
             flex: 1,
             textAlign: 'center',
             fontSize: 20,
-            fontWeight: '600',
+            fontWeight: 'bold',
             color: theme.text,
           }}>
           Notifications
