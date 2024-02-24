@@ -256,7 +256,7 @@ const FunPartyInvite = ({route, navigation}) => {
                   textAlign: 'center',
                   paddingHorizontal: 15,
                 }}>
-                Search not found{' '}
+                No User Found
               </Text>
             )}
           </View>
