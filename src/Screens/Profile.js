@@ -354,7 +354,7 @@ const UserProfile = ({route, navigation}) => {
               flexDirection: 'row',
             }}>
             <Image
-              source={require('../Assets/landing.png')}
+              source={require('../Assets/MAINLOGO.png')}
               style={{
                 width: 40,
                 height: 40,
@@ -395,6 +395,7 @@ const UserProfile = ({route, navigation}) => {
                 style={{
                   marginTop: 16,
                   flexDirection: 'row',
+                  marginHorizontal: 15,
                 }}>
                 <View
                   style={{
@@ -404,7 +405,6 @@ const UserProfile = ({route, navigation}) => {
                     backgroundColor: '#303D5B',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginLeft: 10,
                     alignSelf: 'center',
                   }}>
                   <Image
@@ -422,7 +422,7 @@ const UserProfile = ({route, navigation}) => {
                     }}
                   />
                 </View>
-                <View style={{marginLeft: 10}}>
+                <View style={{marginLeft: 10, flex: 1}}>
                   <Text
                     style={{
                       fontSize: 16,
@@ -434,15 +434,16 @@ const UserProfile = ({route, navigation}) => {
                   <View
                     style={{
                       flexDirection: 'row',
+                      justifyContent: 'space-between',
                     }}>
                     <Text
                       style={{
                         fontSize: 16,
                         fontWeight: '600',
                         color: theme.text,
-                        marginRight: 20,
+                        // marginRight: 20,
                       }}>
-                      invited your for a watch party
+                      Invited you for a watch party
                     </Text>
 
                     <Text
