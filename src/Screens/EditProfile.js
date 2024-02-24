@@ -90,7 +90,7 @@ const EditProfile = props => {
 
   const minDate = new Date();
   const maxDate = new Date();
-  minDate.setFullYear(minDate.getFullYear() - 50);
+  minDate.setFullYear(1900);
   maxDate.setFullYear(maxDate.getFullYear() - 18);
 
   const refRBSheet = useRef(null);
@@ -113,6 +113,9 @@ const EditProfile = props => {
       : '',
     profile_image: route?.params?.profileData?.profile_image
       ? route?.params?.profileData?.profile_image
+      : '',
+    email: route?.params?.profileData?.email
+      ? route?.params?.profileData?.email
       : '',
   });
   console.log(
@@ -377,7 +380,30 @@ const EditProfile = props => {
                   <Text style={{color: 'red'}}>{validationMessage}</Text>
                 )}
               </View>
-
+              <View style={styles.inputFieldWrapper}>
+                <Text style={[styles.fieldLabelStyle, {color: theme.text}]}>
+                  Email Address
+                </Text>
+                <TextInput
+                  style={[
+                    styles.textInputStyle,
+                    {
+                      color: 'grey',
+                      backgroundColor: theme.backgroundHighlight,
+                    },
+                  ]}
+                  value={editProfileData?.email}
+                  onChangeText={e => handleChangeValue(e, 'email')}
+                  placeholder="email"
+                  autoCapitalize="none"
+                  placeholderTextColor={'grey'}
+                  keyboardType="default"
+                  editable={false}
+                />
+                {validationMessage !== '' && (
+                  <Text style={{color: 'red'}}>{validationMessage}</Text>
+                )}
+              </View>
               <View style={styles.inputFieldWrapper}>
                 <Text style={[styles.fieldLabelStyle, {color: theme.text}]}>
                   First Name
