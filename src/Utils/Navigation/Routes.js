@@ -90,8 +90,8 @@ const RootNavigator = ({initial}) => {
       <LeftArrow
         onPress={() => navigationRef.current?.goBack()}
         color={'white'}
-        width={24}
-        height={24}
+        width={18}
+        height={18}
       />
     ),
 
@@ -145,6 +145,8 @@ const RootNavigator = ({initial}) => {
               component={OTPScreen}
               options={{
                 ...customAuthOptions,
+                // ...customOptions,
+                
                 headerShown: true,
                 title: 'Verification code',
                 headerBackTitleVisible: false,
@@ -161,7 +163,9 @@ const RootNavigator = ({initial}) => {
               name={NAVIGATION_ROUTES.HELP}
               component={Help}
               options={{
-                ...customAuthOptions,
+                // ...customAuthOptions,
+                ...customOptions,
+                
                 headerBackTitleVisible: false,
                 headerTitle: 'Need Help',
               }}
@@ -170,7 +174,9 @@ const RootNavigator = ({initial}) => {
               name={NAVIGATION_ROUTES.RECOVER_ACCOUNT}
               component={RecoverAccount}
               options={{
-                ...customAuthOptions,
+                // ...customAuthOptions,
+                ...customOptions,
+
                 headerBackTitleVisible: false,
                 headerTitle: 'Need Help',
               }}
@@ -179,7 +185,8 @@ const RootNavigator = ({initial}) => {
               name={NAVIGATION_ROUTES.TERMS_CONDITION}
               component={TermsnConditions}
               options={{
-                ...customAuthOptions,
+                ...customOptions,
+                // ...customAuthOptions,
                 headerBackTitleVisible: false,
                 title: '',
               }}
@@ -188,7 +195,8 @@ const RootNavigator = ({initial}) => {
               name={NAVIGATION_ROUTES.FORGET}
               component={ForgetPassword}
               options={{
-                ...customAuthOptions,
+                // ...customAuthOptions,
+                ...customOptions,
                 headerBackTitleVisible: true,
                 title: 'Forget Password',
                 headerBackTitle: 'Forgot Password',
@@ -256,9 +264,13 @@ const RootNavigator = ({initial}) => {
             <Stack.Screen
               name={NAVIGATION_ROUTES.SETTINGS}
               component={Settings}
+              // options={{
+              //   ...customOptions,
+              //   headerTitle: 'Settings & Privacy',
+              // }}
               options={{
-                ...customOptions,
-                headerTitle: 'Settings & Privacy',
+                headerShown: false,
+                // headerBackTitle: '',
               }}
             />
 
@@ -266,7 +278,8 @@ const RootNavigator = ({initial}) => {
               name={NAVIGATION_ROUTES.TERMS_CONDITION}
               component={TermsnConditions}
               options={{
-                ...customAuthOptions,
+                ...customOptions,
+                // headerLeft: true,
                 headerBackTitleVisible: false,
                 title: '',
               }}
