@@ -11,8 +11,9 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import LeftArrow from '../Utils/Assets/Icons/LeftArrow';
 const {width, height} = Dimensions.get('screen');
-const WatchPartyGuide = ({setGuidCheck, guidCheck,handleInvitePress}) => {
+const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
   const theme = useSelector(e => e.theme);
   const navigation = useNavigation();
   return (
@@ -34,15 +35,13 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck,handleInvitePress}) => {
             marginBottom: height - height + 20,
           },
         ]}>
-        <Icon
-          name="chevron-back"
-          size={23}
-          color={theme.text}
+        <TouchableOpacity
           onPress={() => {
             setGuidCheck(!guidCheck);
-          }}
-        />
-        <Text style={{color: theme.text, fontWeight: 'bold', fontSize: 17}}>
+          }}>
+          <LeftArrow width={18} height={18} color={theme.text} />
+        </TouchableOpacity>
+        <Text style={{color: theme.text, fontWeight: 'bold', fontSize: 18}}>
           FunParty Instructions
         </Text>
       </View>
@@ -262,7 +261,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck,handleInvitePress}) => {
             color: theme.text,
             fontWeight: 'bold',
             fontSize: 17,
-            marginTop: '45%',
+            marginTop: '30%',
           }}>
           Enjoy your FunParty!
         </Text>
@@ -275,14 +274,14 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck,handleInvitePress}) => {
           bottom: 30,
           right: 30,
           left: 30,
-          backgroundColor:  theme.secondary,
+          backgroundColor: theme.secondary,
           borderRadius: 8,
           height: 45,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text style={{color: 'white', fontSize: 16, padding: 10}}>
-          { 'Start FunParty'}
+          {'Start FunParty'}
         </Text>
       </TouchableOpacity>
     </View>
