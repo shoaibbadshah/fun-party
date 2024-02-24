@@ -6,21 +6,31 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import LeftArrow from '../Utils/Assets/Icons/LeftArrow';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import {isIos} from '../Utils/helpers';
+
 const {width, height} = Dimensions.get('screen');
 const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
+  const [adLoaded, setAdLoaded] = useState(true);
+
+  const adUnitId = __DEV__
+    ? TestIds.ADAPTIVE_BANNER
+    : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+
   const theme = useSelector(e => e.theme);
   const navigation = useNavigation();
   return (
-    <View
+    <SafeAreaView
       style={[
         styles.container,
-        {backgroundColor: theme.primary, marginHorizontal: 15},
+        {flex: 1, backgroundColor: theme.primary, marginHorizontal: 15},
       ]}>
       <StatusBar
         // backgroundColor={"transparent"}
@@ -32,7 +42,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
           styles.flexStyle,
           {
             width: width - width / 3.5,
-            marginBottom: height - height + 20,
+            marginBottom: height - height + 10,
           },
         ]}>
         <TouchableOpacity
@@ -45,101 +55,101 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
           FunParty Instructions
         </Text>
       </View>
-      <View
-        style={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          //   marginTop: "2%",
-        }}>
-        <Text
-          style={{
-            color: theme.text,
-            fontWeight: 'bold',
-            fontSize: 17,
-            marginTop: 55,
-          }}>
-          Invite sent
-        </Text>
 
+      <ScrollView>
         <View
           style={{
-            width: '95%',
-            // justifyContent: "center",
-            // alignItems: "center",ellipsis-horizontal-outline
-            marginTop: '12%',
-            // height: '62%',
-            borderRadius: 15,
-            backgroundColor: theme.name === 'dark' ? '#303d5b' : '#ECECEC',
-            padding: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
           <Text
             style={{
               color: theme.text,
               fontWeight: 'bold',
-              fontSize: 16,
-              marginLeft: 15,
-            }}>
-            Steps to start FunParty
-          </Text>
-          <Text
-            style={{
-              color: theme.text,
-              fontWeight: 'bold',
-              fontSize: 16,
-              marginTop: 20,
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlignVertical: 'auto',
-              //   marginLeft: 15,
-            }}>
-            1. Go to{'   '}
-            <Icon
-              name="ellipsis-horizontal-outline"
-              color={theme.text}
-              size={19}
-              //   style={{ marginTop: 35 }}
-            />{' '}
-          </Text>
-          <Text
-            style={{
-              color: theme.text,
-              fontWeight: 'bold',
-              fontSize: 16,
+              fontSize: 17,
               marginTop: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlignVertical: 'top',
-              //   height: 40,
-              //   backgroundColor: "red",
-              //   marginLeft: 15,
             }}>
-            2. Tap on{' '}
-            <Icon
-              name="play-circle-outline"
-              color={theme.text}
-              size={18}
-              //   style={{ marginTop: 35 }}
-            />{' '}
-            Share video icon
-          </Text>
-          <Text
-            style={{
-              color: theme.text,
-              fontWeight: 'bold',
-              fontSize: 16,
-              marginTop: 10,
-              //   marginLeft: 15,
-            }}>
-            3. Paste the video link from Fun Videos or Youtube in the text box
-            and hit OK.
+            Invite sent
           </Text>
 
           <View
             style={{
-              width: '100%',
-              marginTop: '10%',
-              maxHeight: '50%',
+              // width: '95%',
+              // justifyContent: "center",
+              // alignItems: "center",ellipsis-horizontal-outline
+              marginTop: 10,
+              // height: '62%',
+              borderRadius: 15,
+              backgroundColor: theme.name === 'dark' ? '#303d5b' : '#ECECEC',
+              padding: 20,
+            }}>
+            <Text
+              style={{
+                color: theme.text,
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginLeft: 15,
+              }}>
+              Steps to start FunParty
+            </Text>
+            <Text
+              style={{
+                color: theme.text,
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginTop: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlignVertical: 'auto',
+                //   marginLeft: 15,
+              }}>
+              1. Go to{'   '}
+              <Icon
+                name="ellipsis-horizontal-outline"
+                color={theme.text}
+                size={19}
+                //   style={{ marginTop: 35 }}
+              />{' '}
+            </Text>
+            <Text
+              style={{
+                color: theme.text,
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginTop: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlignVertical: 'top',
+                //   height: 40,
+                //   backgroundColor: "red",
+                //   marginLeft: 15,
+              }}>
+              2. Tap on{' '}
+              <Icon
+                name="play-circle-outline"
+                color={theme.text}
+                size={18}
+                //   style={{ marginTop: 35 }}
+              />{' '}
+              Share video icon
+            </Text>
+            <Text
+              style={{
+                color: theme.text,
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginTop: 10,
+                //   marginLeft: 15,
+              }}>
+              3. Paste the video link from Fun Videos or Youtube in the text box
+              and hit OK.
+            </Text>
+
+            {/* <View
+            style={{
+              // width: '100%',
+              // marginTop: '10%',
+              // maxHeight: '50%',
               display: 'none',
               // height: '55%',
               // flex: 0.9,
@@ -177,7 +187,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
 
                   //   marginLeft: 15,
                 }}>
-                {/* Share video */}
+               <Text> Share video</Text>
               </View>
               <View
                 style={{
@@ -187,7 +197,7 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
                   backgroundColor:
                     theme.name === 'dark' ? '#303d5b' : '#ECECEC',
                   borderRadius: 5,
-                }}></View>
+                }}>
               <View
                 style={{
                   //   marginTop: 10,
@@ -250,41 +260,77 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
                     Cancel
                   </Text>
                 </TouchableOpacity>
-                {/* Share video */}
+                <Text>Share video</Text>
               </View>
             </View>
+            </View>
+          </View> */}
           </View>
-        </View>
 
-        <Text
-          style={{
-            color: theme.text,
-            fontWeight: 'bold',
-            fontSize: 17,
-            marginTop: '30%',
-          }}>
-          Enjoy your FunParty!
-        </Text>
-      </View>
-      <TouchableOpacity
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'black',
+              marginTop: 20,
+              overflow: 'hidden',
+              display: adLoaded ? 'flex' : 'flex',
+            }}>
+            <BannerAd
+              // unitId={adUnitId}
+              unitId={
+                isIos
+                  ? 'ca-app-pub-3686012001393355/1947713354'
+                  : 'ca-app-pub-3686012001393355/2445325230'
+              }
+              size={BannerAdSize.MEDIUM_RECTANGLE}
+              onAdFailedToLoad={() => {
+                setAdLoaded(false);
+              }}
+              onAdLoaded={() => {
+                setAdLoaded(true);
+              }}
+              requestOptions={{
+                networkExtras: {
+                  collapsible: 'top',
+                },
+              }}
+            />
+          </View>
+          <Text
+            style={{
+              color: theme.text,
+              fontWeight: 'bold',
+              fontSize: 17,
+              marginTop: 15,
+              // marginBottom:20
+            }}>
+            Enjoy your FunParty!
+          </Text>
+          <TouchableOpacity
         onPress={handleInvitePress}
         // disabled={checked.length == 0 ? true : false}
         style={{
-          position: 'absolute',
-          bottom: 30,
-          right: 30,
-          left: 30,
+          
           backgroundColor: theme.secondary,
           borderRadius: 8,
           height: 45,
-          justifyContent: 'center',
+          paddingHorizontal:'20%',
+                  justifyContent: 'center',
           alignItems: 'center',
+          marginBottom:30,
+          marginTop:50
+         
         }}>
         <Text style={{color: 'white', fontSize: 16, padding: 10}}>
           {'Start FunParty'}
         </Text>
       </TouchableOpacity>
-    </View>
+        </View>
+      </ScrollView>
+
+     
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
