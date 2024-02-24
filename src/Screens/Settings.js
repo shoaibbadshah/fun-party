@@ -10,6 +10,7 @@ import {
   Pressable,
   Alert,
   Modal,
+  StatusBar,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useDispatch, useSelector} from 'react-redux';
@@ -36,6 +37,7 @@ import {
   PrivacyPolicy,
   TermsandConditions,
 } from '../Utils/PolicyStrings';
+import LeftArrow from '../Utils/Assets/Icons/LeftArrow';
 
 const Settings = () => {
   const theme = useSelector(e => e.theme);
@@ -205,9 +207,34 @@ const Settings = () => {
   const styles = useStyles(theme);
   return (
     <ScrollView
-      style={{backgroundColor: theme.primary}}
+      style={[
+        {
+          flex: 1,
+          backgroundColor: theme?.primary,
+          paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
+        },
+      ]}
       showsVerticalScrollIndicator={false}>
-      <View style={{flex: 1, padding: 15, backgroundColor: theme.primary}}>
+      <StatusBar barStyle={theme.StatusBar} />
+      <View style={[styles.flexStyle]}>
+        <View>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <LeftArrow width={18} height={18} color={theme.text} />
+          </TouchableOpacity>
+        </View>
+
+        <Text
+          style={{
+            color: theme.text,
+            fontWeight: 'bold',
+            fontSize: 20,
+          }}>
+          Settings & Privacy
+        </Text>
+
+        <TouchableOpacity></TouchableOpacity>
+      </View>
+      <View style={{flex: 1, backgroundColor: theme.primary, marginHorizontal:15}}>
         <Text style={styles.heading}>Account</Text>
         <View style={styles.container}>
           <TouchableOpacity onPress={handleChangePassword} style={styles.row}>
@@ -570,4 +597,10 @@ const useStyles = theme =>
     },
     title: {paddingVertical: '2%', paddingHorizontal: 15},
     textHeading: {fontSize: 18, fontWeight: '600', color: theme.text},
+    flexStyle: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginHorizontal:15
+    },
   });
