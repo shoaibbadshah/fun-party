@@ -142,7 +142,7 @@ const CommunityGuidLines = {
   title: 'Community GuidLines',
   data: `Our Community Guidelines along with relevant portions of the Terms & Conditions (collectively, the "Guidelines") govern your relationship with and use of Share Slate and are enforced by us, the admins.
 
-Share Slate intends to use ‘equal opportunity’ algorithms to show ordinary, real, and diverse communities of people through the sharing of short and long videos and watch party also known as Fun Party. We are a platform of neutrality where users can converse and discover the world around them through content. We have created a platform to express yourself, share your life and show your talent. Our mission is to use technology to empower everyone's life so that everyone has the opportunity to show, the channel to speak, and the possibility to be seen. To accomplish this, we generally allow Share Slate users to moderate and curate their own content but also have set basic Guidelines to protect the safety and privacy of our users and others. To that end, our Guidelines are based on Equality, Unbiasedness, Respect, and Law.
+Share Slate intends to use ‘equal opportunity’ algorithms to show ordinary, real, and diverse communities of people through the sharing of short and long videos and watch party also known as FunParty. We are a platform of neutrality where users can converse and discover the world around them through content. We have created a platform to express yourself, share your life and show your talent. Our mission is to use technology to empower everyone's life so that everyone has the opportunity to show, the channel to speak, and the possibility to be seen. To accomplish this, we generally allow Share Slate users to moderate and curate their own content but also have set basic Guidelines to protect the safety and privacy of our users and others. To that end, our Guidelines are based on Equality, Unbiasedness, Respect, and Law.
 
 You must follow each of the below "Overarching Principles," as well as any other principles outlined in the Guidelines. Users who violate any of the Guidelines may be restricted, suspended, or otherwise banned, in our sole discretion. Again, our hope is that the Share Slate community is defined by you, but the Share Slate admins must reserve the right to revoke access or remove content for any reason, without notice, especially when it comes to the safety and privacy of our users and others.
 
@@ -207,10 +207,10 @@ Would constitute, encourage, or provide instructions for a criminal offense, vio
 May infringe any patent, trademark, trade secret, copyright, or other intellectual or proprietary right of any party; If reported pretending to others and using other’s Intellectual property.
 For the above situation, we will implement Enforcement B.
 
-Particularly when you use Share Slate Watch Party also known Fun Party, you agree to abide by the following rules at all times. You also agree not to encourage others to violate these rules. The latter is taken seriously and can also result in removal from the Service.
+Particularly when you use Share Slate Watch Party also known FunParty, you agree to abide by the following rules at all times. You also agree not to encourage others to violate these rules. The latter is taken seriously and can also result in removal from the Service.
 
-You shall be responsible for the actions of dual hosts in the Watch Party also known as Fun Party. If they violate the community guidelines, both of you will be reported and investigated;
-You, as a Moderator, shall be responsible for the viewers' actions in the Watch Party also known as Fun Party. If viewers violate the community guidelines, the Moderator has the responsibility to point out and take action to remove the viewer(s) from Watch Party;
+You shall be responsible for the actions of dual hosts in the Watch Party also known as FunParty. If they violate the community guidelines, both of you will be reported and investigated;
+You, as a Moderator, shall be responsible for the viewers' actions in the Watch Party also known as FunParty. If viewers violate the community guidelines, the Moderator has the responsibility to point out and take action to remove the viewer(s) from Watch Party;
 You, as a shop host, shall be responsible for the goods or services you sell. To ensure a good community environment, Share Slate prohibits the sale of alcohol, goods or services about child endangerment or abuse, drugs and drug paraphernalia, firearms, any illegal or stolen goods or unlawful services, all offensive content and activities, and other goods or services prohibited by App Store and Google.
 To learn more, please click the following links:
 
@@ -235,9 +235,9 @@ Safety
 CONTENT MODERATION
 If someone has not violated any of the Rules, but you would still prefer not to interact with them, here are some tools you can utilize.
 
-Watch Party also known as Fun Party moderators decide who is in a room and can speak or view the material:
+Watch Party also known as FunParty moderators decide who is in a room and can speak or view the material:
 
-Accept or reject viewers: If you are a Watch Party also known as Fun Party moderators you decide who can view or speak. If you’d like to invite someone from the audience to speak, just tap on the profile photo of that user and select "unmute." Moderator has the authority to accept or decline any user request during the watch party session.
+Accept or reject viewers: If you are a Watch Party also known as FunParty moderators you decide who can view or speak. If you’d like to invite someone from the audience to speak, just tap on the profile photo of that user and select "unmute." Moderator has the authority to accept or decline any user request during the watch party session.
 Remove viewer: Watch Party moderators can also temporarily mute a viewer. To mute the viewer, tap on their profile photo to open the half-sheet, and then tap the mute button to the right of their profile photo.
 Anyone can decide who they interact with:
 

@@ -136,7 +136,6 @@ const NotificationScreen = ({navigation}) => {
         flex: 1,
         backgroundColor: theme.primary,
         paddingTop: Platform.OS == 'ios' ? StatusBar.currentHeight + 60 : 15,
-
       }}>
       <StatusBar barStyle={theme.statusbar} />
 

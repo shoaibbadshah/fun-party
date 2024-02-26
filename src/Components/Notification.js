@@ -38,7 +38,7 @@ export default function Notification({item}) {
         // dispatch(onNotificationTap(item._id));
         navigation.navigate(NAVIGATION_ROUTES.JITSI, {roomId: meetParameter});
       } else {
-        Alert.alert('Fun Party ', 'FunParty was ended by the owner');
+        Alert.alert('FunParty ', 'FunParty was ended by the owner');
       }
     }
   };
@@ -101,9 +101,8 @@ export default function Notification({item}) {
                 }}>
                 {item?.from?.first_name} {item?.from?.last_name}{' '}
               </Text>
-
               {/* {item?.body} */}
-              Invited you for a fun party
+              Invited you for a FunParty
             </Text>
           </View>
           <View style={{alignItems: 'center'}}>

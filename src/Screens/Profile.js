@@ -370,7 +370,7 @@ const UserProfile = ({route, navigation}) => {
                 fontWeight: 'bold',
                 color: theme.text,
               }}>
-              Start Fun Party
+              Start FunParty
             </Text>
           </ITouchableOpacity>
         </View>
@@ -385,7 +385,7 @@ const UserProfile = ({route, navigation}) => {
               color: '#6B6B6B',
               paddingLeft: 15,
             }}>
-            Previous Fun Party
+            Previous FunParty
           </Text>
         </View>
         <View>
@@ -443,7 +443,7 @@ const UserProfile = ({route, navigation}) => {
                         color: theme.text,
                         // marginRight: 20,
                       }}>
-                      Invited you for a fun party
+                      Invited you for a FunParty
                     </Text>
 
                     <Text
