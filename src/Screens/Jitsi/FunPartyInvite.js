@@ -246,7 +246,7 @@ const FunPartyInvite = ({route, navigation}) => {
                   paddingHorizontal: 15,
                 }}>
                 Looks like you don't have any friends yet! Invite your friends
-                for a watch party!
+                for a fun party!
               </Text>
             ) : (
               <Text

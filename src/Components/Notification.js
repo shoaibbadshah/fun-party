@@ -102,7 +102,8 @@ export default function Notification({item}) {
                 {item?.from?.first_name} {item?.from?.last_name}{' '}
               </Text>
 
-              {item?.body}
+              {/* {item?.body} */}
+              Invited you for a fun party
             </Text>
           </View>
           <View style={{alignItems: 'center'}}>

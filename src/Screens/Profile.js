@@ -443,7 +443,7 @@ const UserProfile = ({route, navigation}) => {
                         color: theme.text,
                         // marginRight: 20,
                       }}>
-                      Invited you for a watch party
+                      Invited you for a fun party
                     </Text>
 
                     <Text
