@@ -279,9 +279,9 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
             <BannerAd
               // unitId={adUnitId}
               unitId={
-                isIos
-                  ? 'ca-app-pub-3686012001393355/1947713354'
-                  : 'ca-app-pub-3686012001393355/2445325230'
+                !isIos
+                  ? 'ca-app-pub-3686012001393355/3621783252'
+                  : 'ca-app-pub-3686012001393355/1358033256'
               }
               size={BannerAdSize.MEDIUM_RECTANGLE}
               onAdFailedToLoad={() => {
@@ -308,28 +308,24 @@ const WatchPartyGuide = ({setGuidCheck, guidCheck, handleInvitePress}) => {
             Enjoy your FunParty!
           </Text>
           <TouchableOpacity
-        onPress={handleInvitePress}
-        // disabled={checked.length == 0 ? true : false}
-        style={{
-          
-          backgroundColor: theme.secondary,
-          borderRadius: 8,
-          height: 45,
-          paddingHorizontal:'20%',
-                  justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom:30,
-          marginTop:50
-         
-        }}>
-        <Text style={{color: 'white', fontSize: 16, padding: 10}}>
-          {'Start FunParty'}
-        </Text>
-      </TouchableOpacity>
+            onPress={handleInvitePress}
+            // disabled={checked.length == 0 ? true : false}
+            style={{
+              backgroundColor: theme.secondary,
+              borderRadius: 8,
+              height: 45,
+              paddingHorizontal: '20%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: 30,
+              marginTop: 50,
+            }}>
+            <Text style={{color: 'white', fontSize: 16, padding: 10}}>
+              {'Start FunParty'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-
-     
     </SafeAreaView>
   );
 };

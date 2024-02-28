@@ -83,9 +83,9 @@ const VideoCall = ({route, navigation}) => {
         <BannerAd
           // unitId={adUnitId}
           unitId={
-            isIos
-              ? 'ca-app-pub-3686012001393355/1947713354'
-              : 'ca-app-pub-3686012001393355/2445325230'
+            !isIos
+              ? 'ca-app-pub-3686012001393355/3621783252'
+              : 'ca-app-pub-3686012001393355/1358033256'
           }
           size={BannerAdSize.BANNER}
           onAdFailedToLoad={() => {

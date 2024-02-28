@@ -85,12 +85,19 @@
 
 	<key>NSCalendarsUsageDescription</key>
 	<string>We need access to calendars to schedule your FunParty.</string>
+	
 	<key>NSCameraUsageDescription</key>
-	<string>We need access to the camera for capturing photos and videos.</string>
+	<string>We need access to the camera for capturing photos and videos. This enables you to share moments with your friends during watch parties and enhance the interactive experience within the app.</string>
+
+
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We may use tracking for improving your watch party experience by providing personalized recommendations and features.</string>
+
+
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to provide personalized recommendations based on your current area.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+    <string>We require access to your microphone to enable audio communication during watch parties, allowing you to chat and interact with other participants.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to the photo library to enhance your experience by allowing you to select and upload photos.</string>
 	<key>SKAdNetworkItems</key>

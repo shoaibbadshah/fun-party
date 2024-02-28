@@ -178,16 +178,34 @@ const Settings = () => {
   };
 
   const handleDeleteProfile = async () => {
-    try {
-      const data = await API.v1.Auth.deleteProfile();
-      Alert.alert('User deleted', data.data.message);
-      handleLogout();
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: Settings.js:176 ~ handleDeleteProfile ~ error:',
-        error,
-      );
-    }
+    Alert.alert(
+      'Delete Account Warning: ',
+      'Your account will be deactivated for 7 days. Failure to log in within this period will result in permanent deletion from all Share Slate apps. Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const data = await API.v1.Auth.deleteProfile();
+              // Alert.alert('User deleted', data.data.message);
+              handleLogout();
+            } catch (error) {
+              console.log(
+                '🚀 ~ file: Settings.js:176 ~ handleDeleteProfile ~ error:',
+                error,
+              );
+              Alert.alert('Error', error);
+            }
+          },
+        },
+      ],
+    );
   };
   const handleLogout = async () => {
     let fcm = {};
@@ -234,7 +252,8 @@ const Settings = () => {
 
         <TouchableOpacity></TouchableOpacity>
       </View>
-      <View style={{flex: 1, backgroundColor: theme.primary, marginHorizontal:15}}>
+      <View
+        style={{flex: 1, backgroundColor: theme.primary, marginHorizontal: 15}}>
         <Text style={styles.heading}>Account</Text>
         <View style={styles.container}>
           <TouchableOpacity onPress={handleChangePassword} style={styles.row}>
@@ -601,6 +620,6 @@ const useStyles = theme =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginHorizontal:15
+      marginHorizontal: 15,
     },
   });
