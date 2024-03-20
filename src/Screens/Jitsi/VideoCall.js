@@ -103,7 +103,6 @@ const VideoCall = ({route, navigation}) => {
       </View>
       <JitsiMeeting
         flags={{
-          'call-integration.enabled': true,
           'fullscreen.enabled': true,
           'add-people.enabled': false,
           'chat.enabled': false,
@@ -113,7 +112,6 @@ const VideoCall = ({route, navigation}) => {
           'settings.enabled': false,
           'live-streaming.enabled': true,
           'tile-view.enabled': true,
-          'video-share.enabled': true,
         }}
         eventListeners={{
           onConferenceJoined: e => {

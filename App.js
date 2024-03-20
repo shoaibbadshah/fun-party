@@ -21,6 +21,7 @@ import {
   MobileAds,
   TestIds,
 } from 'react-native-google-mobile-ads';
+import {store} from './src/Store/store';
 
 const toastConfig = {
   /*
@@ -57,6 +58,8 @@ export const interstitial = InterstitialAd.createForAdRequest(
 const App = () => {
   LogBox.ignoreAllLogs();
   const [initialURL, setInitialURL] = useState();
+  const {data, isOnBaorded} = useSelector(({user}) => user);
+  const user = store.getState().user?.data;
   useEffect(() => {
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     // When the component is unmounted, remove the listener
@@ -133,12 +136,22 @@ const App = () => {
   const handleDynamicLink = async link => {
     console.log('🚀 ~ handleDynamicLink ~ link:', link);
     if (link?.url) {
+      // console.log('🚀 ~ handleDynamicLink ~ url:', url?.url);
+
       const getRoute = link.url?.split('?')[1];
       console.log('🚀 ~ handleDynamicLink ~ getRoute:', getRoute);
-
-      navigate(NAVIGATION_ROUTES.JITSI, {
-        roomId: getRoute,
-      });
+      if (getRoute && user) {
+        navigate(NAVIGATION_ROUTES.JITSI, {
+          roomId: getRoute,
+        });
+        console.log('🚀 ~ handleDynamicLink ~ (getRoute && user:');
+      } else if (user) {
+        navigate(NAVIGATION_ROUTES.PROFILE);
+        console.log('🚀 ~ handleDynamicLink ~ (user:');
+      } else {
+        navigate(NAVIGATION_ROUTES.AUTH_DECIDE);
+        console.log('else chala');
+      }
     }
   };
 
